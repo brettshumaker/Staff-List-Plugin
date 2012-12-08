@@ -1,0 +1,27 @@
+#adminmenu #menu-posts-product div.wp-menu-image {
+	b/ackground: url('../_images/product-icon-sprite.png') no-repeat left bottom;		
+}
+
+#adminmenu #menu-posts-product:hover div.wp-menu-image, #adminmenu #menu-posts-product.wp-has-current-submenu div.wp-menu-image {
+	background-position: left top;
+}
+
+#sortable-table td { 
+	background: white; 
+}
+
+#sortable-table .column-order { 
+	padding: 3px 10px; width: 50px; 
+}
+
+#sortable-table .column-order img { 
+	cursor: move; 
+}
+
+#sortable-table td.column-order { 
+	vertical-align: middle; text-align: center; 
+}
+
+#sortable-table .column-thumbnail { 
+	width: 160px; 
+}

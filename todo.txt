@@ -1,0 +1,3 @@
+* Obfuscate email links
+
+* Maybe find a way to only have to edit accepted tags in one place?
