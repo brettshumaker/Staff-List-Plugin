@@ -32,7 +32,7 @@ include_once('_inc/user-view-show-staff-list.php');
 
 $default_template = '
 [staff_loop]		
-	<img src="[photo_url]" alt="[name] : [title]">
+	[photo]
 	[name]
 	[title]
 	[email_link]
@@ -61,7 +61,7 @@ function staff_member_admin_enqueue_scripts() {
 	wp_enqueue_script( 'jquery-ui-sortable' );
 	wp_enqueue_script( 'staff-member-admin-scripts', STAFFLIST_PATH . '_js/staff-member-admin-scripts.js' );
 	
-	wp_enqueue_style ( 'staff-list-css', STAFFLIST_PATH . '_css/staff-list.css' );
+	wp_enqueue_style ( 'staff-list-css', STAFFLIST_PATH . '_css/admin-staff-list.css' );
 }
 
 
