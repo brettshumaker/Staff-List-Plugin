@@ -50,11 +50,12 @@ function staff_member_bio_meta_box(){
 // Staff List Custom Column View
 //////////////////////////////*/
 
-add_action( "manage_posts_custom_column", "custom_columns", 10, 2 );
+add_action( "manage_posts_custom_column", "staff_member_display_custom_columns");
 
-function custom_columns( $column, $post_id ) {
+function staff_member_display_custom_columns( $column ) {
   global $post;
   $custom = get_post_custom();
+  
   $_staff_member_title = $custom["_staff_member_title"][0];
   $_staff_member_email = $custom["_staff_member_email"][0];
   $_staff_member_phone = $custom["_staff_member_phone"][0];
@@ -160,6 +161,9 @@ function staff_member_display_template(){
 	// Get options for default HTML CSS
 	$default_html = get_option('staff_listing_default_html');
 	$default_css = get_option('staff_listing_default_css');
+	$default_tag_string = get_option('_staff_listing_default_tag_string');
+	$default_formatted_tag_string = get_option('_staff_listing_default_formatted_tag_string');
+	
 	
 	// Check Nonce and then update options
 	if ( !empty($_POST) && check_admin_referer( 'staff-member-template', 'staff-list-template' ) ) {
@@ -180,9 +184,9 @@ function staff_member_display_template(){
     
     $output .= '<div style="padding:15px;">';
     $output .= '<p>Accepted Shortcodes - These <strong>MUST</strong> be used inside the "[staff_loop]" shortcodes:</p>';
-    $output .= '<p><xmp>[name] , [photo_url] , [title] , [email] , [phone] , [bio]</xmp></p>';
+    $output .= '<p>'.$default_tag_string.'</p>';
     $output .= '<p>These will only return string values. If you would like to return pre-formatted headers (using &lt;h3&gt; tags), links, and paragraphs, use these:</p>';
-    $output .= '<p><xmp>[name_header] , [title_formatted] , [photo] , [email_link] , [bio_paragraph]</xmp></p>';
+    $output .= '<p>'.$default_formatted_tag_string.'</p>';
     $output .= '<form method="post" action="">';
     $output .= '<h3>Staff Page HTML</h3>';
     $output .= '<textarea name="staff-listing-html" cols="120" rows="16">'.$custom_html.'</textarea>';
@@ -200,4 +204,44 @@ function staff_member_display_template(){
 }
 
 
+
+
+
+/*
+// Custom Post Type Icon for Admin Menu & Post Screen
+//////////////////////////////*/
+
+//add_action( 'admin_head', 'staff_member_CPT_icon' );
+ 
+function staff_member_CPT_icon() {
+    ?>
+    <style>
+        /* Admin Menu - 16px */
+        #menu-posts-staff-member .wp-menu-image {
+        	background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon.png') no-repeat 5px 5px !important;
+            background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon.svg') no-repeat 5px 5px !important;
+            background-size: 70% !important;
+            opacity: .5;
+        }
+        #menu-posts-staff-member:hover .wp-menu-image, #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
+            b--ackground-position: 6px -26px !important;
+            opacity: 1;
+        }
+        
+        #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
+	        background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon-lighter.png') no-repeat 5px 5px !important;
+            background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon-lighter.svg') no-repeat 5px 5px !important;
+            background-size: 70% !important;
+        }
+        /* Post Screen - 32px */
+        .icon32-posts-staff-member {
+        	background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon.png') no-repeat left top !important;
+            background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon.svg') no-repeat left top !important;
+            background-size: 100% !important;
+            height: 32px;
+            width: 32px;
+        }
+    </style>
+<?php } 
+ 
 ?>

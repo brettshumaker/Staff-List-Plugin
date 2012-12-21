@@ -1,27 +1,47 @@
-#adminmenu #menu-posts-product div.wp-menu-image {
-	b/ackground: url('../_images/product-icon-sprite.png') no-repeat left bottom;		
+#poststuff .stng_admin_wrap h2 {
+	margin:10px 0 0;
 }
 
-#adminmenu #menu-posts-product:hover div.wp-menu-image, #adminmenu #menu-posts-product.wp-has-current-submenu div.wp-menu-image {
-	background-position: left top;
+.stng_admin_wrap input[type="text"] {
+	font-size: 1.5em;
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+	line-height: 29px;
+	padding-left: 0.3em;
+	width: 100%;
 }
 
-#sortable-table td { 
-	background: white; 
+.stng_admin_wrap .wp-editor-area {
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
 }
 
-#sortable-table .column-order { 
-	padding: 3px 10px; width: 50px; 
+
+
+/*
+	CPT Icon Styles
+*/
+
+/* Admin Menu - 16px */
+#menu-posts-staff-member .wp-menu-image {
+	background: url('../_images/staff-list-icon.png') no-repeat 5px 5px !important;
+    background: url('../_images/staff-list-icon.svg') no-repeat 5px 5px !important;
+    background-size: 70% !important;
+    opacity: .5;
+}
+#menu-posts-staff-member:hover .wp-menu-image, #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
+    b--ackground-position: 6px -26px !important;
+    opacity: 1;
 }
 
-#sortable-table .column-order img { 
-	cursor: move; 
+#menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
+    background: url('../_images/staff-list-icon-lighter.png') no-repeat 5px 5px !important;
+    background: url('../_images/staff-list-icon-lighter.svg') no-repeat 5px 5px !important;
+    background-size: 70% !important;
 }
-
-#sortable-table td.column-order { 
-	vertical-align: middle; text-align: center; 
-}
-
-#sortable-table .column-thumbnail { 
-	width: 160px; 
+/* Post Screen - 32px */
+.icon32-posts-staff-member {
+	background: url('../_images/staff-list-icon.png') no-repeat left top !important;
+    background: url('../_images/staff-list-icon.svg') no-repeat left top !important;
+    background-size: 100% !important;
+    height: 32px;
+    width: 32px;
 }

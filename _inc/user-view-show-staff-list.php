@@ -7,8 +7,10 @@ function staff_member_listing_shortcode_func($atts) {
      
      // Get Template and CSS
      
-     $custom_html = stripslashes_deep(get_option('staff_listing_custom_html'));
-     $custom_css = stripslashes_deep(get_option('staff_listing_custom_css'));
+     $custom_html 				= stripslashes_deep(get_option('staff_listing_custom_html'));
+     $custom_css 				= stripslashes_deep(get_option('staff_listing_custom_css'));
+     $default_tags 				= get_option('_staff_listing_default_tags');
+     $default_formatted_tags 	= get_option('_staff_listing_default_formatted_tags');
      
      
      // Check to see if we have custom css
@@ -38,7 +40,7 @@ function staff_member_listing_shortcode_func($atts) {
 			
 			$custom 	= get_post_custom();
 			$name 		= get_the_title();
-			$title 	= $custom["_staff_member_title"][0];
+			$title 		= $custom["_staff_member_title"][0];
 			$email 		= $custom["_staff_member_email"][0];
 			$phone 		= $custom["_staff_member_phone"][0];
 			$bio 		= $custom["_staff_member_bio"][0];
@@ -56,13 +58,16 @@ function staff_member_listing_shortcode_func($atts) {
 			
 			
 			
-			$accepted_single_tags = array('[name]', '[photo_url]', '[title]', '[email]', '[phone]', '[bio]');
 			$bio_format = '<div class="staff-member-bio">'.$bio.'</div>';
 			
-			$replace_single_values = array($name, $photo_url, $title, $email, $phone, $bio);
+			$email_mailto = antispambot( $email, 1 );
+			$email_nolink = antispambot( $email, 0 );
+			
+			$accepted_single_tags = $default_tags;
+			$replace_single_values = array($name, $photo_url, $title, $email_nolink, $phone, $bio);
 	
-			$accepted_formatted_tags = array('[name_header]', '[title_formatted]', '[photo]', '[email_link]', '[bio_paragraph]');
-			$replace_formatted_values = array('<h3>'.$name.'</h3>', '<h4>'.$title.'</h4>', $photo, '<a href="mailto:'.$email.'">Email '.$name.'</a>', '<p>'.$bio.'</p>');
+			$accepted_formatted_tags = $default_formatted_tags;
+			$replace_formatted_values = array('<h3>'.$name.'</h3>', '<h4>'.$title.'</h4>', $photo, $email_mailto, '<p>'.$bio.'</p>');
 	
 			$loop_markup = str_replace($accepted_single_tags, $replace_single_values, $loop_markup);
 			$loop_markup = str_replace($accepted_formatted_tags, $replace_formatted_values, $loop_markup);

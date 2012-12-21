@@ -27,26 +27,71 @@ include_once('_inc/user-view-show-staff-list.php');
 
 
 /*
+// Register Activation/Deactivation Hooks
+//////////////////////////////*/
+
+//add_action( 'init', 'stng_product_init' );
+register_activation_hook( __FILE__, 'staff_member_activate' );
+register_deactivation_hook( __FILE__, 'staff_member_deactivate' );
+
+
+
+
+
+/*
 // Setup default options
 //////////////////////////////*/
 
-$default_template = '
-[staff_loop]		
-	[photo]
-	[name]
-	[title]
-	[email_link]
-	[bio_paragraph]					
-[/staff_loop]';
+function staff_member_activate(){
+	
+	$default_template = '
+	[staff_loop]		
+		<img src="[photo_url]" alt="[name] : [title]">
+		[name]
+		[title]
+		[email_link]
+		[bio_paragraph]					
+	[/staff_loop]';
+	
+	$default_css = '/* Enter your valid CSS here */';
+	
+	$default_tags = array('[name]', '[photo_url]', '[title]', '[email]', '[phone]', '[bio]');
+	$default_tag_string = implode(", ", $default_tags);
+	
+	$default_formatted_tags = array('[name_header]', '[title_formatted]', '[photo]', '[email_link]', '[bio_paragraph]');
+	$default_formatted_tag_string = implode(", ", $default_formatted_tags);
+	
+	if (!get_option('_staff_listing_default_tags')){
+		update_option('_staff_listing_default_tags', $default_tags );
+	}
+	
+	if (!get_option('_staff_listing_default_tag_string')){
+		update_option('_staff_listing_default_tag_string', $default_tag_string);
+	}
+	
+	if (!get_option('_staff_listing_default_formatted_tags')){
+		update_option('_staff_listing_default_formatted_tags', $default_formatted_tags );
+	}
+	
+	if (!get_option('_staff_listing_default_formatted_tag_string')){
+		update_option('_staff_listing_default_formatted_tag_string', $default_formatted_tag_string);
+	}
+	
+	if (!get_option('_staff_listing_default_html')){
+		update_option('_staff_listing_default_html', $default_template);
+	}
+	
+	if (!get_option('staff_listing_default_css')){
+		update_option('staff_listing_default_css', $default_css);
+	}
+	
+	flush_rewrite_rules();
+}
 
-$default_css = '/* Enter your valid CSS here */';
+function staff_member_deactivate(){
+	flush_rewrite_rules();
+}
 
-update_option('staff_listing_default_html', $default_template);
-update_option('staff_listing_default_css', $default_css);
-if (get_option('staff_listing_custom_html')=='')
-	update_option('staff_listing_custom_html', $default_template);
-if (get_option('staff_listing_custom_css')=='')
-	update_option('staff_listing_custom_css', $default_css);
 
 
 
@@ -55,12 +100,16 @@ if (get_option('staff_listing_custom_css')=='')
 // Enqueue Plugin Scripts and Styles
 //////////////////////////////*/
 
-add_action( 'admin_enqueue_scripts', 'staff_member_admin_enqueue_scripts' );
+function staff_member_admin_print_scripts() {
+	//** Scripts
+	//wp_enqueue_script( 'jquery-ui-sortable' );
+	wp_enqueue_script( 'staff-member-admin-scripts', STAFFLIST_PATH . '_js/staff-member-admin-scripts.js', array('jquery', 'jquery-ui-sortable' ), '1.0', false  );
+}
 
-function staff_member_admin_enqueue_scripts() {
-	wp_enqueue_script( 'jquery-ui-sortable' );
-	wp_enqueue_script( 'staff-member-admin-scripts', STAFFLIST_PATH . '_js/staff-member-admin-scripts.js' );
-	
+add_action( 'admin_enqueue_scripts', 'staff_member_admin_enqueue_styles' );
+
+function staff_member_admin_enqueue_styles() {
+	//** Styles
 	wp_enqueue_style ( 'staff-list-css', STAFFLIST_PATH . '_css/admin-staff-list.css' );
 }
 
@@ -191,21 +240,24 @@ function staff_member_custom_columns( $cols ) {
 add_action( 'admin_menu', 'staff_member_register_menu' );
 
 function staff_member_register_menu() {
-	add_submenu_page(
-		'edit.php?post_type=staff-member',
-		'Order Staff Members',
-		'Order',
-		'edit_pages', 'staff-member-order',
-		'staff_member_order_page'
-	);
+	$order_page = add_submenu_page(
+					'edit.php?post_type=staff-member',
+					'Order Staff Members',
+					'Order',
+					'edit_pages', 'staff-member-order',
+					'staff_member_order_page'
+				);
 	
-	add_submenu_page(
-		'edit.php?post_type=staff-member',
-		'Display Templates',
-		'Templates',
-		'edit_pages', 'staff-member-template',
-		'staff_member_display_template'
-	);
+	$templates_page = add_submenu_page(
+						'edit.php?post_type=staff-member',
+						'Display Templates',
+						'Templates',
+						'edit_pages', 'staff-member-template',
+						'staff_member_display_template'
+					);
+	
+	add_action( 'admin_print_scripts-'.$order_page, 'staff_member_admin_print_scripts' );
+	// Don't need the javascript on the templates page...don't load it.
 }
 
 ?>
