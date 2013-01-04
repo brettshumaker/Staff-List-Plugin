@@ -1,25 +1,31 @@
 <?php
 
 
-/*
-// Member Info Meta Box
-//////////////////////////////*/
+/**
+ * Displays Staff Member INFO Meta Box
+ * 
+ * Callback function to display meta box
+ *
+ * @param    object		$post    				Contains the global $post object
+ * @param    array		$custom    				Contains the post's custom meta
+ * @param    string		$_staff_member_title    Staff member job title
+ * @param    string		$_staff_member_email    Staff member email address
+ * @param    string		$_staff_member_phone    Staff member phone number
+ *
+ */
 
-function staff_member_info_meta_box(){
+function sslp_staff_member_info_meta_box(){
 	global $post;
 	$custom = get_post_custom($post->ID);
 	$_staff_member_title = $custom["_staff_member_title"][0];
 	$_staff_member_email = $custom["_staff_member_email"][0];
 	$_staff_member_phone = $custom["_staff_member_phone"][0];
 	?>
-	
-	<label for="_staff-member-title">Title:</label>
-	<input type="text" name="_staff_member_title" id="_staff_member_title" placeholder="<?php if ($_staff_member_title == '') echo ('Staff Member\'s Title'); ?>" value="<?php if ($_staff_member_title != '') echo $_staff_member_title; ?>" />
-	<label for="_staff-member-email">Email:</label>
-	<input type="text" name="_staff_member_email" id="_staff_member_email" placeholder="<?php if ($_staff_member_email == '') echo ('Staff Member\'s Email'); ?>" value="<?php if ($_staff_member_email != '') echo $_staff_member_email; ?>" />
-	<label for="_staff-member-title">Phone:</label>
-	<input type="text" name="_staff_member_phone" id="_staff_member_phone" placeholder="<?php if ($_staff_member_phone == '') echo ('Staff Member\'s Phone'); ?>" value="<?php if ($_staff_member_phone != '') echo $_staff_member_phone; ?>" />
-	
+	<div class="sslp_admin_wrap">
+		<label for="_staff-member-title">Position: <input type="text" name="_staff_member_title" id="_staff_member_title" placeholder="<?php if ($_staff_member_title == '') echo ('Staff Member\'s Position'); ?>" value="<?php if ($_staff_member_title != '') echo $_staff_member_title; ?>" /></label>
+		<label for="_staff-member-email">Email: <input type="text" name="_staff_member_email" id="_staff_member_email" placeholder="<?php if ($_staff_member_email == '') echo ('Staff Member\'s Email'); ?>" value="<?php if ($_staff_member_email != '') echo $_staff_member_email; ?>" /></label>
+		<label for="_staff-member-title">Phone: <input type="text" name="_staff_member_phone" id="_staff_member_phone" placeholder="<?php if ($_staff_member_phone == '') echo ('Staff Member\'s Phone'); ?>" value="<?php if ($_staff_member_phone != '') echo $_staff_member_phone; ?>" /></label>
+	</div>
 <?php	
 }
 
@@ -30,7 +36,7 @@ function staff_member_info_meta_box(){
 // Bio Meta Box
 //////////////////////////////*/
 
-function staff_member_bio_meta_box(){
+function sslp_staff_member_bio_meta_box(){
 	global $post;
 	$custom = get_post_custom($post->ID);
 	$_staff_member_bio = $custom["_staff_member_bio"][0];
@@ -41,6 +47,11 @@ function staff_member_bio_meta_box(){
 												tinymce => false, // Disables actual TinyMCE buttons // This makes the rich content editor
 												quicktags => true // Use QuickTags for formatting    // work within a metabox.
 												) );
+	?>
+	
+	<p class="sslp-note">**Note: Bio will be wrapped in a '&lt;p&gt;' tag. Double line breaks will be converted to '&lt;p&gt;' tags. Single line breaks will remain intact.</p>
+	
+	<?php
 }
 
 
@@ -50,9 +61,9 @@ function staff_member_bio_meta_box(){
 // Staff List Custom Column View
 //////////////////////////////*/
 
-add_action( "manage_posts_custom_column", "staff_member_display_custom_columns");
+add_action( "manage_posts_custom_column", "sslp_staff_member_display_custom_columns");
 
-function staff_member_display_custom_columns( $column ) {
+function sslp_staff_member_display_custom_columns( $column ) {
   global $post;
   $custom = get_post_custom();
   
@@ -62,7 +73,7 @@ function staff_member_display_custom_columns( $column ) {
   $_staff_member_bio   = $custom["_staff_member_bio"][0];
   switch ( $column ) {
     case "photo":
-      echo get_the_post_thumbnail( $post->ID );
+      echo get_the_post_thumbnail( $post->ID, array( 75, 75 ) );
       break;
   	case "_staff_member_title":
   	  echo $_staff_member_title;
@@ -87,10 +98,11 @@ function staff_member_display_custom_columns( $column ) {
 // Build the 'Ordering' Page
 //////////////////////////////*/
 
-function staff_member_order_page() {
+function sslp_staff_member_order_page() {
 ?>
 	<div class="wrap">
-		<h2>Sort Staff</h2>
+		<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>Simple Staff List</h2>
+		<h2>Order Staff</h2>
 		<p>Simply drag the staff member up or down and they will be saved in that order.</p>
 	<?php $staff = new WP_Query( array( 'post_type' => 'staff-member', 'posts_per_page' => -1, 'order' => 'ASC', 'orderby' => 'menu_order' ) );
 		  if( $staff->have_posts() ) : ?>
@@ -101,7 +113,7 @@ function staff_member_order_page() {
 					<th class="column-order">Order</th>
 					<th class="column-photo">Photo</th>
 					<th class="column-name">Name</th>
-					<th class="column-title">Title</th>
+					<th class="column-title">Position</th>
 					<th class="column-email">Email</th>
 					<th class="column-phone">Phone</th>
 					<th class="column-bio">Bio</th>
@@ -113,7 +125,7 @@ function staff_member_order_page() {
 			?>
 				<tr id="post-<?php the_ID(); ?>">
 					<td class="column-order"><img src="<?php echo STAFFLIST_PATH . '_images/move-icon.png'; ?>" title="" alt="Move Icon" width="24" height="24" class="" /></td>
-					<td class="column-photo"><?php echo get_the_post_thumbnail( $post->ID ); ?></td>
+					<td class="column-photo"><?php echo get_the_post_thumbnail( $post->ID, array( 75, 75 ) ); ?></td>
 					<td class="column-name"><strong><?php the_title(); ?></strong></td>
 					<td class="column-title"><?php echo $custom["_staff_member_title"][0]; ?></td>
 					<td class="column-email"><?php echo $custom["_staff_member_email"][0]; ?></td>
@@ -127,7 +139,7 @@ function staff_member_order_page() {
 					<th class="column-order">Order</th>
 					<th class="column-photo">Photo</th>
 					<th class="column-name">Name</th>
-					<th class="column-title">Title</th>
+					<th class="column-title">Position</th>
 					<th class="column-email">Email</th>
 					<th class="column-phone">Phone</th>
 					<th class="column-bio">Bio</th>
@@ -153,16 +165,59 @@ function staff_member_order_page() {
 
 
 /*
+// Build the 'Usage' Page
+//////////////////////////////*/
+
+function sslp_staff_member_usage_page() {
+	
+	$output .= '<div class="wrap sslp-usage">';
+	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>Simple Staff List</h2>';
+	$output .= '<h2>Usage</h2>';
+	$output .= '<p>The Simple Staff List plugin makes it easy to create and display a staff directory on your website. You can create your own <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">template</a> for displaying staff information as well as <a href="edit.php?post_type=staff-member&page=staff-member-usage" title="Edit Custom CSS for Simple Staff List">add custom css</a> styling to make your staff directory look great.</p>';
+	
+	$output .= '<p>To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">here</a>.</p>';
+	
+	$output .= '<p></p>';
+
+	$output .= '</div>';
+	echo $output;
+}
+
+
+
+
+
+/*
 // Build the 'Templates' Page
 //////////////////////////////*/
 
-function staff_member_display_template(){ 
+function sslp_staff_member_template_page(){ 
 
 	// Get options for default HTML CSS
 	$default_html = get_option('staff_listing_default_html');
 	$default_css = get_option('staff_listing_default_css');
 	$default_tag_string = get_option('_staff_listing_default_tag_string');
 	$default_formatted_tag_string = get_option('_staff_listing_default_formatted_tag_string');
+	
+	
+	$default_tags 				= get_option('_staff_listing_default_tags');
+    $default_formatted_tags 	= get_option('_staff_listing_default_formatted_tags');
+    
+    $default_tag_ul  = '<ul class="sslp-tag-list">';
+    
+    foreach( $default_tags as $tag ) {
+	    $default_tag_ul .= '<li>' . $tag . '</li>';
+    }
+    
+    $default_tag_ul .= '</ul>';
+    
+    $default_formatted_tag_ul  = '<ul class="sslp-tag-list">';
+    
+    foreach( $default_formatted_tags as $tag ) {
+	    $default_formatted_tag_ul .= '<li>' . $tag . '</li>';
+    }
+    
+    $default_formatted_tag_ul .= '</ul>';
 	
 	
 	// Check Nonce and then update options
@@ -178,20 +233,33 @@ function staff_member_display_template(){
 		$custom_css = stripslashes_deep(get_option('staff_listing_custom_css'));
 	}
 	
-	$output .= '<div class="wrap">';
-	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>Staff Member</h2>';
-	$output .= '<h2>Staff Listing Templates</h2>';
+	$output .= '<div class="wrap sslp-template">';
+	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>Simple Staff List</h2>';
+	$output .= '<h2>Templates</h2>';
     
-    $output .= '<div style="padding:15px;">';
-    $output .= '<p>Accepted Shortcodes - These <strong>MUST</strong> be used inside the "[staff_loop]" shortcodes:</p>';
-    $output .= '<p>'.$default_tag_string.'</p>';
-    $output .= '<p>These will only return string values. If you would like to return pre-formatted headers (using &lt;h3&gt; tags), links, and paragraphs, use these:</p>';
-    $output .= '<p>'.$default_formatted_tag_string.'</p>';
+    $output .= '<div>';
+    $output .= '<h4>Accepted Template Tags <strong>(UNFORMATTED)</strong></h4>';
+    $output .= $default_tag_ul;
+    
+    $output .= '<br />';
+    
+    $output .= '<h4>Accepted Template Tags <strong>(FORMATTED)</strong></h4>';
+    $output .= $default_formatted_tag_ul;
+
+    $output .= '<br />';
+        
+    $output .= '<p>These <strong>MUST</strong> be used inside the <code>[staff_loop]</code> wrapper. The unformatted tags will return plain strings so you will want to wrap them in your own HTML. The <code>[staff_loop]</code> can accept any HTML so be careful when adding your own HTML code. The formatted tags will return data wrapped in HTML elements. For example, <code>[staff-name-formatted]</code> returns <code>&lt;h3&gt;STAFF-NAME&lt;/h3&gt;</code>, and <code>[staff-email-link]</code> returns <code>&lt;a href="mailto:STAFF-EMAIL" title="Email STAFF-NAME"&gt;STAFF-EMAIL&lt;/a&gt;</code>.</p>';
+    $output .= '<p>**Note: All emails are obfuscated using the <a href="http://codex.wordpress.org/Function_Reference/antispambot" target="_blank" title="WordPress email obfuscation function: antispambot()">antispambot() WordPress function</a>.</p>';
+    
+    $output .= '<br />';
+    
     $output .= '<form method="post" action="">';
-    $output .= '<h3>Staff Page HTML</h3>';
+    $output .= '<h3>Staff Loop Template</h3>';
     $output .= '<textarea name="staff-listing-html" cols="120" rows="16">'.$custom_html.'</textarea>';
     $output .= '<p><input type="submit" value="Save ALL Changes" class="button button-primary button-large"></p><br /><br />';
+    
     $output .= '<h3>Staff Page CSS</h3>';
+    $output .= '<p>Add your custom CSS below to style the output of your staff list. I\'ve included selectors for everything output by the plugin.</p>';
     $output .= '<textarea name="staff-listing-css" cols="120" rows="16">'.$custom_css.'</textarea>';
     
     $output .= '<p><input type="submit" value="Save ALL Changes" class="button button-primary button-large"></p>';
@@ -202,46 +270,5 @@ function staff_member_display_template(){
     echo $output;
 
 }
-
-
-
-
-
-/*
-// Custom Post Type Icon for Admin Menu & Post Screen
-//////////////////////////////*/
-
-//add_action( 'admin_head', 'staff_member_CPT_icon' );
- 
-function staff_member_CPT_icon() {
-    ?>
-    <style>
-        /* Admin Menu - 16px */
-        #menu-posts-staff-member .wp-menu-image {
-        	background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon.png') no-repeat 5px 5px !important;
-            background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon.svg') no-repeat 5px 5px !important;
-            background-size: 70% !important;
-            opacity: .5;
-        }
-        #menu-posts-staff-member:hover .wp-menu-image, #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
-            b--ackground-position: 6px -26px !important;
-            opacity: 1;
-        }
-        
-        #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
-	        background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon-lighter.png') no-repeat 5px 5px !important;
-            background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon-lighter.svg') no-repeat 5px 5px !important;
-            background-size: 70% !important;
-        }
-        /* Post Screen - 32px */
-        .icon32-posts-staff-member {
-        	background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon.png') no-repeat left top !important;
-            background: url('<?php echo STAFFLIST_PATH; ?>_images/staff-list-icon.svg') no-repeat left top !important;
-            background-size: 100% !important;
-            height: 32px;
-            width: 32px;
-        }
-    </style>
-<?php } 
  
 ?>

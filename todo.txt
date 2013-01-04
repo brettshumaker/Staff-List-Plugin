@@ -1,1 +1,2 @@
-** Nothing as of right now. Going to ask for code reviews to see if I'm "doing it wrong."
+** Write some more detailed usage instructions
+** Finish readme.txt for WP Plugin Repo

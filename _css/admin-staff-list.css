@@ -2,16 +2,60 @@
 	margin:10px 0 0;
 }
 
-.stng_admin_wrap input[type="text"] {
-	font-size: 1.5em;
+.sslp_admin_wrap input[type="text"] {
 	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
-	line-height: 29px;
-	padding-left: 0.3em;
-	width: 100%;
+	width: 30%;
 }
 
-.stng_admin_wrap .wp-editor-area {
+#wp-_staff_member_bio-wrap .wp-editor-area {
 	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+}
+
+#staff-member-info label {
+	position: relative;
+	display: block;
+	padding-top: 0.5em;
+	margin-bottom: 1.5em;
+}
+
+#staff-member-info label input {
+	position: absolute;
+	left: 60px;
+	top: -0em;
+}
+
+#post-body-content {
+	margin-bottom: 0; /* Tightens up spacing between title bar and our custom meta boxes */
+}
+
+.wrap.sslp-usage {
+	width:50%;
+}
+
+.wrap.sslp-template p {
+	width:60%;
+}
+
+p.sslp-note {
+	font-size: .8em;
+	font-style: italic;
+	color: red;
+}
+
+ul.sslp-tag-list {
+	margin-left: 3em;
+}
+
+ul.sslp-tag-list li {
+	display:inline;
+	padding: .25em 1em;
+	font-weight: bold;
+}
+
+td.column-order img {
+	display: block;
+	padding: 24px 42px;
+	cursor: hand;
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 
-function staff_member_listing_shortcode_func($atts) {
+function sslp_staff_member_listing_shortcode_func($atts) {
      extract(shortcode_atts(array(
 	      'single' => 'no',
      ), $atts));
@@ -50,24 +50,26 @@ function staff_member_listing_shortcode_func($atts) {
 			if(has_post_thumbnail()){
 				
 				$photo_url = wp_get_attachment_url( get_post_thumbnail_id($staff->ID) );
-				$photo = '<img src="'.$photo_url.'" alt = "'.$title.'">';
+				$photo = '<img class="staff-member-photo" src="'.$photo_url.'" alt = "'.$title.'">';
 			}else{
 				$photo_url = '';
 				$photo = '';
 			}
 			
 			
+			if (function_exists('wpautop')){
+				$bio_format = '<div class="staff-member-bio">'.wpautop($bio).'</div>';
+			}
 			
-			$bio_format = '<div class="staff-member-bio">'.$bio.'</div>';
 			
-			$email_mailto = antispambot( $email, 1 );
-			$email_nolink = antispambot( $email, 0 );
+			$email_mailto = '<a class="staff-member-email" href="mailto:'.antispambot( $email ).'" title="Email '.$name.'">'.antispambot( $email ).'</a>';
+			$email_nolink = antispambot( $email );
 			
 			$accepted_single_tags = $default_tags;
 			$replace_single_values = array($name, $photo_url, $title, $email_nolink, $phone, $bio);
 	
 			$accepted_formatted_tags = $default_formatted_tags;
-			$replace_formatted_values = array('<h3>'.$name.'</h3>', '<h4>'.$title.'</h4>', $photo, $email_mailto, '<p>'.$bio.'</p>');
+			$replace_formatted_values = array('<h3 class="staff-member-name">'.$name.'</h3>', '<h4 class="staff-member-position">'.$title.'</h4>', $photo, $email_mailto, $bio_format);
 	
 			$loop_markup = str_replace($accepted_single_tags, $replace_single_values, $loop_markup);
 			$loop_markup = str_replace($accepted_formatted_tags, $replace_formatted_values, $loop_markup);
@@ -88,6 +90,6 @@ function staff_member_listing_shortcode_func($atts) {
 	}
      return $output;
 }
-add_shortcode('staff-member-list', 'staff_member_listing_shortcode_func');
+add_shortcode('simple-staff-list', 'sslp_staff_member_listing_shortcode_func');
 
 ?>

@@ -8,9 +8,9 @@
 //////  Register and write the AJAX callback function to actually update the posts on sort.
 /////	
 		
-		add_action( 'wp_ajax_staff_member_update_post_order', 'staff_member_update_post_order' );
+		add_action( 'wp_ajax_staff_member_update_post_order', 'sslp_staff_member_update_post_order' );
 		
-		function staff_member_update_post_order() {
+		function sslp_staff_member_update_post_order() {
 			global $wpdb;
 		
 			$post_type     = $_POST['postType'];
@@ -35,9 +35,9 @@
 //////  Save Custom Post Type Fields
 //////
 		
-		add_action('save_post', 'save_staff_member_details');
+		add_action('save_post', 'sslp_save_staff_member_details');
 		
-		function save_staff_member_details(){
+		function sslp_save_staff_member_details(){
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
 				return;	
 			global $post;
