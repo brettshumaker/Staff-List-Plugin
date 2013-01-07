@@ -3,7 +3,7 @@
 Plugin Name: Simple Staff List
 Plugin URI: 
 Description: A simple plugin to build and display a staff listing for your website.
-Version: 1.0
+Version: 1.01
 Author: Brett Shumaker
 Author URI: http://www.brettshumaker.com
 */

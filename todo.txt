@@ -1,2 +1,1 @@
-** Write some more detailed usage instructions
-** Finish readme.txt for WP Plugin Repo
+** None right now. Just uploaded v1.01 to the repo. Will add todo's as I get feedback.

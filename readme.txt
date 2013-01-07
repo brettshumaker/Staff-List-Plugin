@@ -4,7 +4,7 @@ Donate link: http://brettshumaker.com/
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.0
+Stable tag: 1.01
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,8 @@ There's also a drag-and-drop interface to set the order of your staff members.
 
 You'll use the `[staff-member-list]` shortcode within a page or post to display the full staff listing in the order set
 on the "Order" page. You'll be able to customize the information shown for each staff member on your website by editing a simple template. You can add your own custom CSS to style your staff list as well.
+
+Email me at brettshumaker@gmail.com with any problems/comments!
 
 
 == Installation ==
@@ -40,9 +42,9 @@ on the "Order" page. You'll be able to customize the information shown for each 
 
 == Changelog ==
 
+= 1.01 =
+* I incorrectly tagged release version 1.0 and, as a result, not all files were included in version 1.0 of Simple Staff List.
+* This version adds those required files back into the package.
+
 = 1.0 =
 * Initial Plugin Launch
-
-== Upgrade Notice ==
-
-Enjoy!
