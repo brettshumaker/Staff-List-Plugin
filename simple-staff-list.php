@@ -45,16 +45,24 @@ register_uninstall_hook( __FILE__, 'sslp_staff_member_uninstall' );
 // Enqueue Plugin Scripts and Styles
 //////////////////////////////*/
 
+/*
+ *  Admin js action added on line 270 of this file (simple-staff-list.php)
+ */
+
 function sslp_staff_member_admin_print_scripts() {
-	//** Scripts
+
+	//* Scripts
 	wp_enqueue_script( 'staff-member-admin-scripts', STAFFLIST_PATH . '_js/staff-member-admin-scripts.js', array('jquery', 'jquery-ui-sortable' ), '1.0', false  );
+
 }
 
 add_action( 'admin_enqueue_scripts', 'sslp_staff_member_admin_enqueue_styles' );
 
 function sslp_staff_member_admin_enqueue_styles() {
+
 	//** Styles
 	wp_enqueue_style ( 'staff-list-css', STAFFLIST_PATH . '_css/admin-staff-list.css' );
+
 }
 
 
@@ -114,7 +122,7 @@ function sslp_staff_member_init() {
 // Change what's hidden by default
 add_filter('default_hidden_meta_boxes', 'hide_meta_lock', 10, 2);
 function hide_meta_lock($hidden, $screen) {
-        if ( 'staff-member' == $screen->base )
+        if ( $screen->base == 'staff-member' )
                 $hidden = array( 'postexcerpt' );
         return $hidden;
 }
@@ -139,7 +147,7 @@ function hide_meta_lock($hidden, $screen) {
 add_filter( 'enter_title_here', 'sslp_staff_member_change_title' );
 function sslp_staff_member_change_title( $title ){
     $screen = get_current_screen();
-    if ( 'staff-member' == $screen->post_type ) {
+    if ( $screen->post_type == 'staff-member' ) {
         $title = 'Staff Name';
     }
     return $title;
@@ -202,16 +210,16 @@ function sslp_staff_member_add_meta_boxes() {
  
 add_filter( "manage_staff-member_posts_columns", "sslp_staff_member_custom_columns" );
 function sslp_staff_member_custom_columns( $cols ) {
-  $cols = array(
-    'cb'				  =>     '<input type="checkbox" />',
-    'title'				  => __( 'Name' ),
-    'photo'				  => __( 'Photo' ),
-    '_staff_member_title' => __( 'Position' ),
-    '_staff_member_email' => __( 'Email' ),
-    '_staff_member_phone' => __( 'Phone' ),
-    '_staff_member_bio'   => __( 'Bio' ),
-  );
-  return $cols;
+	$cols = array(
+		'cb'				  =>     '<input type="checkbox" />',
+		'title'				  => __( 'Name' ),
+		'photo'				  => __( 'Photo' ),
+		'_staff_member_title' => __( 'Position' ),
+		'_staff_member_email' => __( 'Email' ),
+		'_staff_member_phone' => __( 'Phone' ),
+		'_staff_member_bio'   => __( 'Bio' ),
+	);
+	return $cols;
 }
 
 
@@ -235,13 +243,13 @@ function sslp_staff_member_custom_columns( $cols ) {
  
 add_action( 'admin_menu', 'sslp_staff_member_register_menu' );
 function sslp_staff_member_register_menu() {
-	$order_page = add_submenu_page(
-					'edit.php?post_type=staff-member',
-					'Order Staff Members',
-					'Order',
-					'edit_pages', 'staff-member-order',
-					'sslp_staff_member_order_page'
-				);
+	$order_page 	= add_submenu_page(
+						'edit.php?post_type=staff-member',
+						'Order Staff Members',
+						'Order',
+						'edit_pages', 'staff-member-order',
+						'sslp_staff_member_order_page'
+					);
 	
 	$templates_page = add_submenu_page(
 						'edit.php?post_type=staff-member',
@@ -251,7 +259,7 @@ function sslp_staff_member_register_menu() {
 						'sslp_staff_member_template_page'
 					);
 	
-	$usage_page = add_submenu_page(
+	$usage_page 	= add_submenu_page(
 						'edit.php?post_type=staff-member',
 						'Simple Staff List Usage',
 						'Usage',

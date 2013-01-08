@@ -16,7 +16,7 @@ The Simple Staff List plugin allows you to build a staff directory for your webs
 which allows you to edit the following fields for each staff member: Name, Photo, Position, Email, Phone Number, and Bio.
 There's also a drag-and-drop interface to set the order of your staff members.
 
-You'll use the `[staff-member-list]` shortcode within a page or post to display the full staff listing in the order set
+You'll use the `[simple-staff-list]` shortcode within a page or post to display the full staff listing in the order set
 on the "Order" page. You'll be able to customize the information shown for each staff member on your website by editing a simple template. You can add your own custom CSS to style your staff list as well.
 
 Email me at brettshumaker@gmail.com with any problems/comments!
@@ -26,7 +26,7 @@ Email me at brettshumaker@gmail.com with any problems/comments!
 
 1. Upload the `simple-staff-list` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `[staff-member-list]` in a page or post
+1. Place `[simple-staff-list]` in a page or post
 
 == Frequently Asked Questions ==
 

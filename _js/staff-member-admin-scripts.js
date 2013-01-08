@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
 	// Fix broken table width on sort
 	
 	$('td').each(function(){
-        $(this).css('width', $(this).width() +'px');
+        ($this).css('width', ($this).width() +'px');
     });
 	
 	// Sortable Table
