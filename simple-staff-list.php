@@ -3,7 +3,7 @@
 Plugin Name: Simple Staff List
 Plugin URI: 
 Description: A simple plugin to build and display a staff listing for your website.
-Version: 1.01
+Version: 1.13
 Author: Brett Shumaker
 Author URI: http://www.brettshumaker.com
 */
@@ -37,6 +37,21 @@ register_activation_hook( __FILE__, 'sslp_staff_member_activate' );
 register_deactivation_hook( __FILE__, 'sslp_staff_member_deactivate' );
 register_uninstall_hook( __FILE__, 'sslp_staff_member_uninstall' );
 
+// Need to check plugin version here and run sslp_staff_member_plugin_update()
+// function location: /_inc/admin-install-uninstall.php
+if ( ! function_exists( 'get_plugins' ) )
+	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+$plugin_folder = get_plugins( '/' . plugin_basename( dirname( __FILE__ ) ) );
+$plugin_file = basename( ( __FILE__ ) );
+$plugin_version = $plugin_folder[$plugin_file]['Version'];    
+$sslp_ver_option = get_option('_simple_staff_list_version');
+if ($sslp_ver_option == "" || $sslp_ver_option <= $plugin_version){
+	sslp_staff_member_plugin_update($sslp_ver_option, $plugin_version);
+}
+
+// End plugin version check
+
 
 
 
@@ -50,19 +65,29 @@ register_uninstall_hook( __FILE__, 'sslp_staff_member_uninstall' );
  */
 
 function sslp_staff_member_admin_print_scripts() {
-
-	//* Scripts
-	wp_enqueue_script( 'staff-member-admin-scripts', STAFFLIST_PATH . '_js/staff-member-admin-scripts.js', array('jquery', 'jquery-ui-sortable' ), '1.0', false  );
-
+	//** Admin Scripts
+	wp_register_script( 'staff-member-admin-scripts', STAFFLIST_PATH . '_js/staff-member-admin-scripts.js', array('jquery', 'jquery-ui-sortable' ), '1.0', false );
+	wp_enqueue_script( 'staff-member-admin-scripts' );
 }
 
 add_action( 'admin_enqueue_scripts', 'sslp_staff_member_admin_enqueue_styles' );
 
 function sslp_staff_member_admin_enqueue_styles() {
+	//** Admin Styles
+	wp_register_style( 'staff-list-css', STAFFLIST_PATH . '_css/admin-staff-list.css' );
+	wp_enqueue_style ( 'staff-list-css' );
+	
+	flush_rewrite_rules();
+}
 
-	//** Styles
-	wp_enqueue_style ( 'staff-list-css', STAFFLIST_PATH . '_css/admin-staff-list.css' );
+add_action( 'wp_enqueue_scripts', 'sslp_staff_member_enqueue_styles');
 
+function sslp_staff_member_enqueue_styles(){
+	//** Front-end Style
+	if (get_option('_staff_listing_write_external_css') == "yes") {
+		wp_register_style( 'staff-list-custom-css', get_stylesheet_directory_uri() . '/simple-staff-list-custom.css' );
+		wp_enqueue_style ( 'staff-list-custom-css' );
+	}
 }
 
 
@@ -85,6 +110,7 @@ function sslp_staff_member_init() {
         'new_item' => __('New Staff Member'),
         'view_item' => __('View Staff Member'),
         'search_items' => __('Search Staff Members'),
+        'exclude_from_search' => true,
         'not_found' =>  __('No staff members found'),
         'not_found_in_trash' => __('No staff members found in Trash'),
         'parent_item_colon' => '',
@@ -104,11 +130,45 @@ function sslp_staff_member_init() {
         'has_archive' => true,
         'hierarchical' => false,
         'menu_position' => 100,
-        //'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt' )
+        'rewrite' => array('slug'=>'staff-members','with_front'=>false),
         'supports' => array( 'title', 'thumbnail', 'excerpt' )
     );
 
     register_post_type( 'staff-member', $args );
+}
+
+
+
+
+
+/*
+// Setup Our Staff Group Taxonomy
+//////////////////////////////*/
+
+add_action( 'init', 'sslp_custom_tax' );
+
+function sslp_custom_tax() {
+	
+	$labels = array(
+		'name' => _x( 'Groups', 'taxonomy general name' ),
+		'singular_name' => _x( 'Group', 'taxonomy singular name' ),
+		'search_items' => __( 'Search Groups' ),
+		'all_items' => __( 'All Groups' ),
+		'parent_item' => __( 'Parent Group' ),
+		'parent_item_colon' => __( 'Parent Group:' ),
+		'edit_item' => __( 'Edit Group' ), 
+		'update_item' => __( 'Update Group' ),
+		'add_new_item' => __( 'Add New Group' ),
+		'new_item_name' => __( 'New Group Name' ),
+	); 	
+
+	register_taxonomy( 'staff-member-group', array( 'staff-member' ), array(
+		'hierarchical' => true,
+		'labels' => $labels, /* NOTICE: Here is where the $labels variable is used */
+		'show_ui' => true,
+		'query_var' => true,
+		'rewrite' => array( 'slug' => 'group' ),
+	));
 }
 
 
@@ -268,7 +328,23 @@ function sslp_staff_member_register_menu() {
 					);
 	
 	add_action( 'admin_print_scripts-'.$order_page, 'sslp_staff_member_admin_print_scripts' );
-	// Don't need the javascript on the templates page...don't load it.
+	add_action( 'admin_print_scripts-'.$templates_page, 'sslp_staff_member_admin_print_scripts' );
 }
 
+
+
+
+
+/*
+// Make Sure We Add The Custom CSS File on Theme Switch
+//////////////////////////////*/
+
+function sslp_staff_member_create_css_on_switch_theme($new_theme) {
+    $filename = get_stylesheet_directory() . '/simple-staff-list-custom.css';
+    $custom_css = get_option('_staff_listing_custom_css');
+    file_put_contents($filename, $custom_css);
+}
+if ( get_option('_staff_listing_write_external_css') == 'yes' ){
+	add_action('switch_theme', 'sslp_staff_member_create_css_on_switch_theme');
+}
 ?>

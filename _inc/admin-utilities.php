@@ -40,4 +40,24 @@ function format_phone($number)
     return substr($number, 0, 3) . '.' . substr($number, 3, 3) . '.' . substr($number, 6);
  }
  
+
+
+
+
+/*
+// Get all Taxonomies for staff-member
+//////////////////////////////*/
+ 
+function get_sslp_terms($tax) {
+    $terms = get_terms($tax);
+    $names = array();
+    
+    // Loop through terms to get the names
+    foreach($terms as $term) {
+	    array_push($names, strtolower($term->name));
+    }
+    
+    return $names;
+}
+ 
 ?>

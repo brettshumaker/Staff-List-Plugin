@@ -3,8 +3,9 @@ jQuery(document).ready(function($) {
 	// Fix broken table width on sort
 	
 	$('td').each(function(){
-        ($this).css('width', ($this).width() +'px');
+        $(this).css('width', $(this).width() +'px');
     });
+	
 	
 	// Sortable Table
 	
@@ -26,5 +27,14 @@ jQuery(document).ready(function($) {
 				$.post(ajaxurl, data);
 			}
 		}).disableSelection();
-		}
+	}
+	
+		
+	// collapsable divs on templates page
+	
+	$(".content").hide();
+	$(".heading").click(function() {
+		$(this).next(".content").slideToggle(500);
+	});
+	
 });

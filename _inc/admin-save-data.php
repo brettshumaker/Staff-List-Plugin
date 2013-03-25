@@ -38,14 +38,20 @@
 		add_action('save_post', 'sslp_save_staff_member_details');
 		
 		function sslp_save_staff_member_details(){
-			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
-				return;	
 			global $post;
+			
+			if ( !isset( $_POST['sslp_add_edit_staff_member_noncename'] ) || !wp_verify_nonce( $_POST['sslp_add_edit_staff_member_noncename'], 'sslp_post_nonce' ) ) {
+				return;
+			}
+			
+			
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
+				return $post->ID;	
 			
 			update_post_meta($post->ID, "_staff_member_bio", $_POST["_staff_member_bio"]);
 			update_post_meta($post->ID, "_staff_member_title", $_POST["_staff_member_title"]);
 			update_post_meta($post->ID, "_staff_member_email", $_POST["_staff_member_email"]);
-			update_post_meta($post->ID, "_staff_member_phone", format_phone($_POST["_staff_member_phone"])); //Format the phone number before saving it.
+			update_post_meta($post->ID, "_staff_member_phone", $_POST["_staff_member_phone"]);
 		}
 		
 ?>

@@ -49,7 +49,9 @@ function sslp_staff_member_bio_meta_box(){
 												) );
 	?>
 	
-	<p class="sslp-note">**Note: Bio will be wrapped in a '&lt;p&gt;' tag. Double line breaks will be converted to '&lt;p&gt;' tags. Single line breaks will remain intact.</p>
+	<p class="sslp-note">**Note: HTML is allowed.</p>
+	
+	<?php wp_nonce_field('sslp_post_nonce', 'sslp_add_edit_staff_member_noncename') ?>
 	
 	<?php
 }
@@ -175,6 +177,15 @@ function sslp_staff_member_usage_page() {
 	$output .= '<h2>Usage</h2>';
 	$output .= '<p>The Simple Staff List plugin makes it easy to create and display a staff directory on your website. You can create your own <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">template</a> for displaying staff information as well as <a href="edit.php?post_type=staff-member&page=staff-member-usage" title="Edit Custom CSS for Simple Staff List">add custom css</a> styling to make your staff directory look great.</p>';
 	
+	$output .= '<h3>Shortcode</h3>';
+	$output .= '<table><tbody>';
+	$output .= '<tr><td width="280px"><code>[simple-staff-list]</code></td><td>This is the most basic usage of Simple Staff List. Displays all Staff Members on post or page.</td></tr>';
+	$output .= '<tr><td><code>[simple-staff-list <strong>group="Robots"</strong>]</code></td><td>This displays all Staff Members from the group "Robots" sorted by order on the "Order" page. This will also add a class of "Robots" to the outer Staff List container for styling purposes.</td></tr>';
+	$output .= '<tr><td><code>[simple-staff-list <strong>wrap_class="clearfix"</strong>]</code></td><td>This adds a class to the inner Staff Member wrap.</td></tr>';
+	$output .= '<tr><td><code>[simple-staff-list <strong>order="ASC"</strong>]</code></td><td>This displays Staff Members sorted by ascending or descending order according to the "Order" page. You may use "ASC" or "DESC" but the default is "ASC"</td></tr>';
+	
+	$output .= '</tbody></table>';
+	
 	$output .= '<p>To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">here</a>.</p>';
 	
 	$output .= '<p></p>';
@@ -194,14 +205,13 @@ function sslp_staff_member_usage_page() {
 function sslp_staff_member_template_page(){ 
 
 	// Get options for default HTML CSS
-	$default_html = get_option('staff_listing_default_html');
-	$default_css = get_option('staff_listing_default_css');
-	$default_tag_string = get_option('_staff_listing_default_tag_string');
-	$default_formatted_tag_string = get_option('_staff_listing_default_formatted_tag_string');
-	
-	
-	$default_tags 				= get_option('_staff_listing_default_tags');
-    $default_formatted_tags 	= get_option('_staff_listing_default_formatted_tags');
+	$default_html 					= get_option('_staff_listing_default_html');
+	$default_css 					= get_option('_staff_listing_default_css');
+	$default_tag_string 			= get_option('_staff_listing_default_tag_string');
+	$default_formatted_tag_string 	= get_option('_staff_listing_default_formatted_tag_string');
+	$default_tags 					= get_option('_staff_listing_default_tags');
+    $default_formatted_tags 		= get_option('_staff_listing_default_formatted_tags');
+    $write_external_css				= get_option('_staff_listing_write_external_css');
     
     $default_tag_ul  = '<ul class="sslp-tag-list">';
     
@@ -222,15 +232,47 @@ function sslp_staff_member_template_page(){
 	
 	// Check Nonce and then update options
 	if ( !empty($_POST) && check_admin_referer( 'staff-member-template', 'staff-list-template' ) ) {
-		//echo("<script>alert('Test passed');</script>");
-		update_option('staff_listing_custom_html', $_POST[ "staff-listing-html"]);
-		update_option('staff_listing_custom_css', $_POST[ "staff-listing-css"]);		
-		$custom_html = stripslashes_deep(get_option('staff_listing_custom_html'));
-		$custom_css = stripslashes_deep(get_option('staff_listing_custom_css'));
-	} else {		
-		//echo("<script>alert('Test FAILED');</script>");
-		$custom_html = stripslashes_deep(get_option('staff_listing_custom_html'));
-		$custom_css = stripslashes_deep(get_option('staff_listing_custom_css'));
+		update_option('_staff_listing_custom_html', $_POST[ "staff-listing-html"]);
+		update_option('_staff_listing_custom_css', $_POST[ "staff-listing-css"]);
+		
+		$custom_html = stripslashes_deep(get_option('_staff_listing_custom_html'));
+		$custom_css = stripslashes_deep(get_option('_staff_listing_custom_css'));
+		
+		if ( $_POST[ "write-external-css" ] != "yes" ) {
+			update_option('_staff_listing_write_external_css', "no");
+			$write_external_css = "no";
+		} else {
+			update_option('_staff_listing_write_external_css', $_POST[ "write-external-css" ]);
+			$write_external_css = "yes";
+			
+			// User wants to write to external CSS file, do it.
+			$filename = get_stylesheet_directory() . '/simple-staff-list-custom.css';
+			file_put_contents($filename, $custom_css);
+		}
+
+
+	} else {
+		$custom_html = stripslashes_deep(get_option('_staff_listing_custom_html'));
+		
+		if ( $write_external_css == "yes" ) {
+		
+			$filename = get_stylesheet_directory() . '/simple-staff-list-custom.css';
+				
+			if (file_exists($filename)){
+				$custom_css = file_get_contents($filename);
+				update_option('_staff_listing_custom_css', $custom_css);
+			} else {
+				$custom_css  = stripslashes_deep(get_option('_staff_listing_default_css'));
+				update_option('_staff_listing_custom_css', $custom_css);
+				file_put_contents($filename, $custom_css);
+			}
+		} else {
+			$custom_css = stripslashes_deep(get_option('_staff_listing_custom_css'));
+		}
+	}
+	
+	if ( $write_external_css == 'yes' ){
+		$ext_css_check = "checked";
 	}
 	
 	$output .= '<div class="wrap sslp-template">';
@@ -250,16 +292,33 @@ function sslp_staff_member_template_page(){
         
     $output .= '<p>These <strong>MUST</strong> be used inside the <code>[staff_loop]</code> wrapper. The unformatted tags will return plain strings so you will want to wrap them in your own HTML. The <code>[staff_loop]</code> can accept any HTML so be careful when adding your own HTML code. The formatted tags will return data wrapped in HTML elements. For example, <code>[staff-name-formatted]</code> returns <code>&lt;h3&gt;STAFF-NAME&lt;/h3&gt;</code>, and <code>[staff-email-link]</code> returns <code>&lt;a href="mailto:STAFF-EMAIL" title="Email STAFF-NAME"&gt;STAFF-EMAIL&lt;/a&gt;</code>.</p>';
     $output .= '<p>**Note: All emails are obfuscated using the <a href="http://codex.wordpress.org/Function_Reference/antispambot" target="_blank" title="WordPress email obfuscation function: antispambot()">antispambot() WordPress function</a>.</p>';
-    
     $output .= '<br />';
     
     $output .= '<form method="post" action="">';
     $output .= '<h3>Staff Loop Template</h3>';
+    
+    $output .= '<div class="default-html">
+    				<h4 class="heading button-secondary">View Default Template</h4>
+    				<div class="content">
+    					<pre>'.htmlspecialchars(stripslashes_deep($default_html)).'</pre>
+    				</div>
+    			</div><br />';
+    
     $output .= '<textarea name="staff-listing-html" cols="120" rows="16">'.$custom_html.'</textarea>';
     $output .= '<p><input type="submit" value="Save ALL Changes" class="button button-primary button-large"></p><br /><br />';
     
     $output .= '<h3>Staff Page CSS</h3>';
-    $output .= '<p>Add your custom CSS below to style the output of your staff list. I\'ve included selectors for everything output by the plugin.</p>';
+    
+    $output .= '<p><input type="checkbox" name="write-external-css" id="write-external-css" value="yes" '.$ext_css_check.' /><label for="write-external-css"> Write to external CSS file? (Leave unchecked for WP Multisite.)</label>';
+    
+    $output .= '<div class="default-css">
+    				<h4 class="heading button-secondary">View Default CSS</h4>
+    				<div class="content">
+    					<pre>'.htmlspecialchars(stripslashes_deep($default_css)).'</pre>
+    				</div>
+    			</div><br />';
+    			
+    $output .= '<p style="margin-top:0;">Add your custom CSS below to style the output of your staff list. I\'ve included selectors for everything output by the plugin.</p>';
     $output .= '<textarea name="staff-listing-css" cols="120" rows="16">'.$custom_css.'</textarea>';
     
     $output .= '<p><input type="submit" value="Save ALL Changes" class="button button-primary button-large"></p>';
