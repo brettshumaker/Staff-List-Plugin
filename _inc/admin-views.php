@@ -20,13 +20,28 @@ function sslp_staff_member_info_meta_box(){
 	$_staff_member_title = $custom["_staff_member_title"][0];
 	$_staff_member_email = $custom["_staff_member_email"][0];
 	$_staff_member_phone = $custom["_staff_member_phone"][0];
+	$_staff_member_fb	 = $custom["_staff_member_fb"][0];
+	$_staff_member_tw	 = $custom["_staff_member_tw"][0];
 	?>
 	<div class="sslp_admin_wrap">
 		<label for="_staff-member-title">Position: <input type="text" name="_staff_member_title" id="_staff_member_title" placeholder="<?php if ($_staff_member_title == '') echo ('Staff Member\'s Position'); ?>" value="<?php if ($_staff_member_title != '') echo $_staff_member_title; ?>" /></label>
 		<label for="_staff-member-email">Email: <input type="text" name="_staff_member_email" id="_staff_member_email" placeholder="<?php if ($_staff_member_email == '') echo ('Staff Member\'s Email'); ?>" value="<?php if ($_staff_member_email != '') echo $_staff_member_email; ?>" /></label>
 		<label for="_staff-member-title">Phone: <input type="text" name="_staff_member_phone" id="_staff_member_phone" placeholder="<?php if ($_staff_member_phone == '') echo ('Staff Member\'s Phone'); ?>" value="<?php if ($_staff_member_phone != '') echo $_staff_member_phone; ?>" /></label>
+		<label for="_staff-member-fb">Facebook URL: <input type="text" name="_staff_member_fb" id="_staff_member_fb" placeholder="<?php if ($_staff_member_fb == '') echo ('Staff Member\'s Facebook URL'); ?>" value="<?php if ($_staff_member_fb != '') echo $_staff_member_fb; ?>" /></label>
+		<label for="_staff-member-tw">Twitter Username: <input type="text" name="_staff_member_tw" id="_staff_member_tw" placeholder="<?php if ($_staff_member_tw == '') echo ('Staff Member\'s Twitter Name'); ?>" value="<?php if ($_staff_member_tw != '') echo $_staff_member_tw; ?>" /></label>
 	</div>
 <?php	
+}
+
+
+
+
+/*
+// Warning Meta Box
+//////////////////////////////*/
+
+function sslp_staff_member_warning_meta_box() {
+	echo '<p><strong>Your current theme does not support post thumbnails. Unfortunately, you will not be able to add photos for your Staff Members</strong></p>';
 }
 
 
@@ -44,7 +59,7 @@ function sslp_staff_member_bio_meta_box(){
 	wp_editor( $_staff_member_bio, '_staff_member_bio', $settings = array(
 												textarea_rows => 8,
 												media_buttons => false,
-												tinymce => false, // Disables actual TinyMCE buttons // This makes the rich content editor
+												tinymce => true, // Disables actual TinyMCE buttons // This makes the rich content editor
 												quicktags => true // Use QuickTags for formatting    // work within a metabox.
 												) );
 	?>
@@ -75,7 +90,9 @@ function sslp_staff_member_display_custom_columns( $column ) {
   $_staff_member_bio   = $custom["_staff_member_bio"][0];
   switch ( $column ) {
     case "photo":
-      echo get_the_post_thumbnail( $post->ID, array( 75, 75 ) );
+      if(has_post_thumbnail()){
+	      echo get_the_post_thumbnail( $post->ID, array( 75, 75 ) );
+      }
       break;
   	case "_staff_member_title":
   	  echo $_staff_member_title;

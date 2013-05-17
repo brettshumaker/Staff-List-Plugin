@@ -110,7 +110,7 @@ div.staff-member:after {
 div.staff-member { display: block; }
 ';
 	
-	$default_tags = array('[staff-name]', '[staff-name-slug]', '[staff-photo-url]', '[staff-position]', '[staff-email]', '[staff-phone]', '[staff-bio]');
+	$default_tags = array('[staff-name]', '[staff-name-slug]', '[staff-photo-url]', '[staff-position]', '[staff-email]', '[staff-phone]', '[staff-bio]', '[staff-facebook]', '[staff-twitter]');
 	$default_tag_string = implode(", ", $default_tags);
 	
 	$default_formatted_tags = array('[staff-name-formatted]', '[staff-position-formatted]', '[staff-photo]', '[staff-email-link]', '[staff-bio-formatted]');

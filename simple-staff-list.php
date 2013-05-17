@@ -3,7 +3,7 @@
 Plugin Name: Simple Staff List
 Plugin URI: 
 Description: A simple plugin to build and display a staff listing for your website.
-Version: 1.13
+Version: 1.15
 Author: Brett Shumaker
 Author URI: http://www.brettshumaker.com
 */
@@ -22,6 +22,16 @@ include_once('_inc/admin-views.php');
 include_once('_inc/admin-save-data.php');
 include_once('_inc/admin-utilities.php');
 include_once('_inc/user-view-show-staff-list.php');
+
+
+
+
+
+/*
+// Add post-thumbnails support for our custom post type
+//////////////////////////////*/
+
+add_theme_support( 'post-thumbnails', array( 'staff-member' ));
 
 
 
@@ -76,8 +86,6 @@ function sslp_staff_member_admin_enqueue_styles() {
 	//** Admin Styles
 	wp_register_style( 'staff-list-css', STAFFLIST_PATH . '_css/admin-staff-list.css' );
 	wp_enqueue_style ( 'staff-list-css' );
-	
-	flush_rewrite_rules();
 }
 
 add_action( 'wp_enqueue_scripts', 'sslp_staff_member_enqueue_styles');
@@ -232,8 +240,11 @@ add_action('do_meta_boxes', 'sslp_staff_member_featured_image_text');
 function sslp_staff_member_featured_image_text() {
 
     remove_meta_box( 'postimagediv', 'staff-member', 'side' );
-
-    add_meta_box('postimagediv', __('Staff Photo'), 'post_thumbnail_meta_box', 'staff-member', 'normal', 'high');
+    if (current_theme_supports('post-thumbnails')) {
+	    add_meta_box('postimagediv', __('Staff Photo'), 'post_thumbnail_meta_box', 'staff-member', 'normal', 'high');
+	} else {
+		add_meta_box('staff-member-warning', __('Staff Photo'), 'sslp_staff_member_warning_meta_box', 'staff-member', 'normal', 'high');
+	}
 }
 
 

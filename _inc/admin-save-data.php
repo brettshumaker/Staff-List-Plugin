@@ -52,6 +52,8 @@
 			update_post_meta($post->ID, "_staff_member_title", $_POST["_staff_member_title"]);
 			update_post_meta($post->ID, "_staff_member_email", $_POST["_staff_member_email"]);
 			update_post_meta($post->ID, "_staff_member_phone", $_POST["_staff_member_phone"]);
+			update_post_meta($post->ID, "_staff_member_fb", $_POST["_staff_member_fb"]);
+			update_post_meta($post->ID, "_staff_member_tw", $_POST["_staff_member_tw"]);
 		}
 		
 ?>

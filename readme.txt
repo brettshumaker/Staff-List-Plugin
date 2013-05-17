@@ -4,7 +4,7 @@ Donate link: http://brettshumaker.com/
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.13
+Stable tag: 1.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,11 +49,23 @@ Alright, here's a few things to try:
 
 == Changelog ==
 
+= 1.15 =
+* UPDATED: Added Facebook and Twitter fields for Staff Members
+* UPDATED: Added support for WYSIWYG editor for Staff Bio.
+* UPDATED: Added support for shortcodes within Staff Loop Template and/or Staff Bio field.
+* UPDATED: Removed HTML comments that caused some themes to add an extra <p> tag.
+* BUGFIX: Added post-thumbnail support for 'staff-member' custom post type. Themes that only added post-thumbnail support for 'posts' weren't able to save featured images.
+* BUGFIX: Fixed a rare bug that caused an error on some hosting setups ("Can't Resolve Host" error).
+
+= 1.14 =
+* UPDATED: Now I check to make sure the theme supports post thumbnails and display a warning message on the Add/Edit screen
+* UPDATED: Minor CSS fix for admin screens
+
 = 1.13 =
 * NOTE: If you like using my plugin and want to make sure I can still devote some time to updating it with new features, why not head over to [my website](http://brettshumaker.com) and make a donation? I'd really appreciate it!!
 * FEATURE: Users now have the option to write their custom CSS to an external file (on by default). This allows Multisite users to write their custom styles inline.
 * UPDATED: You can now use either the group name (i.e. "My Cool Group") OR the group slug (i.e. "my-cool-group") in the Simple Staff List shortcode.
-* UPDATED: Passing an empty or non-existent group name no longer results in returning all staff members.
+* UPDATED: Passing an empty or non-existent group name no longer results in returning all staff members
 * BUGFIX: Fixed bug where the Staff Loop Template and the Staff Page CSS boxes were blank on initial install...for real this time, guys.
 
 = 1.12 =
