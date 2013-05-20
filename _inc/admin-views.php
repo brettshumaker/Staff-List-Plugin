@@ -23,12 +23,13 @@ function sslp_staff_member_info_meta_box(){
 	$_staff_member_fb	 = $custom["_staff_member_fb"][0];
 	$_staff_member_tw	 = $custom["_staff_member_tw"][0];
 	?>
+
 	<div class="sslp_admin_wrap">
-		<label for="_staff-member-title">Position: <input type="text" name="_staff_member_title" id="_staff_member_title" placeholder="<?php if ($_staff_member_title == '') echo ('Staff Member\'s Position'); ?>" value="<?php if ($_staff_member_title != '') echo $_staff_member_title; ?>" /></label>
-		<label for="_staff-member-email">Email: <input type="text" name="_staff_member_email" id="_staff_member_email" placeholder="<?php if ($_staff_member_email == '') echo ('Staff Member\'s Email'); ?>" value="<?php if ($_staff_member_email != '') echo $_staff_member_email; ?>" /></label>
-		<label for="_staff-member-title">Phone: <input type="text" name="_staff_member_phone" id="_staff_member_phone" placeholder="<?php if ($_staff_member_phone == '') echo ('Staff Member\'s Phone'); ?>" value="<?php if ($_staff_member_phone != '') echo $_staff_member_phone; ?>" /></label>
-		<label for="_staff-member-fb">Facebook URL: <input type="text" name="_staff_member_fb" id="_staff_member_fb" placeholder="<?php if ($_staff_member_fb == '') echo ('Staff Member\'s Facebook URL'); ?>" value="<?php if ($_staff_member_fb != '') echo $_staff_member_fb; ?>" /></label>
-		<label for="_staff-member-tw">Twitter Username: <input type="text" name="_staff_member_tw" id="_staff_member_tw" placeholder="<?php if ($_staff_member_tw == '') echo ('Staff Member\'s Twitter Name'); ?>" value="<?php if ($_staff_member_tw != '') echo $_staff_member_tw; ?>" /></label>
+		<label for="_staff-member-title"><?php _e( 'Position:', 'simple-staff-list' ); ?> <input type="text" name="_staff_member_title" id="_staff_member_title" placeholder="<?php if ($_staff_member_title == '') _e( 'Staff Member\'s Position', 'simple-staff-list' ); ?>" value="<?php if ($_staff_member_title != '') echo $_staff_member_title; ?>" /></label>
+		<label for="_staff-member-email"><?php _e( 'Email:', 'simple-staff-list' ); ?> <input type="text" name="_staff_member_email" id="_staff_member_email" placeholder="<?php if ($_staff_member_email == '') _e( 'Staff Member\'s Email', 'simple-staff-list' ); ?>" value="<?php if ($_staff_member_email != '') echo $_staff_member_email; ?>" /></label>
+		<label for="_staff-member-title"><?php _e( 'Phone:', 'simple-staff-list' ); ?> <input type="text" name="_staff_member_phone" id="_staff_member_phone" placeholder="<?php if ($_staff_member_phone == '') _e( 'Staff Member\'s Phone', 'simple-staff-list' ); ?>" value="<?php if ($_staff_member_phone != '') echo $_staff_member_phone; ?>" /></label>
+		<label for="_staff-member-fb"><?php _e( 'Facebook URL:', 'simple-staff-list' ); ?><input type="text" name="_staff_member_fb" id="_staff_member_fb" placeholder="<?php if ($_staff_member_fb == '') _e( 'Staff Member\'s Facebook URL', 'simple-staff-list' ); ?>" value="<?php if ($_staff_member_fb != '') echo $_staff_member_fb; ?>" /></label>
+		<label for="_staff-member-tw"><?php _e( 'Twitter Username:', 'simple-staff-list' ); ?><input type="text" name="_staff_member_tw" id="_staff_member_tw" placeholder="<?php if ($_staff_member_tw == '') _e( 'Staff Member\'s Twitter Name', 'simple-staff-list' ); ?>" value="<?php if ($_staff_member_tw != '') echo $_staff_member_tw; ?>" /></label>
 	</div>
 <?php	
 }
@@ -41,7 +42,7 @@ function sslp_staff_member_info_meta_box(){
 //////////////////////////////*/
 
 function sslp_staff_member_warning_meta_box() {
-	echo '<p><strong>Your current theme does not support post thumbnails. Unfortunately, you will not be able to add photos for your Staff Members</strong></p>';
+	_e( '<p><strong>Your current theme does not support post thumbnails. Unfortunately, you will not be able to add photos for your Staff Members</strong></p>', 'simple-staff-list' );
 }
 
 
@@ -129,13 +130,13 @@ function sslp_staff_member_order_page() {
 		<table class="wp-list-table widefat fixed posts" id="sortable-table">
 			<thead>
 				<tr>
-					<th class="column-order">Order</th>
-					<th class="column-photo">Photo</th>
-					<th class="column-name">Name</th>
-					<th class="column-title">Position</th>
-					<th class="column-email">Email</th>
-					<th class="column-phone">Phone</th>
-					<th class="column-bio">Bio</th>
+					<th class="column-order"><?php _e( 'Order', 'simple-staff-list' ); ?></th>
+					<th class="column-photo"><?php _e( 'Photo', 'simple-staff-list' ); ?></th>
+					<th class="column-name"><?php _e( 'Name', 'simple-staff-list' ); ?></th>
+					<th class="column-title"><?php _e( 'Position', 'simple-staff-list' ); ?></th>
+					<th class="column-email"><?php _e( 'Email', 'simple-staff-list' ); ?></th>
+					<th class="column-phone"><?php _e( 'Phone', 'simple-staff-list' ); ?></th>
+					<th class="column-bio"><?php _e( 'Bio', 'simple-staff-list' ); ?></th>
 				</tr>
 			</thead>
 			<tbody data-post-type="product">
@@ -155,13 +156,13 @@ function sslp_staff_member_order_page() {
 			</tbody>
 			<tfoot>
 				<tr>
-					<th class="column-order">Order</th>
-					<th class="column-photo">Photo</th>
-					<th class="column-name">Name</th>
-					<th class="column-title">Position</th>
-					<th class="column-email">Email</th>
-					<th class="column-phone">Phone</th>
-					<th class="column-bio">Bio</th>
+					<th class="column-order"><?php _e( 'Order', 'simple-staff-list' ); ?></th>
+					<th class="column-photo"><?php _e( 'Photo', 'simple-staff-list' ); ?></th>
+					<th class="column-name"><?php _e( 'Name', 'simple-staff-list' ); ?></th>
+					<th class="column-title"><?php _e( 'Position', 'simple-staff-list' ); ?></th>
+					<th class="column-email"><?php _e( 'Email', 'simple-staff-list' ); ?></th>
+					<th class="column-phone"><?php _e( 'Phone', 'simple-staff-list' ); ?></th>
+					<th class="column-bio"><?php _e( 'Bio', 'simple-staff-list' ); ?></th>
 				</tr>
 			</tfoot>
 
@@ -169,7 +170,7 @@ function sslp_staff_member_order_page() {
 
 	<?php else: ?>
 
-		<p>No staff members found, why not <a href="post-new.php?post_type=staff-member">create one?</a></p>
+		<p><?php _e( 'No staff members found, why not <a href="post-new.php?post_type=staff-member">create one?', 'simple-staff-list' ); ?></a></p>
 
 	<?php endif; ?>
 	<?php wp_reset_postdata(); // Don't forget to reset again! ?>
@@ -190,20 +191,20 @@ function sslp_staff_member_order_page() {
 function sslp_staff_member_usage_page() {
 	
 	$output .= '<div class="wrap sslp-usage">';
-	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>Simple Staff List</h2>';
-	$output .= '<h2>Usage</h2>';
-	$output .= '<p>The Simple Staff List plugin makes it easy to create and display a staff directory on your website. You can create your own <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">template</a> for displaying staff information as well as <a href="edit.php?post_type=staff-member&page=staff-member-usage" title="Edit Custom CSS for Simple Staff List">add custom css</a> styling to make your staff directory look great.</p>';
+	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>' . __( 'Simple Staff List', 'simple-staff-list' ) . '</h2>';
+	$output .= '<h2>' . __( 'Usage' ) . '</h2>';
+	$output .= '<p>' . __( 'The Simple Staff List plugin makes it easy to create and display a staff directory on your website. You can create your own <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">template</a> for displaying staff information as well as <a href="edit.php?post_type=staff-member&page=staff-member-usage" title="Edit Custom CSS for Simple Staff List">add custom css</a> styling to make your staff directory look great.' ) . '</p>';
 	
-	$output .= '<h3>Shortcode</h3>';
+	$output .= '<h3>' . __( 'Shortcode' ) . '</h3>';
 	$output .= '<table><tbody>';
-	$output .= '<tr><td width="280px"><code>[simple-staff-list]</code></td><td>This is the most basic usage of Simple Staff List. Displays all Staff Members on post or page.</td></tr>';
-	$output .= '<tr><td><code>[simple-staff-list <strong>group="Robots"</strong>]</code></td><td>This displays all Staff Members from the group "Robots" sorted by order on the "Order" page. This will also add a class of "Robots" to the outer Staff List container for styling purposes.</td></tr>';
-	$output .= '<tr><td><code>[simple-staff-list <strong>wrap_class="clearfix"</strong>]</code></td><td>This adds a class to the inner Staff Member wrap.</td></tr>';
-	$output .= '<tr><td><code>[simple-staff-list <strong>order="ASC"</strong>]</code></td><td>This displays Staff Members sorted by ascending or descending order according to the "Order" page. You may use "ASC" or "DESC" but the default is "ASC"</td></tr>';
+	$output .= '<tr><td width="280px"><code>[simple-staff-list]</code></td><td>' . __( 'This is the most basic usage of Simple Staff List. Displays all Staff Members on post or page.' ) . '</td></tr>';
+	$output .= '<tr><td><code>[simple-staff-list <strong>group="Robots"</strong>]</code></td><td>' . __( 'This displays all Staff Members from the group "Robots" sorted by order on the "Order" page. This will also add a class of "Robots" to the outer Staff List container for styling purposes.' ) . '</td></tr>';
+	$output .= '<tr><td><code>[simple-staff-list <strong>wrap_class="clearfix"</strong>]</code></td><td>' . __( 'This adds a class to the inner Staff Member wrap.' ) . '</td></tr>';
+	$output .= '<tr><td><code>[simple-staff-list <strong>order="ASC"</strong>]</code></td><td>' . __( 'This displays Staff Members sorted by ascending or descending order according to the "Order" page. You may use "ASC" or "DESC" but the default is "ASC"' ) . '</td></tr>';
 	
 	$output .= '</tbody></table>';
 	
-	$output .= '<p>To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">here</a>.</p>';
+	$output .= '<p>' . __( 'To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">here' ) . '</a>.</p>';
 	
 	$output .= '<p></p>';
 
@@ -293,52 +294,52 @@ function sslp_staff_member_template_page(){
 	}
 	
 	$output .= '<div class="wrap sslp-template">';
-	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>Simple Staff List</h2>';
+	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>' . __( 'Simple Staff List' ) . '</h2>';
 	$output .= '<h2>Templates</h2>';
     
     $output .= '<div>';
-    $output .= '<h4>Accepted Template Tags <strong>(UNFORMATTED)</strong></h4>';
+    $output .= '<h4>' . __( 'Accepted Template Tags <strong>(UNFORMATTED)</strong>' ) . '</h4>';
     $output .= $default_tag_ul;
     
     $output .= '<br />';
     
-    $output .= '<h4>Accepted Template Tags <strong>(FORMATTED)</strong></h4>';
+    $output .= '<h4>' . __( 'Accepted Template Tags <strong>(FORMATTED)</strong>' ) . '</h4>';
     $output .= $default_formatted_tag_ul;
 
     $output .= '<br />';
         
-    $output .= '<p>These <strong>MUST</strong> be used inside the <code>[staff_loop]</code> wrapper. The unformatted tags will return plain strings so you will want to wrap them in your own HTML. The <code>[staff_loop]</code> can accept any HTML so be careful when adding your own HTML code. The formatted tags will return data wrapped in HTML elements. For example, <code>[staff-name-formatted]</code> returns <code>&lt;h3&gt;STAFF-NAME&lt;/h3&gt;</code>, and <code>[staff-email-link]</code> returns <code>&lt;a href="mailto:STAFF-EMAIL" title="Email STAFF-NAME"&gt;STAFF-EMAIL&lt;/a&gt;</code>.</p>';
-    $output .= '<p>**Note: All emails are obfuscated using the <a href="http://codex.wordpress.org/Function_Reference/antispambot" target="_blank" title="WordPress email obfuscation function: antispambot()">antispambot() WordPress function</a>.</p>';
+    $output .= '<p>' . __( 'These <strong>MUST</strong> be used inside the <code>[staff_loop]</code> wrapper. The unformatted tags will return plain strings so you will want to wrap them in your own HTML. The <code>[staff_loop]</code> can accept any HTML so be careful when adding your own HTML code. The formatted tags will return data wrapped in HTML elements. For example, <code>[staff-name-formatted]</code> returns <code>&lt;h3&gt;STAFF-NAME&lt;/h3&gt;</code>, and <code>[staff-email-link]</code> returns <code>&lt;a href="mailto:STAFF-EMAIL" title="Email STAFF-NAME"&gt;STAFF-EMAIL&lt;/a&gt;</code>.' ) . '</p>';
+    $output .= '<p>' . __( '**Note: All emails are obfuscated using the <a href="http://codex.wordpress.org/Function_Reference/antispambot" target="_blank" title="WordPress email obfuscation function: antispambot()">antispambot() WordPress function</a>.' ) . '</p>';
     $output .= '<br />';
     
     $output .= '<form method="post" action="">';
-    $output .= '<h3>Staff Loop Template</h3>';
+    $output .= '<h3>' . __( 'Staff Loop Template' ) . '</h3>';
     
     $output .= '<div class="default-html">
-    				<h4 class="heading button-secondary">View Default Template</h4>
+    				<h4 class="heading button-secondary">' . __( 'View Default Template' ) . '</h4>
     				<div class="content">
     					<pre>'.htmlspecialchars(stripslashes_deep($default_html)).'</pre>
     				</div>
     			</div><br />';
     
     $output .= '<textarea name="staff-listing-html" cols="120" rows="16">'.$custom_html.'</textarea>';
-    $output .= '<p><input type="submit" value="Save ALL Changes" class="button button-primary button-large"></p><br /><br />';
+    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' ) . '" class="button button-primary button-large"></p><br /><br />';
     
-    $output .= '<h3>Staff Page CSS</h3>';
+    $output .= '<h3>' . __( 'Staff Page CSS' ) . '</h3>';
     
-    $output .= '<p><input type="checkbox" name="write-external-css" id="write-external-css" value="yes" '.$ext_css_check.' /><label for="write-external-css"> Write to external CSS file? (Leave unchecked for WP Multisite.)</label>';
+    $output .= '<p><input type="checkbox" name="write-external-css" id="write-external-css" value="yes" '.$ext_css_check.' /><label for="write-external-css"> ' . __( 'Write to external CSS file? (Leave unchecked for WP Multisite.)' ) . '</label>';
     
     $output .= '<div class="default-css">
-    				<h4 class="heading button-secondary">View Default CSS</h4>
+    				<h4 class="heading button-secondary">' . __( 'View Default CSS' ) . '</h4>
     				<div class="content">
     					<pre>'.htmlspecialchars(stripslashes_deep($default_css)).'</pre>
     				</div>
     			</div><br />';
     			
-    $output .= '<p style="margin-top:0;">Add your custom CSS below to style the output of your staff list. I\'ve included selectors for everything output by the plugin.</p>';
+    $output .= '<p style="margin-top:0;">' . __( 'Add your custom CSS below to style the output of your staff list. I\'ve included selectors for everything output by the plugin.' ) . '</p>';
     $output .= '<textarea name="staff-listing-css" cols="120" rows="16">'.$custom_css.'</textarea>';
     
-    $output .= '<p><input type="submit" value="Save ALL Changes" class="button button-primary button-large"></p>';
+    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' ) . '" class="button button-primary button-large"></p>';
     $output .= wp_nonce_field('staff-member-template', 'staff-list-template');
     $output .= '</form>';
     $output .= '</div>';
