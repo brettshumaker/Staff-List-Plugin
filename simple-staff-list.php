@@ -380,6 +380,12 @@ if ( get_option('_staff_listing_write_external_css') == 'yes' ){
 // Template Tags
 //////////////////////////////*/
 
+/**
+ * function which is used as the backend for all other template tags
+ * @param integer  $staff_id the ID of th staff member.
+ * @param $meta_field the name of the meta field
+ * @return string | boolean the value of meta field. If nothing could be found false will be returned 
+ */
 function _staff_member_meta( $staff_id = null, $meta_field) {
     global $post;
 
@@ -388,6 +394,13 @@ function _staff_member_meta( $staff_id = null, $meta_field) {
     return get_post_meta( $staff_id, $meta_field, true);
 }
 
+
+/**
+ * returns or echo the postion of a staff member,
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the position of a staff member or false
+ */
 function staff_member_position( $staff_id = null, $echo = false) {
     $position = _staff_member_meta( $staff_id, '_staff_member_title');
 
@@ -396,10 +409,23 @@ function staff_member_position( $staff_id = null, $echo = false) {
     return $postion;
 } 
 
+
+/**
+ * shortcut to echo the positon of a staff member,
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
 function the_Staff_member_position( $staff_id = null) {
     staff_member_position( $staff_id, true);
 }
 
+
+/**
+ * returns or echo the bio of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the bio of a staff member or false
+ */
 function staff_member_bio( $staff_id = null, $echo = false) {
    $bio = _staff_member_meta( $staff_id, '_staff_member_bio', true);
 
@@ -408,10 +434,23 @@ function staff_member_bio( $staff_id = null, $echo = false) {
    return $bio;
 }
 
+
+/**
+ * shortcut to echo the bio of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
 function the_staff_member_bio( $staff_id = null) {
     staff_member_bio( $staff_id, true);
 }
 
+
+/**
+ * return or echo the email of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the email of a staff member of false
+ */
 function staff_member_email( $staff_id = null, $echo = false) {
     $email = _staff_member_meta( $staff_id, '_staff_member_email');
     
@@ -420,10 +459,23 @@ function staff_member_email( $staff_id = null, $echo = false) {
     return $email; 
 }
 
+
+/**
+ * shortcut to echo the email of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
 function the_staff_member_email( $staff_id = null) {
     staff_member_email( $staff_id, true);
 }
 
+
+/**
+ * returns or echo the facebook url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the facebook url of a staff member or false 
+ */
 function staff_member_facebok( $staff_id = null, $echo = false) {
     $fb = _staff_member_meta( $staff_id, '_staff_member_fb');
 
@@ -432,10 +484,23 @@ function staff_member_facebok( $staff_id = null, $echo = false) {
     return $fb;
 } 
 
+
+/**
+ * shortcut to ecoh the facebook url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
 function the_staff_member_facebook( $staff_id = null) {
     the_staff_member_facebook( $staff_id, true);
 }
 
+
+/**
+ * returns or echo the twitter url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the twitter url of a staff member or false
+ */
 function staff_member_twitter( $staff_id = null, $echo = false) {
     $twitter = _staff_member_meta( $staff_id, '_staff_member_tw');
 
@@ -444,6 +509,12 @@ function staff_member_twitter( $staff_id = null, $echo = false) {
     return $twitter;
 }
 
+
+/**
+ * shortcut to echo the twitter url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
 function the_staff_member_twitter( $staff_id = null) {
     staff_member_twitter( $staff_id, true);
 }
