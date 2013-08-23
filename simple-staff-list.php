@@ -375,4 +375,76 @@ function sslp_staff_member_create_css_on_switch_theme($new_theme) {
 if ( get_option('_staff_listing_write_external_css') == 'yes' ){
 	add_action('switch_theme', 'sslp_staff_member_create_css_on_switch_theme');
 }
+
+/*
+// Template Tags
+//////////////////////////////*/
+
+function _staff_member_meta( $staff_id = null, $meta_field) {
+    global $post;
+
+    if( is_null( $staff_id)) $staff_id = $post->ID;
+
+    return get_post_meta( $staff_id, $meta_field, true);
+}
+
+function staff_member_position( $staff_id = null, $echo = false) {
+    $position = _staff_member_meta( $staff_id, '_staff_member_title');
+
+    if( $echo) echo $position;
+
+    return $postion;
+} 
+
+function the_Staff_member_position( $staff_id = null) {
+    staff_member_position( $staff_id, true);
+}
+
+function staff_member_bio( $staff_id = null, $echo = false) {
+   $bio = _staff_member_meta( $staff_id, '_staff_member_bio', true);
+
+   if( $echo) echo $bio;
+
+   return $bio;
+}
+
+function the_staff_member_bio( $staff_id = null) {
+    staff_member_bio( $staff_id, true);
+}
+
+function staff_member_email( $staff_id = null, $echo = false) {
+    $email = _staff_member_meta( $staff_id, '_staff_member_email');
+    
+    if( $echo) echo $email;
+
+    return $email; 
+}
+
+function the_staff_member_email( $staff_id = null) {
+    staff_member_email( $staff_id, true);
+}
+
+function staff_member_facebok( $staff_id = null, $echo = false) {
+    $fb = _staff_member_meta( $staff_id, '_staff_member_fb');
+
+    if( $echo ) echo $fb;
+
+    return $fb;
+} 
+
+function the_staff_member_facebook( $staff_id = null) {
+    the_staff_member_facebook( $staff_id, true);
+}
+
+function staff_member_twitter( $staff_id = null, $echo = false) {
+    $twitter = _staff_member_meta( $staff_id, '_staff_member_tw');
+
+    if( $echo) echo $twitter;
+
+    return $twitter;
+}
+
+function the_staff_member_twitter( $staff_id = null) {
+    staff_member_twitter( $staff_id, true);
+}
 ?>
