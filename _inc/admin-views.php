@@ -347,5 +347,52 @@ function sslp_staff_member_template_page(){
     echo $output;
 
 }
- 
+
+
+
+
+
+/*
+// Build the 'Options' Page
+//////////////////////////////*/
+
+function sslp_staff_member_options_page(){ 
+
+	// Get existing options
+	$default_slug 					= get_option('_staff_listing_default_slug');
+    
+	// Check Nonce and then update options
+	if ( !empty($_POST) && check_admin_referer( 'staff-member-options', 'staff-list-options' ) ) {
+		update_option('_staff_listing_custom_slug', wp_unique_term_slug($_POST[ "staff-listing-slug"],'staff-member'));
+		
+		$custom_slug = stripslashes_deep(get_option('_staff_listing_custom_slug'));
+
+	} else {
+		$custom_slug = stripslashes_deep(get_option('_staff_listing_custom_slug'));
+		
+	}
+	
+	
+	$output .= '<div class="wrap sslp-options">';
+	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>' . __( 'Simple Staff List' ) . '</h2>';
+	$output .= '<h2>Options</h2>';
+    
+    $output .= '<div>';
+    $output .= '<form method="post" action="">';
+    $output .= '<fieldset id="staff-listing-field-slug">';
+    $output .= '<legend class="sslp-field-label">' . __( 'Staff Members URL Slug' ) . '</legend>';
+    $output .= '<input type="text" name="staff-listing-slug" value="' . $custom_slug . '"></fieldset>';
+    $output .= '<p>' . __( 'The slug used for building the staff members URL. The current URL is: ' );
+	$output .= site_url($custom_slug) . '/';
+    $output .= '</p>';
+    
+    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' ) . '" class="button button-primary button-large"></p><br /><br />';
+    
+    $output .= wp_nonce_field('staff-member-options', 'staff-list-options');
+    $output .= '</form>';
+    $output .= '</div>';
+        
+    echo $output;
+
+}
 ?>
