@@ -117,6 +117,8 @@ div.staff-member { display: block; }
 	$default_formatted_tag_string = implode(", ", $default_formatted_tags);
 	
 	$default_slug = 'staff-members';
+	$default_name_singular = _x( 'Staff Member', 'post type singular name', 'simple-staff-list' );
+	$default_name_plural = _x( 'Staff Members', 'post type general name', 'simple-staff-list' );
 
 	update_option('_staff_listing_default_tags', $default_tags );
 	update_option('_staff_listing_default_tag_string', $default_tag_string);
@@ -126,6 +128,8 @@ div.staff-member { display: block; }
 	update_option('_staff_listing_default_css', $default_css);
 
 	update_option('_staff_listing_default_slug', $default_slug);
+	update_option('_staff_listing_default_name_singular', $default_name_singular);
+	update_option('_staff_listing_default_name_plural', $default_name_plural);
 	
 	
 	if (!get_option('_staff_listing_custom_html')){
@@ -146,6 +150,14 @@ div.staff-member { display: block; }
 
 	if (!get_option('_staff_listing_custom_slug')){
 		update_option('_staff_listing_custom_slug', $default_slug);
+	}
+
+	if (!get_option('_staff_listing_custom_name_singular')){
+		update_option('_staff_listing_custom_name_singular', $default_name_singular);
+	}
+
+	if (!get_option('_staff_listing_custom_name_plural')){
+		update_option('_staff_listing_custom_name_plural', $default_name_plural);
 	}
 	
 	if ($is_forced != 'forced activation'){

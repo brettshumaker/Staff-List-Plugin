@@ -132,10 +132,20 @@ function sslp_staff_member_init() {
 	} else {
 		$sslp_slug = get_option('_staff_listing_custom_slug');
 	}
+	if (!get_option('_staff_listing_custom_name_singular')){
+		$sslp_singular = get_option('_staff_listing_default_name_singular');
+	} else {
+		$sslp_singular = get_option('_staff_listing_custom_name_singular');
+	}
+	if (!get_option('_staff_listing_custom_name_plural')){
+		$sslp_name = get_option('_staff_listing_default_name_plural');
+	} else {
+		$sslp_name = get_option('_staff_listing_custom_name_plural');
+	}
 
 	$labels = array(
-		'name'                => _x( 'Staff Members', 'post type general name', 'simple-staff-list' ),
-		'singular_name'       => _x( 'Staff Member', 'post type singular name', 'simple-staff-list' ),
+		'name'                => $sslp_name,
+		'singular_name'       => $sslp_singular,
 		'add_new'             => _x( 'Add New', 'staff member', 'simple-staff-list' ),
 		'add_new_item'        => __( 'Add New Staff Member', 'simple-staff-list' ),
 		'edit_item'           => __( 'Edit Staff Member', 'simple-staff-list' ),
