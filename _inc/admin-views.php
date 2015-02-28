@@ -347,5 +347,68 @@ function sslp_staff_member_template_page(){
     echo $output;
 
 }
- 
+
+
+
+
+
+/*
+// Build the 'Options' Page
+//////////////////////////////*/
+
+function sslp_staff_member_options_page(){ 
+
+	// Get existing options
+	$default_slug 					= get_option('_staff_listing_default_slug');
+	$default_name_singular			= get_option('_staff_listing_default_name_singular');
+	$default_name_plural			= get_option('_staff_listing_default_name_plural');
+    
+	// Check Nonce and then update options
+	if ( !empty($_POST) && check_admin_referer( 'staff-member-options', 'staff-list-options' ) ) {
+		update_option('_staff_listing_custom_slug', wp_unique_term_slug($_POST[ "staff-listing-slug"],'staff-member'));
+		update_option('_staff_listing_custom_name_singular', $_POST[ "staff-listing-name-singular"]);
+		update_option('_staff_listing_custom_name_plural', $_POST[ "staff-listing-name-plural"]);
+		
+		$custom_slug = stripslashes_deep(get_option('_staff_listing_custom_slug'));
+		$custom_name_singular = stripslashes_deep(get_option('_staff_listing_custom_name_singular'));
+		$custom_name_plural = stripslashes_deep(get_option('_staff_listing_custom_name_plural'));
+
+	} else {
+		$custom_slug = stripslashes_deep(get_option('_staff_listing_custom_slug'));
+		$custom_name_singular = stripslashes_deep(get_option('_staff_listing_custom_name_singular'));
+		$custom_name_plural = stripslashes_deep(get_option('_staff_listing_custom_name_plural'));
+		
+	}
+	
+	
+	$output .= '<div class="wrap sslp-options">';
+	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>' . __( 'Simple Staff List' ) . '</h2>';
+	$output .= '<h2>Options</h2>';
+    
+    $output .= '<div>';
+    $output .= '<form method="post" action="">';
+    $output .= '<fieldset id="staff-listing-field-slug" class="sslp-fieldset">';
+    $output .= '<legend class="sslp-field-label">' . __( 'Staff Members URL Slug' ) . '</legend>';
+    $output .= '<input type="text" name="staff-listing-slug" value="' . $custom_slug . '"></fieldset>';
+    $output .= '<p>' . __( 'The slug used for building the staff members URL. The current URL is: ' );
+	$output .= site_url($custom_slug) . '/';
+    $output .= '</p>';
+    $output .= '<fieldset id="staff-listing-field-name-plural" class="sslp-fieldset">';
+    $output .= '<legend class="sslp-field-label">' . __( 'Staff Member title' ) . '</legend>';
+    $output .= '<input type="text" name="staff-listing-name-plural" value="' . $custom_name_plural . '"></fieldset>';
+    $output .= '<p>' . __( 'The title that displays on the Staff Member archive page. Default is "Staff Members"' ) . '</p>';
+    $output .= '<fieldset id="staff-listing-field-name-singular" class="sslp-fieldset">';
+    $output .= '<legend class="sslp-field-label">' . __( 'Staff Member singular title' ) . '</legend>';
+    $output .= '<input type="text" name="staff-listing-name-singular" value="' . $custom_name_singular . '"></fieldset>';
+    $output .= '<p>' . __( 'The Staff Member taxonomy singular name. No need to change this unless you need to use the singular_name field in your theme. Default is "Staff Member"' ) . '</p>';
+
+    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' ) . '" class="button button-primary button-large"></p><br /><br />';
+    
+    $output .= wp_nonce_field('staff-member-options', 'staff-list-options');
+    $output .= '</form>';
+    $output .= '</div>';
+        
+    echo $output;
+
+}
 ?>
