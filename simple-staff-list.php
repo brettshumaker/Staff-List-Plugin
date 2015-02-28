@@ -158,6 +158,12 @@ function sslp_staff_member_init() {
         'rewrite' => array('slug'=>'staff-members','with_front'=>false),
         'supports' => array( 'title', 'thumbnail', 'excerpt' )
     );
+    
+    global $wp_version;
+    
+    if (version_compare($wp_version, '3.8', '>=')) {
+	    $args['menu_icon'] = 'dashicons-groups';
+    }
 
     register_post_type( 'staff-member', $args );
 }

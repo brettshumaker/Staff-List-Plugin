@@ -111,6 +111,10 @@ td.column-order img {
     background: url('../_images/staff-list-icon-lighter.svg') no-repeat 5px 5px !important;
     background-size: 70% !important;
 }
+body[class*="branch-3-8"] #menu-posts-staff-member .wp-menu-image,
+body[class*="branch-4"] #menu-posts-staff-member .wp-menu-image {
+	background-image: none !important;
+}
 /* Post Screen - 32px */
 .icon32-posts-staff-member {
 	background: url('../_images/staff-list-icon.png') no-repeat left top !important;
