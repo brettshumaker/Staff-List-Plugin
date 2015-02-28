@@ -408,4 +408,141 @@ function sslp_staff_member_create_css_on_switch_theme($new_theme) {
 if ( get_option('_staff_listing_write_external_css') == 'yes' ){
 	add_action('switch_theme', 'sslp_staff_member_create_css_on_switch_theme');
 }
+
+
+
+
+/*
+// Template Tags
+//////////////////////////////*/
+/**
+ * function which is used as the backend for all other template tags
+ * @param integer  $staff_id the ID of th staff member.
+ * @param $meta_field the name of the meta field
+ * @return string | boolean the value of meta field. If nothing could be found false will be returned 
+ */
+function _staff_member_meta( $staff_id = null, $meta_field) {
+    global $post;
+    if( is_null( $staff_id)) $staff_id = $post->ID;
+    if( $meta_field == '_staff_member_image') {
+	    return wp_get_attachment_url( get_post_thumbnail_id( $staff_id) );
+    } else {
+		return get_post_meta( $staff_id, $meta_field, true);
+    }
+}
+/**
+ * returns or echo the postion of a staff member,
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the position of a staff member or false
+ */
+function staff_member_position( $staff_id = null, $echo = false) {
+    $position = _staff_member_meta( $staff_id, '_staff_member_title');
+    if( $echo ) echo $position;
+    return $postion;
+} 
+/**
+ * shortcut to echo the positon of a staff member,
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
+function the_staff_member_position( $staff_id = null) {
+    staff_member_position( $staff_id, true);
+}
+/**
+ * returns or echo the bio of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the bio of a staff member or false
+ */
+function staff_member_bio( $staff_id = null, $echo = false) {
+   $bio = _staff_member_meta( $staff_id, '_staff_member_bio', true);
+   if( $echo ) echo $bio;
+   return $bio;
+}
+/**
+ * shortcut to echo the bio of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
+function the_staff_member_bio( $staff_id = null) {
+    staff_member_bio( $staff_id, true);
+}
+/**
+ * return or echo the email of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the email of a staff member of false
+ */
+function staff_member_email( $staff_id = null, $echo = false) {
+    $email = _staff_member_meta( $staff_id, '_staff_member_email');
+    
+    if( $echo ) echo antispambot($email);
+    return antispambot($email); 
+}
+/**
+ * shortcut to echo the email of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
+function the_staff_member_email( $staff_id = null) {
+    staff_member_email( $staff_id, true);
+}
+/**
+ * returns or echo the facebook url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the facebook url of a staff member or false 
+ */
+function staff_member_facebook( $staff_id = null, $echo = false) {
+    $fb = _staff_member_meta( $staff_id, '_staff_member_fb');
+    if( $echo ) echo $fb;
+    return $fb;
+} 
+/**
+ * shortcut to ecoh the facebook url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
+function the_staff_member_facebook( $staff_id = null) {
+    staff_member_facebook( $staff_id, true);
+}
+/**
+ * returns or echo the twitter url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the twitter url of a staff member or false
+ */
+function staff_member_twitter( $staff_id = null, $echo = false) {
+    $twitter = _staff_member_meta( $staff_id, '_staff_member_tw');
+    if( $echo) echo $twitter;
+    return $twitter;
+}
+/**
+ * shortcut to echo the twitter url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
+function the_staff_member_twitter( $staff_id = null) {
+    staff_member_twitter( $staff_id, true);
+}
+/**
+ * returns or echo the featured image url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @param boolean $echo if true, result will be echoed
+ * @return string | boolean the image url of a staff member or false
+ */
+function staff_member_image_url( $staff_id = null, $echo = false) {
+	$photo_url = _staff_member_meta( $staff_id, '_staff_member_image');
+	if ( $echo) echo $photo_url;
+	return $photo_url;
+}
+/**
+ * shortcut to echo the image url of a staff member
+ * @param integer $staff_id the ID of a staff member
+ * @return void
+ */
+function the_staff_member_image_url( $staff_id = null) {
+	staff_member_image_url( $staff_id, true);
+}
 ?>
