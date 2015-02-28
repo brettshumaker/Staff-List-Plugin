@@ -58,10 +58,10 @@ function sslp_staff_member_bio_meta_box(){
 	$_staff_member_bio = $custom["_staff_member_bio"][0];
 	
 	wp_editor( $_staff_member_bio, '_staff_member_bio', $settings = array(
-												textarea_rows => 8,
-												media_buttons => false,
-												tinymce => true, // Disables actual TinyMCE buttons // This makes the rich content editor
-												quicktags => true // Use QuickTags for formatting    // work within a metabox.
+												'textarea_rows' => 8,
+												'media_buttons' => false,
+												'tinymce' => true, // Disables actual TinyMCE buttons // This makes the rich content editor
+												'quicktags' => true // Use QuickTags for formatting    // work within a metabox.
 												) );
 	?>
 	
