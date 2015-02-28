@@ -52,7 +52,7 @@ function sslp_staff_member_listing_shortcode_func($atts) {
 	// Prepare to output styles if not using external style sheet
 	if ( $use_external_css == "no" ) {
 		$style_output = '<style>'.$custom_css.'</style>';
-	}
+	} else { $style_output = ''; }
 	
 	$i = 0;
 	
