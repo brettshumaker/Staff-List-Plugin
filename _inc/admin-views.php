@@ -121,9 +121,9 @@ function sslp_staff_member_display_custom_columns( $column ) {
 function sslp_staff_member_order_page() {
 ?>
 	<div class="wrap">
-		<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>Simple Staff List</h2>
-		<h2>Order Staff</h2>
-		<p>Simply drag the staff member up or down and they will be saved in that order.</p>
+		<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2><?php _e( 'Simple Staff List', 'simple-staff-list' ); ?></h2>
+		<h2><?php _e( 'Order Staff', 'simple-staff-list' ); ?></h2>
+		<p><?php _e( 'Simply drag the staff member up or down and they will be saved in that order.', 'simple-staff-list' ); ?></p>
 	<?php $staff = new WP_Query( array( 'post_type' => 'staff-member', 'posts_per_page' => -1, 'order' => 'ASC', 'orderby' => 'menu_order' ) );
 		  if( $staff->have_posts() ) : ?>
 
@@ -192,19 +192,19 @@ function sslp_staff_member_usage_page() {
 	
 	$output .= '<div class="wrap sslp-usage">';
 	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>' . __( 'Simple Staff List', 'simple-staff-list' ) . '</h2>';
-	$output .= '<h2>' . __( 'Usage' ) . '</h2>';
-	$output .= '<p>' . __( 'The Simple Staff List plugin makes it easy to create and display a staff directory on your website. You can create your own <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">template</a> for displaying staff information as well as <a href="edit.php?post_type=staff-member&page=staff-member-usage" title="Edit Custom CSS for Simple Staff List">add custom css</a> styling to make your staff directory look great.' ) . '</p>';
+	$output .= '<h2>' . __( 'Usage' , 'simple-staff-list' ) . '</h2>';
+	$output .= '<p>' . __( 'The Simple Staff List plugin makes it easy to create and display a staff directory on your website. You can create your own <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">template</a> for displaying staff information as well as <a href="edit.php?post_type=staff-member&page=staff-member-usage" title="Edit Custom CSS for Simple Staff List">add custom css</a> styling to make your staff directory look great.' , 'simple-staff-list' ) . '</p>';
 	
-	$output .= '<h3>' . __( 'Shortcode' ) . '</h3>';
+	$output .= '<h3>' . __( 'Shortcode' , 'simple-staff-list' ) . '</h3>';
 	$output .= '<table><tbody>';
-	$output .= '<tr><td width="280px"><code>[simple-staff-list]</code></td><td>' . __( 'This is the most basic usage of Simple Staff List. Displays all Staff Members on post or page.' ) . '</td></tr>';
-	$output .= '<tr><td><code>[simple-staff-list <strong>group="Robots"</strong>]</code></td><td>' . __( 'This displays all Staff Members from the group "Robots" sorted by order on the "Order" page. This will also add a class of "Robots" to the outer Staff List container for styling purposes.' ) . '</td></tr>';
-	$output .= '<tr><td><code>[simple-staff-list <strong>wrap_class="clearfix"</strong>]</code></td><td>' . __( 'This adds a class to the inner Staff Member wrap.' ) . '</td></tr>';
-	$output .= '<tr><td><code>[simple-staff-list <strong>order="ASC"</strong>]</code></td><td>' . __( 'This displays Staff Members sorted by ascending or descending order according to the "Order" page. You may use "ASC" or "DESC" but the default is "ASC"' ) . '</td></tr>';
+	$output .= '<tr><td width="280px"><code>[simple-staff-list]</code></td><td>' . __( 'This is the most basic usage of Simple Staff List. Displays all Staff Members on post or page.' , 'simple-staff-list' ) . '</td></tr>';
+	$output .= '<tr><td><code>[simple-staff-list <strong>group="Robots"</strong>]</code></td><td>' . __( 'This displays all Staff Members from the group "Robots" sorted by order on the "Order" page. This will also add a class of "Robots" to the outer Staff List container for styling purposes.' , 'simple-staff-list' ) . '</td></tr>';
+	$output .= '<tr><td><code>[simple-staff-list <strong>wrap_class="clearfix"</strong>]</code></td><td>' . __( 'This adds a class to the inner Staff Member wrap.' , 'simple-staff-list' ) . '</td></tr>';
+	$output .= '<tr><td><code>[simple-staff-list <strong>order="ASC"</strong>]</code></td><td>' . __( 'This displays Staff Members sorted by ascending or descending order according to the "Order" page. You may use "ASC" or "DESC" but the default is "ASC"' , 'simple-staff-list' ) . '</td></tr>';
 	
 	$output .= '</tbody></table>';
 	
-	$output .= '<p>' . __( 'To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">here' ) . '</a>.</p>';
+	$output .= '<p>' . __( 'To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">here' , 'simple-staff-list' ) . '</a>.</p>';
 	
 	$output .= '<p></p>';
 
@@ -294,52 +294,52 @@ function sslp_staff_member_template_page(){
 	}
 	
 	$output .= '<div class="wrap sslp-template">';
-	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>' . __( 'Simple Staff List' ) . '</h2>';
+	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>' . __( 'Simple Staff List' , 'simple-staff-list' ) . '</h2>';
 	$output .= '<h2>Templates</h2>';
     
     $output .= '<div>';
-    $output .= '<h4>' . __( 'Accepted Template Tags <strong>(UNFORMATTED)</strong>' ) . '</h4>';
+    $output .= '<h4>' . __( 'Accepted Template Tags <strong>(UNFORMATTED)</strong>' , 'simple-staff-list' ) . '</h4>';
     $output .= $default_tag_ul;
     
     $output .= '<br />';
     
-    $output .= '<h4>' . __( 'Accepted Template Tags <strong>(FORMATTED)</strong>' ) . '</h4>';
+    $output .= '<h4>' . __( 'Accepted Template Tags <strong>(FORMATTED)</strong>' , 'simple-staff-list' ) . '</h4>';
     $output .= $default_formatted_tag_ul;
 
     $output .= '<br />';
         
-    $output .= '<p>' . __( 'These <strong>MUST</strong> be used inside the <code>[staff_loop]</code> wrapper. The unformatted tags will return plain strings so you will want to wrap them in your own HTML. The <code>[staff_loop]</code> can accept any HTML so be careful when adding your own HTML code. The formatted tags will return data wrapped in HTML elements. For example, <code>[staff-name-formatted]</code> returns <code>&lt;h3&gt;STAFF-NAME&lt;/h3&gt;</code>, and <code>[staff-email-link]</code> returns <code>&lt;a href="mailto:STAFF-EMAIL" title="Email STAFF-NAME"&gt;STAFF-EMAIL&lt;/a&gt;</code>.' ) . '</p>';
-    $output .= '<p>' . __( '**Note: All emails are obfuscated using the <a href="http://codex.wordpress.org/Function_Reference/antispambot" target="_blank" title="WordPress email obfuscation function: antispambot()">antispambot() WordPress function</a>.' ) . '</p>';
+    $output .= '<p>' . __( 'These <strong>MUST</strong> be used inside the <code>[staff_loop]</code> wrapper. The unformatted tags will return plain strings so you will want to wrap them in your own HTML. The <code>[staff_loop]</code> can accept any HTML so be careful when adding your own HTML code. The formatted tags will return data wrapped in HTML elements. For example, <code>[staff-name-formatted]</code> returns <code>&lt;h3&gt;STAFF-NAME&lt;/h3&gt;</code>, and <code>[staff-email-link]</code> returns <code>&lt;a href="mailto:STAFF-EMAIL" title="Email STAFF-NAME"&gt;STAFF-EMAIL&lt;/a&gt;</code>.' , 'simple-staff-list' ) . '</p>';
+    $output .= '<p>' . __( '**Note: All emails are obfuscated using the <a href="http://codex.wordpress.org/Function_Reference/antispambot" target="_blank" title="WordPress email obfuscation function: antispambot()">antispambot() WordPress function</a>.' , 'simple-staff-list' ) . '</p>';
     $output .= '<br />';
     
     $output .= '<form method="post" action="">';
-    $output .= '<h3>' . __( 'Staff Loop Template' ) . '</h3>';
+    $output .= '<h3>' . __( 'Staff Loop Template' , 'simple-staff-list' ) . '</h3>';
     
     $output .= '<div class="default-html">
-    				<h4 class="heading button-secondary">' . __( 'View Default Template' ) . '</h4>
+    				<h4 class="heading button-secondary">' . __( 'View Default Template' , 'simple-staff-list' ) . '</h4>
     				<div class="content">
     					<pre>'.htmlspecialchars(stripslashes_deep($default_html)).'</pre>
     				</div>
     			</div><br />';
     
     $output .= '<textarea name="staff-listing-html" cols="120" rows="16">'.$custom_html.'</textarea>';
-    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' ) . '" class="button button-primary button-large"></p><br /><br />';
+    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' , 'simple-staff-list' ) . '" class="button button-primary button-large"></p><br /><br />';
     
-    $output .= '<h3>' . __( 'Staff Page CSS' ) . '</h3>';
+    $output .= '<h3>' . __( 'Staff Page CSS' , 'simple-staff-list' ) . '</h3>';
     
-    $output .= '<p><input type="checkbox" name="write-external-css" id="write-external-css" value="yes" '.$ext_css_check.' /><label for="write-external-css"> ' . __( 'Write to external CSS file? (Leave unchecked for WP Multisite.)' ) . '</label>';
+    $output .= '<p><input type="checkbox" name="write-external-css" id="write-external-css" value="yes" '.$ext_css_check.' /><label for="write-external-css"> ' . __( 'Write to external CSS file? (Leave unchecked for WP Multisite.)' , 'simple-staff-list' ) . '</label>';
     
     $output .= '<div class="default-css">
-    				<h4 class="heading button-secondary">' . __( 'View Default CSS' ) . '</h4>
+    				<h4 class="heading button-secondary">' . __( 'View Default CSS' , 'simple-staff-list' ) . '</h4>
     				<div class="content">
     					<pre>'.htmlspecialchars(stripslashes_deep($default_css)).'</pre>
     				</div>
     			</div><br />';
     			
-    $output .= '<p style="margin-top:0;">' . __( 'Add your custom CSS below to style the output of your staff list. I\'ve included selectors for everything output by the plugin.' ) . '</p>';
+    $output .= '<p style="margin-top:0;">' . __( 'Add your custom CSS below to style the output of your staff list. I\'ve included selectors for everything output by the plugin.' , 'simple-staff-list' ) . '</p>';
     $output .= '<textarea name="staff-listing-css" cols="120" rows="16">'.$custom_css.'</textarea>';
     
-    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' ) . '" class="button button-primary button-large"></p>';
+    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' , 'simple-staff-list' ) . '" class="button button-primary button-large"></p>';
     $output .= wp_nonce_field('staff-member-template', 'staff-list-template');
     $output .= '</form>';
     $output .= '</div>';
@@ -382,27 +382,27 @@ function sslp_staff_member_options_page(){
 	
 	
 	$output .= '<div class="wrap sslp-options">';
-	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>' . __( 'Simple Staff List' ) . '</h2>';
+	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2>' . __( 'Simple Staff List' , 'simple-staff-list' ) . '</h2>';
 	$output .= '<h2>Options</h2>';
     
     $output .= '<div>';
     $output .= '<form method="post" action="">';
     $output .= '<fieldset id="staff-listing-field-slug" class="sslp-fieldset">';
-    $output .= '<legend class="sslp-field-label">' . __( 'Staff Members URL Slug' ) . '</legend>';
+    $output .= '<legend class="sslp-field-label">' . __( 'Staff Members URL Slug' , 'simple-staff-list' ) . '</legend>';
     $output .= '<input type="text" name="staff-listing-slug" value="' . $custom_slug . '"></fieldset>';
-    $output .= '<p>' . __( 'The slug used for building the staff members URL. The current URL is: ' );
+    $output .= '<p>' . __( 'The slug used for building the staff members URL. The current URL is: ' , 'simple-staff-list' );
 	$output .= site_url($custom_slug) . '/';
     $output .= '</p>';
     $output .= '<fieldset id="staff-listing-field-name-plural" class="sslp-fieldset">';
-    $output .= '<legend class="sslp-field-label">' . __( 'Staff Member title' ) . '</legend>';
+    $output .= '<legend class="sslp-field-label">' . __( 'Staff Member title' , 'simple-staff-list' ) . '</legend>';
     $output .= '<input type="text" name="staff-listing-name-plural" value="' . $custom_name_plural . '"></fieldset>';
-    $output .= '<p>' . __( 'The title that displays on the Staff Member archive page. Default is "Staff Members"' ) . '</p>';
+    $output .= '<p>' . __( 'The title that displays on the Staff Member archive page. Default is "Staff Members"' , 'simple-staff-list' ) . '</p>';
     $output .= '<fieldset id="staff-listing-field-name-singular" class="sslp-fieldset">';
-    $output .= '<legend class="sslp-field-label">' . __( 'Staff Member singular title' ) . '</legend>';
+    $output .= '<legend class="sslp-field-label">' . __( 'Staff Member singular title' , 'simple-staff-list' ) . '</legend>';
     $output .= '<input type="text" name="staff-listing-name-singular" value="' . $custom_name_singular . '"></fieldset>';
-    $output .= '<p>' . __( 'The Staff Member taxonomy singular name. No need to change this unless you need to use the singular_name field in your theme. Default is "Staff Member"' ) . '</p>';
+    $output .= '<p>' . __( 'The Staff Member taxonomy singular name. No need to change this unless you need to use the singular_name field in your theme. Default is "Staff Member"', 'simple-staff-list'  ) . '</p>';
 
-    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' ) . '" class="button button-primary button-large"></p><br /><br />';
+    $output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' , 'simple-staff-list' ) . '" class="button button-primary button-large"></p><br /><br />';
     
     $output .= wp_nonce_field('staff-member-options', 'staff-list-options');
     $output .= '</form>';
