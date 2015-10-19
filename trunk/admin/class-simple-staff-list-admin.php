@@ -142,6 +142,7 @@ class Simple_Staff_List_Admin {
 	 * Hide unwanted meta boxes on staff member screen.
 	 *
 	 * @since 1.2
+	 *
 	 * @param $hidden
 	 * @param $screen
 	 *
@@ -161,6 +162,7 @@ class Simple_Staff_List_Admin {
 	 * Change name of title meta box on staff member screen.
 	 *
 	 * @since 1.2
+	 *
 	 * @param $title string Title box text
 	 *
 	 * @return mixed Title box text
@@ -234,6 +236,7 @@ class Simple_Staff_List_Admin {
 	 * Register staff member custom columns.
 	 *
 	 * @since 1.2
+	 *
 	 * @param $cols
 	 *
 	 * @return array Custom columns
@@ -416,7 +419,7 @@ class Simple_Staff_List_Admin {
 				echo $_staff_member_phone;
 				break;
 			case "_staff_member_bio":
-//				echo staff_bio_excerpt( $_staff_member_bio, 10 );
+				echo $this->get_staff_bio_excerpt( $_staff_member_bio, 10 );
 				break;
 		}
 
@@ -459,6 +462,36 @@ class Simple_Staff_List_Admin {
 		update_post_meta( $post->ID,
 			'_staff_member_tw',
 			isset( $_POST['_staff_member_tw'] ) ? $_POST['_staff_member_tw'] : '' );
+
+	}
+
+	/**
+	 * Get staff bio excerpt.
+	 *
+	 * @since 1.2
+	 *
+	 * @param $text string Bio text
+	 * @param $excerpt_length int Excerpt length
+	 *
+	 * @return mixed
+	 */
+	public function get_staff_bio_excerpt( $text, $excerpt_length ) {
+
+		global $post;
+
+		if ( ! $excerpt_length || ! is_int( $excerpt_length ) ) {
+			$excerpt_length = 20;
+		}
+
+		if ( '' != $text ) {
+			$text         = strip_shortcodes( $text );
+			$text         = apply_filters( 'the_content', $text );
+			$text         = str_replace( ']]>', ']]>', $text );
+			$excerpt_more = " ...";
+			$text         = wp_trim_words( $text, $excerpt_length, $excerpt_more );
+		}
+
+		return apply_filters( 'the_excerpt', $text );
 
 	}
 
