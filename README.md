@@ -28,7 +28,7 @@ testing environment in a few easy steps:
    cd simple-staff-list-tester
    mkdir -p content/plugins content/themes
    cp -r wp/wp-content/themes/* content/themes
-   git clone git@github.com:brettshumaker/simple-staff-list.git simple-staff-list
+   git clone git@github.com:brettshumaker/Staff-List-Plugin.git simple-staff-list
    ```
 
 4. Start the virtual machine:
