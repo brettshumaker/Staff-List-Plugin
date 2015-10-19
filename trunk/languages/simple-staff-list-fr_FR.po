@@ -1,0 +1,434 @@
+# Copyright (C) 2013 Simple Staff List
+# This file is distributed under the same license as the Simple Staff List package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Staff List 1.16\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/plugins/simple-staff-list/\n"
+"POT-Creation-Date: 2015-04-30 14:30-0500\n"
+"PO-Revision-Date: 2015-04-30 14:36-0500\n"
+"Last-Translator: Enguerran POULAIN <ebc08@hotmail.fr>\n"
+"Language-Team: theblackhole <contact@epoulain.fr>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.6\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_html__;esc_attr_e;esc_attr__;"
+"_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: _inc/admin-install-uninstall.php:120
+msgctxt "post type singular name"
+msgid "Staff Member"
+msgstr "Membre"
+
+#: _inc/admin-install-uninstall.php:121
+msgctxt "post type general name"
+msgid "Staff Members"
+msgstr "Membres"
+
+#: _inc/admin-views.php:28
+msgid "Position:"
+msgstr "Titre :"
+
+#: _inc/admin-views.php:28
+msgid "Staff Member's Position"
+msgstr "Titre du membre"
+
+#: _inc/admin-views.php:29
+msgid "Email:"
+msgstr "Courriel :"
+
+#: _inc/admin-views.php:29
+msgid "Staff Member's Email"
+msgstr "Courriel du membre"
+
+#: _inc/admin-views.php:30
+msgid "Phone:"
+msgstr "Téléphone :"
+
+#: _inc/admin-views.php:30
+msgid "Staff Member's Phone"
+msgstr "Téléphone du membre"
+
+#: _inc/admin-views.php:31
+msgid "Facebook URL:"
+msgstr "Profil Facebook :"
+
+#: _inc/admin-views.php:31
+msgid "Staff Member's Facebook URL"
+msgstr "Lien du profil Facebook du membre"
+
+#: _inc/admin-views.php:32
+msgid "Twitter Username:"
+msgstr "Identifiant Twitter :"
+
+#: _inc/admin-views.php:32
+msgid "Staff Member's Twitter Name"
+msgstr "Identifiant Twitter du membre"
+
+#: _inc/admin-views.php:45
+msgid ""
+"<p><strong>Your current theme does not support post thumbnails. Unfortunately, "
+"you will not be able to add photos for your Staff Members</strong></p>"
+msgstr ""
+"<p><strong>Votre thème actuel ne supporte pas les Images à la Une. "
+"Malheureusement, vous ne pourrez pas ajouter de photo aux membres</strong></p>"
+
+#: _inc/admin-views.php:124 _inc/admin-views.php:194 _inc/admin-views.php:297
+#: _inc/admin-views.php:385
+msgid "Simple Staff List"
+msgstr "Simple Staff List"
+
+#: _inc/admin-views.php:125
+msgid "Order Staff"
+msgstr "Trier les Membres"
+
+#: _inc/admin-views.php:126
+msgid ""
+"Simply drag the staff member up or down and they will be saved in that order."
+msgstr ""
+"Glissez simplement les membres en haut ou en bas et ils seront sauvegardés dans "
+"cet ordre."
+
+#: _inc/admin-views.php:133 _inc/admin-views.php:159 simple-staff-list.php:361
+msgid "Order"
+msgstr "Trier"
+
+#: _inc/admin-views.php:134 _inc/admin-views.php:160 simple-staff-list.php:327
+msgid "Photo"
+msgstr "Photo"
+
+#: _inc/admin-views.php:135 _inc/admin-views.php:161 simple-staff-list.php:326
+msgid "Name"
+msgstr "Nom"
+
+#: _inc/admin-views.php:136 _inc/admin-views.php:162 simple-staff-list.php:328
+msgid "Position"
+msgstr "Titre"
+
+#: _inc/admin-views.php:137 _inc/admin-views.php:163 simple-staff-list.php:329
+msgid "Email"
+msgstr "Courriel"
+
+#: _inc/admin-views.php:138 _inc/admin-views.php:164 simple-staff-list.php:330
+msgid "Phone"
+msgstr "Téléphone"
+
+#: _inc/admin-views.php:139 _inc/admin-views.php:165 simple-staff-list.php:331
+msgid "Bio"
+msgstr "Biographie"
+
+#: _inc/admin-views.php:173
+msgid ""
+"No staff members found, why not <a href=\"post-new.php?post_type=staff-member"
+"\">create one?"
+msgstr ""
+"Aucun membre trouvé, souhaitez-vous <a href=\"post-new.php?post_type=staff-member"
+"\">en créer un ?"
+
+#: _inc/admin-views.php:195 simple-staff-list.php:377
+msgid "Usage"
+msgstr "Utilisation"
+
+#: _inc/admin-views.php:196
+msgid ""
+"The Simple Staff List plugin makes it easy to create and display a staff "
+"directory on your website. You can create your own <a href=\"edit.php?"
+"post_type=staff-member&page=staff-member-template\" title=\"Edit the Simple "
+"Staff List template.\">template</a> for displaying staff information as well as "
+"<a href=\"edit.php?post_type=staff-member&page=staff-member-usage\" title=\"Edit "
+"Custom CSS for Simple Staff List\">add custom css</a> styling to make your staff "
+"directory look great."
+msgstr ""
+"Le plugin \"Simple Staff List\" permet de créer et afficher facilement une liste "
+"de membres sur votre site web. Vous pouvez créer votre propre <a href=\"edit.php?"
+"post_type=staff-member&page=staff-member-template\" title=\"Editer le modèle de "
+"Simple Staff List.\">modèle</a> pour afficher les informations des membres mais "
+"aussi <a href=\"edit.php?post_type=staff-member&page=staff-member-usage\" title="
+"\"Editer le style CSS personnalisé pour Simple Staff List\">ajouter un style CSS "
+"personnalisé</a> pour mettre en valeur votre liste de membres."
+
+#: _inc/admin-views.php:198
+msgid "Shortcode"
+msgstr "Shortcodes à utiliser"
+
+#: _inc/admin-views.php:200
+msgid ""
+"This is the most basic usage of Simple Staff List. Displays all Staff Members on "
+"post or page."
+msgstr ""
+"C&apos;est l&apos;utilisation la plus basique de Simple Staff List. Ceci affiche "
+"tous les membres dans un article ou une page."
+
+#: _inc/admin-views.php:201
+msgid ""
+"This displays all Staff Members from the group \"Robots\" sorted by order on the "
+"\"Order\" page. This will also add a class of \"Robots\" to the outer Staff List "
+"container for styling purposes."
+msgstr ""
+"Ceci affiche tous les membres du groupe \"Robots\" trié selon les critères de la "
+"page \"Trier\". Ceci ajoutera également une classe \"Robots\" dans le \"container"
+"\" externe de Staff List afin de personnaliser son style."
+
+#: _inc/admin-views.php:202
+msgid "This adds a class to the inner Staff Member wrap."
+msgstr "Ceci ajoute une classe dans le \"wrap\" interne de Staff List."
+
+#: _inc/admin-views.php:203
+msgid ""
+"This displays Staff Members sorted by ascending or descending order according to "
+"the \"Order\" page. You may use \"ASC\" or \"DESC\" but the default is \"ASC\""
+msgstr ""
+"Ceci affiche la liste de membres triés par ordre croissant ou décroissant selon "
+"les critères de la page \"Trier\". Vous pouvez utiliser \"ASC\" pour trier par "
+"ordre croissant et \"DESC\" pour décroissant mais \"ASC\" est utilisé par défaut"
+
+#: _inc/admin-views.php:207
+msgid ""
+"To display your Staff List just use the shortcode <code>[simple-staff-list]</"
+"code> in any page or post. This will output all staff members according to the "
+"template options set <a href=\"edit.php?post_type=staff-member&page=staff-member-"
+"template\" title=\"Edit the Simple Staff List template.\">here"
+msgstr ""
+"Pour afficher la liste de membres, utiliser simplement le code <code>[simple-"
+"staff-list]</code> dans n&apos;importe quelle article ou page. Ceci affichera "
+"tous les membres selon les options définies <a href=\"edit.php?post_type=staff-"
+"member&page=staff-member-template\" title=\"Editer le modèle de Simple Staff "
+"List.\">ici"
+
+#: _inc/admin-views.php:301
+msgid "Accepted Template Tags <strong>(UNFORMATTED)</strong>"
+msgstr "Tags du modèle acceptés <strong>(NON FORMATÉS)</strong>"
+
+#: _inc/admin-views.php:306
+msgid "Accepted Template Tags <strong>(FORMATTED)</strong>"
+msgstr "Tags du modèle acceptés <strong>(FORMATÉS)</strong>"
+
+#: _inc/admin-views.php:311
+msgid ""
+"These <strong>MUST</strong> be used inside the <code>[staff_loop]</code> "
+"wrapper. The unformatted tags will return plain strings so you will want to wrap "
+"them in your own HTML. The <code>[staff_loop]</code> can accept any HTML so be "
+"careful when adding your own HTML code. The formatted tags will return data "
+"wrapped in HTML elements. For example, <code>[staff-name-formatted]</code> "
+"returns <code>&lt;h3&gt;STAFF-NAME&lt;/h3&gt;</code>, and <code>[staff-email-"
+"link]</code> returns <code>&lt;a href=\"mailto:STAFF-EMAIL\" title=\"Email STAFF-"
+"NAME\"&gt;STAFF-EMAIL&lt;/a&gt;</code>."
+msgstr ""
+"Ils <strong>DOIVENT</strong> être utilisés dans le \"wrapper\" "
+"<code>[staff_loop]</code>. Les tags non formatés ne retournent que du texte donc "
+"vous allez sûrement les mettre en forme dans votre propre html. Le code "
+"<code>[staff_loop]</code> peut accepter n&apos;importe quel code HTML donc soyez "
+"attentifs lorsque vous ajoutez votre propre code HTML. Les tags formatés "
+"retournent des données mises en forme avec des éléments HTML. Par exemple, le "
+"code <code>[staff-name-formatted]</code> retourne <code>&lt;h3&gt;STAFF-NAME&lt;/"
+"h3&gt;</code>, et le code <code>[staff-email-link]</code> retourne <code>&lt;a "
+"href=\"mailto:STAFF-EMAIL\" title=\"Email STAFF-NAME\"&gt;STAFF-EMAIL&lt;/a&gt;</"
+"code>."
+
+#: _inc/admin-views.php:312
+msgid ""
+"**Note: All emails are obfuscated using the <a href=\"http://codex.wordpress.org/"
+"Function_Reference/antispambot\" target=\"_blank\" title=\"WordPress email "
+"obfuscation function: antispambot()\">antispambot() WordPress function</a>."
+msgstr ""
+"**Note : Tous les courriels sont masqués avec la <a href=\"http://codex."
+"wordpress.org/Function_Reference/antispambot\" target=\"_blank\" title="
+"\"fonction de masquage de mail WordPress : antispambot()\">fonction de masquage "
+"de mail WordPress : antispambot()</a>"
+
+#: _inc/admin-views.php:316
+msgid "Staff Loop Template"
+msgstr "Modèle d&apos;affichage des membres"
+
+#: _inc/admin-views.php:319
+msgid "View Default Template"
+msgstr "Voir le modèle par défaut"
+
+#: _inc/admin-views.php:326 _inc/admin-views.php:342 _inc/admin-views.php:405
+msgid "Save ALL Changes"
+msgstr "Sauvegarder TOUTES les modifications"
+
+#: _inc/admin-views.php:328
+msgid "Staff Page CSS"
+msgstr "Style CSS de la page de membres"
+
+#: _inc/admin-views.php:330
+msgid "Write to external CSS file? (Leave unchecked for WP Multisite.)"
+msgstr ""
+"Enregistrer le style dans un fichier CSS externe ? (Laisser décoché lorsque vous "
+"avez un réseau multisite WordPress.)"
+
+#: _inc/admin-views.php:333
+msgid "View Default CSS"
+msgstr "Voir le style CSS par défaut"
+
+#: _inc/admin-views.php:339
+msgid ""
+"Add your custom CSS below to style the output of your staff list. I've included "
+"selectors for everything output by the plugin."
+msgstr ""
+"Ajouter votre style CSS personnalisé ci-dessous afin de mettre en forme la liste "
+"des membres. Vous y trouverez des sélecteurs pour tout ce qui est utilisé par le "
+"plugin."
+
+#: _inc/admin-views.php:391
+msgid "Staff Members URL Slug"
+msgstr "Identifiant du permalien des Membres"
+
+#: _inc/admin-views.php:393
+msgid "The slug used for building the staff members URL. The current URL is: "
+msgstr ""
+"L&apos;identifiant utilisé pour créer le permalien des membres. Le permalien "
+"actuel est : "
+
+#: _inc/admin-views.php:397
+msgid "Staff Member title"
+msgstr "Titre du membre"
+
+#: _inc/admin-views.php:399
+msgid ""
+"The title that displays on the Staff Member archive page. Default is \"Staff "
+"Members\""
+msgstr ""
+"Le titre qui s'affiche sur la page \"archives\" de la liste des membres. Par "
+"défaut : \"Membres\""
+
+#: _inc/admin-views.php:401
+msgid "Staff Member singular title"
+msgstr "Le titre \"Membre\" au singulier"
+
+#: _inc/admin-views.php:403
+msgid ""
+"The Staff Member taxonomy singular name. No need to change this unless you need "
+"to use the singular_name field in your theme. Default is \"Staff Member\""
+msgstr ""
+"Le titre \"Membre\" au singulier. Vous n&apos;avez pas à le modifier sauf si "
+"vous utilisez le champ \"singular_name\" dans votre thème. Par défaut : \"Membre"
+"\""
+
+#: simple-staff-list.php:149
+msgctxt "staff member"
+msgid "Add New"
+msgstr "Nouveau membre"
+
+#: simple-staff-list.php:150
+msgid "Add New Staff Member"
+msgstr "Ajouter un nouveau membre"
+
+#: simple-staff-list.php:151
+msgid "Edit Staff Member"
+msgstr "Modifier un membre"
+
+#: simple-staff-list.php:152
+msgid "New Staff Member"
+msgstr "Nouveau membre"
+
+#: simple-staff-list.php:153
+msgid "View Staff Member"
+msgstr "Voir les membres"
+
+#: simple-staff-list.php:154
+msgid "Search Staff Members"
+msgstr "Rechercher un membre"
+
+#: simple-staff-list.php:156
+msgid "No staff members found"
+msgstr "Aucun membre trouvé"
+
+#: simple-staff-list.php:157
+msgid "No staff members found in Trash"
+msgstr "Aucun membre trouvé dans la corbeille"
+
+#: simple-staff-list.php:159
+msgid "All Staff Members"
+msgstr "Tous les membres"
+
+#: simple-staff-list.php:160
+msgid "Staff Members"
+msgstr "Membres"
+
+#: simple-staff-list.php:201
+msgctxt "taxonomy general name"
+msgid "Groups"
+msgstr "Groupes"
+
+#: simple-staff-list.php:202
+msgctxt "taxonomy singular name"
+msgid "Group"
+msgstr "Groupe"
+
+#: simple-staff-list.php:203
+msgid "Search Groups"
+msgstr "Rechercher un groupe"
+
+#: simple-staff-list.php:204
+msgid "All Groups"
+msgstr "Tous les groupes"
+
+#: simple-staff-list.php:205
+msgid "Parent Group"
+msgstr "Groupe parent"
+
+#: simple-staff-list.php:206
+msgid "Parent Group:"
+msgstr "Groupe parent :"
+
+#: simple-staff-list.php:207
+msgid "Edit Group"
+msgstr "Modifier un groupe"
+
+#: simple-staff-list.php:208
+msgid "Update Group"
+msgstr "Mettre à jour le groupe"
+
+#: simple-staff-list.php:209
+msgid "Add New Group"
+msgstr "Ajouter un nouveau groupe"
+
+#: simple-staff-list.php:210
+msgid "New Group Name"
+msgstr "Nom du nouveau groupe"
+
+#: simple-staff-list.php:259
+msgid "Staff Name"
+msgstr "Nom du membre"
+
+#: simple-staff-list.php:284 simple-staff-list.php:286
+msgid "Staff Photo"
+msgstr "Photo du membre"
+
+#: simple-staff-list.php:301
+msgid "Staff Member Info"
+msgstr "Infos sur le membre"
+
+#: simple-staff-list.php:303
+msgid "Staff Member Bio"
+msgstr "Biographie du membre"
+
+#: simple-staff-list.php:360
+msgid "Order Staff Members"
+msgstr "Trier les membres"
+
+#: simple-staff-list.php:368
+msgid "Display Templates"
+msgstr "Afficher les modèles"
+
+#: simple-staff-list.php:369
+msgid "Templates"
+msgstr "Modèles"
+
+#: simple-staff-list.php:376
+msgid "Simple Staff List Usage"
+msgstr "Utilisation de \"Simple Staff List\""
+
+#: simple-staff-list.php:384
+msgid "Simple Staff List Options"
+msgstr "Options de Simple Staff List"
+
+#: simple-staff-list.php:385
+msgid "Options"
+msgstr "Options"
