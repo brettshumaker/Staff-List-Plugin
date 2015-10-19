@@ -4,7 +4,7 @@
  * Register all actions and filters for the plugin
  *
  * @link       http://www.brettshumaker.com
- * @since      1.0.0
+ * @since      1.2
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/includes
@@ -26,7 +26,7 @@ class Simple_Staff_List_Loader {
 	/**
 	 * The array of actions registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   protected
 	 * @var      array    $actions    The actions registered with WordPress to fire when the plugin loads.
 	 */
@@ -35,7 +35,7 @@ class Simple_Staff_List_Loader {
 	/**
 	 * The array of filters registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   protected
 	 * @var      array    $filters    The filters registered with WordPress to fire when the plugin loads.
 	 */
@@ -44,7 +44,7 @@ class Simple_Staff_List_Loader {
 	/**
 	 * Initialize the collections used to maintain the actions and filters.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 */
 	public function __construct() {
 
@@ -56,7 +56,7 @@ class Simple_Staff_List_Loader {
 	/**
 	 * Add a new action to the collection to be registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @param      string               $hook             The name of the WordPress action that is being registered.
 	 * @param      object               $component        A reference to the instance of the object on which the action is defined.
 	 * @param      string               $callback         The name of the function definition on the $component.
@@ -70,7 +70,7 @@ class Simple_Staff_List_Loader {
 	/**
 	 * Add a new filter to the collection to be registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @param      string               $hook             The name of the WordPress filter that is being registered.
 	 * @param      object               $component        A reference to the instance of the object on which the filter is defined.
 	 * @param      string               $callback         The name of the function definition on the $component.
@@ -85,7 +85,7 @@ class Simple_Staff_List_Loader {
 	 * A utility function that is used to register the actions and hooks into a single
 	 * collection.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   private
 	 * @param      array                $hooks            The collection of hooks that is being registered (that is, actions or filters).
 	 * @param      string               $hook             The name of the WordPress filter that is being registered.
@@ -112,7 +112,7 @@ class Simple_Staff_List_Loader {
 	/**
 	 * Register the filters and actions with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 */
 	public function run() {
 
