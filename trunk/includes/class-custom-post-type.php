@@ -527,7 +527,7 @@ class Custom_Post_Type
 				// Deny the WordPress autosave function
 				if( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
 
-				if ( ! wp_verify_nonce( $_POST['custom_post_type'], plugin_basename(__FILE__) ) ) return;
+				if ( !isset($_POST['custom_post_type']) || ! wp_verify_nonce( $_POST['custom_post_type'], plugin_basename(__FILE__) ) ) return;
 
 				global $post;
 
