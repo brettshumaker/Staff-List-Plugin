@@ -114,6 +114,11 @@ class Simple_Staff_List {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-simple-staff-list-admin.php';
 
 		/**
+		 * A utility class for creating custom post types
+		 */
+		require_once plugin_dir_path( __FILE__ ) . 'admin/class-custom-post-type.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
