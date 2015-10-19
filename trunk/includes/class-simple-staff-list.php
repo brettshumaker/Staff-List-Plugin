@@ -165,7 +165,7 @@ class Simple_Staff_List {
 		$this->loader->add_filter( 'enter_title_here', $plugin_admin, 'staff_member_change_title' );
 		$this->loader->add_action( 'do_meta_boxes', $plugin_admin, 'staff_member_featured_image_text' );
 		$this->loader->add_action( 'do_meta_boxes', $plugin_admin, 'staff_member_add_meta_boxes' );
-		$this->loader->add_filter( 'manage_sslp_staff_members_posts_columns', $plugin_admin, 'staff_member_custom_columns' );
+		$this->loader->add_filter( 'manage_sslp_staff_member_posts_columns', $plugin_admin, 'staff_member_custom_columns' );
 		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'staff_member_display_custom_columns' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_staff_member_details' );
 

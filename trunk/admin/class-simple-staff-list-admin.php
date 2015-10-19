@@ -119,7 +119,7 @@ class Simple_Staff_List_Admin {
 
 		// Usage page
 		add_submenu_page(
-			'edit.php?post_type=sslp_staff_members',
+			'edit.php?post_type=sslp_staff_member',
 			__( 'Simple Staff List Usage', $this->plugin_name ),
 			__( 'Usage', $this->plugin_name ),
 			'edit_pages',
@@ -150,7 +150,7 @@ class Simple_Staff_List_Admin {
 	 */
 	public function hide_meta_boxes( $hidden, $screen ) {
 
-		if ( 'sslp_staff_members' == $screen->id ) {
+		if ( 'sslp_staff_member' == $screen->id ) {
 			$hidden = array( 'postexcerpt' );
 		}
 
@@ -171,7 +171,7 @@ class Simple_Staff_List_Admin {
 
 		$screen = get_current_screen();
 
-		if ( $screen->post_type == 'sslp_staff_members' ) {
+		if ( $screen->post_type == 'sslp_staff_member' ) {
 			$title = __( 'Staff Name', $this->plugin_name );
 		}
 
@@ -185,14 +185,14 @@ class Simple_Staff_List_Admin {
 	 */
 	public function staff_member_featured_image_text() {
 
-		remove_meta_box( 'postimagediv', 'sslp_staff_members', 'side' );
+		remove_meta_box( 'postimagediv', 'sslp_staff_member', 'side' );
 
 		if ( current_theme_supports( 'post-thumbnails' ) ) {
 
 			add_meta_box( 'postimagediv',
 				__( 'Staff Photo', $this->plugin_name ),
 				'post_thumbnail_meta_box',
-				'sslp_staff_members',
+				'sslp_staff_member',
 				'normal',
 				'high' );
 
@@ -201,7 +201,7 @@ class Simple_Staff_List_Admin {
 			add_meta_box( 'staff-member-warning',
 				__( 'Staff Photo', $this->plugin_name ),
 				'sslp_staff_member_warning_meta_box',
-				'sslp_staff_members',
+				'sslp_staff_member',
 				'normal',
 				'high' );
 
@@ -219,14 +219,14 @@ class Simple_Staff_List_Admin {
 		add_meta_box( 'staff-member-info',
 			__( 'Staff Member Info', $this->plugin_name ),
 			array( $this, 'staff_member_info_meta_box' ),
-			'sslp_staff_members',
+			'sslp_staff_member',
 			'normal',
 			'high' );
 
 		add_meta_box( 'staff-member-bio',
 			__( 'Staff Member Bio', $this->plugin_name ),
 			array( $this, 'staff_member_bio_meta_box' ),
-			'sslp_staff_members',
+			'sslp_staff_member',
 			'normal',
 			'high' );
 
