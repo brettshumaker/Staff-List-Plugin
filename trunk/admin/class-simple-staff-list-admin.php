@@ -27,7 +27,7 @@ class Simple_Staff_List_Admin {
 	 *
 	 * @since    1.2
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
@@ -36,7 +36,7 @@ class Simple_Staff_List_Admin {
 	 *
 	 * @since    1.2
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
 
@@ -50,7 +50,7 @@ class Simple_Staff_List_Admin {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -73,7 +73,11 @@ class Simple_Staff_List_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-staff-list-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name,
+			plugin_dir_url( __FILE__ ) . 'css/simple-staff-list-admin.css',
+			array(),
+			$this->version,
+			'all' );
 
 	}
 
@@ -96,8 +100,41 @@ class Simple_Staff_List_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name,
+			plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-admin.js',
+			array( 'jquery' ),
+			$this->version,
+			false );
 
+	}
+
+
+	/**
+	 * Register admin menu items.
+	 *
+	 * @since   1.2
+	 */
+	public function register_menu() {
+
+		// Usage page
+		add_submenu_page(
+			'edit.php?post_type=staff-member',
+			__( 'Simple Staff List Usage', $this->plugin_name ),
+			__( 'Usage', $this->plugin_name ),
+			'edit_pages',
+			'staff-member-usage',
+			array( $this, 'display_usage_page' )
+		);
+
+	}
+
+	/**
+	 * Display Usage page content.
+	 *
+	 * @since   1.2
+	 */
+	public function display_usage_page() {
+		include_once( 'partials/simple-staff-list-usage-display.php' );
 	}
 
 }
