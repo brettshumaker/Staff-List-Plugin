@@ -20,7 +20,7 @@
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       http://www.brettshumaker.com
- * @since      1.0.0
+ * @since      1.2
  *
  * @package    Simple_Staff_List
  */
@@ -29,3 +29,14 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+// @TODO: Need to account for multisite and other things in the comments above.
+delete_option('_staff_listing_default_tags');
+delete_option('_staff_listing_default_tag_string');
+delete_option('_staff_listing_default_formatted_tags');
+delete_option('_staff_listing_default_formatted_tag_string');
+delete_option('_staff_listing_default_html');
+delete_option('_staff_listing_default_css');
+delete_option('_staff_listing_custom_html');
+delete_option('_staff_listing_custom_css');
+delete_option('_simple_staff_list_version');
