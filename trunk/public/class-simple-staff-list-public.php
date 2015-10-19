@@ -108,6 +108,11 @@ class Simple_Staff_List_Public {
 
 	}
 
+	/**
+	 * Initialize staff member custom post type and taxonomies.
+	 *
+	 * @since 1.2
+	 */
 	public function staff_member_init() {
 
 		global $wp_version;

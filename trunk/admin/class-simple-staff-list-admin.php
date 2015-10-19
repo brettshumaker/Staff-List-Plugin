@@ -138,6 +138,15 @@ class Simple_Staff_List_Admin {
 		include_once( 'partials/simple-staff-list-usage-display.php' );
 	}
 
+	/**
+	 * Hide unwanted meta boxes on staff member screen.
+	 *
+	 * @since 1.2
+	 * @param $hidden
+	 * @param $screen
+	 *
+	 * @return array
+	 */
 	public function hide_meta_boxes( $hidden, $screen ) {
 
 		if ( 'sslp_staff_members' == $screen->id ) {
@@ -148,6 +157,14 @@ class Simple_Staff_List_Admin {
 
 	}
 
+	/**
+	 * Change name of title meta box on staff member screen.
+	 *
+	 * @since 1.2
+	 * @param $title string Title box text
+	 *
+	 * @return mixed Title box text
+	 */
 	public function staff_member_change_title( $title ) {
 
 		$screen = get_current_screen();
@@ -159,6 +176,11 @@ class Simple_Staff_List_Admin {
 		return $title;
 	}
 
+	/**
+	 * Handle staff member featured image text
+	 *
+	 * @since 1.2
+	 */
 	public function staff_member_featured_image_text() {
 
 		remove_meta_box( 'postimagediv', 'sslp_staff_members', 'side' );
@@ -185,6 +207,11 @@ class Simple_Staff_List_Admin {
 
 	}
 
+	/**
+	 * Register staff member meta boxes.
+	 *
+	 * @since 1.2
+	 */
 	public function staff_member_add_meta_boxes() {
 
 		add_meta_box( 'staff-member-info',
@@ -203,6 +230,14 @@ class Simple_Staff_List_Admin {
 
 	}
 
+	/**
+	 * Register staff member custom columns.
+	 *
+	 * @since 1.2
+	 * @param $cols
+	 *
+	 * @return array Custom columns
+	 */
 	public function staff_member_custom_columns( $cols ) {
 
 		$cols = array(
@@ -218,7 +253,13 @@ class Simple_Staff_List_Admin {
 		return $cols;
 	}
 
-	function staff_member_info_meta_box() {
+	/**
+	 * Display staff member info meta box.
+	 *
+	 * @since 1.2
+	 */
+	public function staff_member_info_meta_box() {
+
 		global $post;
 
 		$custom              = get_post_custom( $post->ID );
@@ -297,18 +338,32 @@ class Simple_Staff_List_Admin {
 			</label>
 		</div>
 		<?php
+
 	}
 
-	function sslp_staff_member_warning_meta_box() {
+	/**
+	 * Display staff member warnings.
+	 *
+	 * @since 1.2
+	 */
+	public function sslp_staff_member_warning_meta_box() {
+
 		_e( '<p><strong>Your current theme does not support post thumbnails. Unfortunately, you will not be able to add photos for your Staff Members</strong></p>',
 			'simple-staff-list' );
+
 	}
 
-	function staff_member_bio_meta_box() {
+	/**
+	 * Display staff member bio meta box.
+	 *
+	 * @since 1.2
+	 */
+	public function staff_member_bio_meta_box() {
+
 		global $post;
 
 		$custom            = get_post_custom( $post->ID );
-		$_staff_member_bio = isset($custom["_staff_member_bio"][0]) ? $custom["_staff_member_bio"][0] : '';
+		$_staff_member_bio = isset( $custom["_staff_member_bio"][0] ) ? $custom["_staff_member_bio"][0] : '';
 
 		wp_editor( $_staff_member_bio,
 			'_staff_member_bio',
@@ -325,9 +380,18 @@ class Simple_Staff_List_Admin {
 		<?php wp_nonce_field( 'sslp_post_nonce', 'sslp_add_edit_staff_member_noncename' ) ?>
 
 		<?php
+
 	}
 
+	/**
+	 * Display staff member custom columns.
+	 *
+	 * @since 1.2
+	 *
+	 * @param $column
+	 */
 	public function staff_member_display_custom_columns( $column ) {
+
 		global $post;
 
 		$custom              = get_post_custom();
@@ -355,6 +419,47 @@ class Simple_Staff_List_Admin {
 //				echo staff_bio_excerpt( $_staff_member_bio, 10 );
 				break;
 		}
+
+	}
+
+	/**
+	 * Save the staff member details post meta.
+	 *
+	 * @since 1.2
+	 */
+	public function save_staff_member_details() {
+
+		global $post;
+
+		if ( ! isset( $_POST['sslp_add_edit_staff_member_noncename'] )
+		     || ! wp_verify_nonce( $_POST['sslp_add_edit_staff_member_noncename'], 'sslp_post_nonce' )
+		) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return $post->ID;
+		}
+
+		update_post_meta( $post->ID,
+			'_staff_member_bio',
+			isset( $_POST['_staff_member_bio'] ) ? $_POST['_staff_member_bio'] : '' );
+		update_post_meta( $post->ID,
+			'_staff_member_title',
+			isset( $_POST['_staff_member_title'] ) ? $_POST['_staff_member_title'] : '' );
+		update_post_meta( $post->ID,
+			'_staff_member_email',
+			isset( $_POST['_staff_member_email'] ) ? $_POST['_staff_member_email'] : '' );
+		update_post_meta( $post->ID,
+			'_staff_member_phone',
+			isset( $_POST['_staff_member_phone'] ) ? $_POST['_staff_member_phone'] : '' );
+		update_post_meta( $post->ID,
+			'_staff_member_fb',
+			isset( $_POST['_staff_member_fb'] ) ? $_POST['_staff_member_fb'] : '' );
+		update_post_meta( $post->ID,
+			'_staff_member_tw',
+			isset( $_POST['_staff_member_tw'] ) ? $_POST['_staff_member_tw'] : '' );
+
 	}
 
 }
