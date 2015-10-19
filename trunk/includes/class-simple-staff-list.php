@@ -35,7 +35,7 @@ class Simple_Staff_List {
 	 *
 	 * @since    1.2
 	 * @access   protected
-	 * @var      Simple_Staff_List_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Simple_Staff_List_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -44,7 +44,7 @@ class Simple_Staff_List {
 	 *
 	 * @since    1.2
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string $plugin_name The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
@@ -53,7 +53,7 @@ class Simple_Staff_List {
 	 *
 	 * @since    1.2
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string $version The current version of the plugin.
 	 */
 	protected $version;
 
@@ -69,7 +69,7 @@ class Simple_Staff_List {
 	public function __construct() {
 
 		$this->plugin_name = 'simple-staff-list';
-		$this->version = '1.2';
+		$this->version     = '1.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -160,6 +160,13 @@ class Simple_Staff_List {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_menu' );
+
+		$this->loader->add_filter( 'default_hidden_meta_boxes', $plugin_admin,  'hide_meta_boxes', 10, 2 );
+		$this->loader->add_filter( 'enter_title_here', $plugin_admin, 'staff_member_change_title' );
+		$this->loader->add_action( 'do_meta_boxes', $plugin_admin, 'staff_member_featured_image_text' );
+		$this->loader->add_action( 'do_meta_boxes', $plugin_admin, 'staff_member_add_meta_boxes' );
+		$this->loader->add_filter( 'manage_sslp_staff_members_posts_columns', $plugin_admin, 'staff_member_custom_columns' );
+		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'staff_member_display_custom_columns' );
 
 	}
 
