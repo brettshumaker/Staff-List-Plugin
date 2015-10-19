@@ -116,7 +116,7 @@ class Simple_Staff_List {
 		/**
 		 * A utility class for creating custom post types
 		 */
-		require_once plugin_dir_path( __FILE__ ) . 'admin/class-custom-post-type.php';
+		require_once plugin_dir_path( __FILE__ ) . 'class-custom-post-type.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -175,6 +175,7 @@ class Simple_Staff_List {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'init', $plugin_public, 'staff_member_init' );
 
 	}
 
