@@ -7,7 +7,7 @@
  * public-facing side of the site and the admin area.
  *
  * @link       http://www.brettshumaker.com
- * @since      1.0.0
+ * @since      1.2
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/includes
@@ -22,7 +22,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      1.2
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/includes
  * @author     Brett Shumaker <brettshumaker@gmail.com>
@@ -33,7 +33,7 @@ class Simple_Staff_List {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   protected
 	 * @var      Simple_Staff_List_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
@@ -42,7 +42,7 @@ class Simple_Staff_List {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
@@ -51,7 +51,7 @@ class Simple_Staff_List {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -64,12 +64,12 @@ class Simple_Staff_List {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 */
 	public function __construct() {
 
 		$this->plugin_name = 'simple-staff-list';
-		$this->version = '1.0.0';
+		$this->version = '1.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -91,7 +91,7 @@ class Simple_Staff_List {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -129,7 +129,7 @@ class Simple_Staff_List {
 	 * Uses the Simple_Staff_List_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   private
 	 */
 	private function set_locale() {
@@ -145,7 +145,7 @@ class Simple_Staff_List {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -161,7 +161,7 @@ class Simple_Staff_List {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -176,7 +176,7 @@ class Simple_Staff_List {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 */
 	public function run() {
 		$this->loader->run();
@@ -186,7 +186,7 @@ class Simple_Staff_List {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     1.2
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
@@ -196,7 +196,7 @@ class Simple_Staff_List {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     1.2
 	 * @return    Simple_Staff_List_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
@@ -206,7 +206,7 @@ class Simple_Staff_List {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     1.2
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {

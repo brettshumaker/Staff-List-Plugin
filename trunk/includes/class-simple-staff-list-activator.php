@@ -4,7 +4,7 @@
  * Fired during plugin activation
  *
  * @link       http://www.brettshumaker.com
- * @since      1.0.0
+ * @since      1.2
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.0
+ * @since      1.2
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/includes
  * @author     Brett Shumaker <brettshumaker@gmail.com>
@@ -27,7 +27,7 @@ class Simple_Staff_List_Activator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    1.2
 	 */
 	public static function activate() {
 
