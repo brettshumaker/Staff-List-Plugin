@@ -23,14 +23,14 @@
 class Simple_Staff_List_Deactivator {
 
 	/**
-	 * Short Description. (use period)
+	 * Runs on plugin deactivation.
 	 *
-	 * Long Description.
+	 * Nothing but flushing rewrite rules right now.
 	 *
 	 * @since    1.2
 	 */
 	public static function deactivate() {
-
+		flush_rewrite_rules();
 	}
 
 }

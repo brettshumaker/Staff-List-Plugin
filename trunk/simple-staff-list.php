@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Simple Staff List
  * Plugin URI:        https://wordpress.org/plugins/simple-staff-list/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       A simple plugin to build and display a staff listing for your website.
  * Version:           1.2
  * Author:            Brett Shumaker
  * Author URI:        http://www.brettshumaker.com
