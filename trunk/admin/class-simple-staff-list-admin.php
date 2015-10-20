@@ -117,6 +117,16 @@ class Simple_Staff_List_Admin {
 	 */
 	public function register_menu() {
 
+		// Templates page
+		add_submenu_page(
+			'edit.php?post_type=sslp_staff_member',
+			__( 'Display Templates', $this->plugin_name ),
+			__( 'Templates', $this->plugin_name ),
+			'edit_pages',
+			'staff-member-template',
+			array( $this, 'display_templates_page' )
+		);
+		
 		// Usage page
 		add_submenu_page(
 			'edit.php?post_type=sslp_staff_member',
@@ -129,6 +139,15 @@ class Simple_Staff_List_Admin {
 
 	}
 
+	/**
+	 * Display Template page content.
+	 *
+	 * @since   1.2
+	 */
+	public function display_templates_page() {
+		include_once( 'partials/simple-staff-list-template-display.php' );
+	}
+	
 	/**
 	 * Display Usage page content.
 	 *
