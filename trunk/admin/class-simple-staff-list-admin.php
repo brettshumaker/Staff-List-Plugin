@@ -147,6 +147,15 @@ class Simple_Staff_List_Admin {
 	public function display_usage_page() {
 		include_once( 'partials/simple-staff-list-usage-display.php' );
 	}
+	
+	/**
+	 * Display Usage page content.
+	 *
+	 * @since   1.2
+	 */
+	public function display_options_page() {
+		include_once( 'partials/simple-staff-list-options-display.php' );
+	}
 
 	/**
 	 * Hide unwanted meta boxes on staff member screen.

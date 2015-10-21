@@ -11,42 +11,57 @@
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/admin/partials
  */
-?>
 
-<div class="wrap sslp-usage">
-	<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div>
-	<h2><?php _e( 'Simple Staff List', 'simple-staff-list' ); ?></h2>
 
-	<h2><?php _e( 'Usage', 'simple-staff-list' ); ?></h2>
+// Get existing options
+$default_slug = get_option( '_staff_listing_default_slug' );
+$default_name_singular = get_option( '_staff_listing_default_name_singular' );
+$default_name_plural = get_option( '_staff_listing_default_name_plural' );
 
-	<p><?php _e( 'The Simple Staff List plugin makes it easy to create and display a staff directory on your website. You can create your own <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">template</a> for displaying staff information as well as <a href="edit.php?post_type=staff-member&page=staff-member-usage" title="Edit Custom CSS for Simple Staff List">add custom css</a> styling to make your staff directory look great.',
-			'simple-staff-list' ); ?></p>
+// Check Nonce and then update options
+if ( !empty($_POST) && check_admin_referer( 'staff-member-options', 'staff-list-options' ) ) {
+	update_option( '_staff_listing_custom_slug', wp_unique_term_slug( $_POST[ "staff-listing-slug"],'staff-member' ) );
+	update_option( '_staff_listing_custom_name_singular', $_POST[ "staff-listing-name-singular"] );
+	update_option( '_staff_listing_custom_name_plural', $_POST[ "staff-listing-name-plural"] );
+	
+	$custom_slug = stripslashes_deep( get_option('_staff_listing_custom_slug') );
+	$custom_name_singular = stripslashes_deep( get_option('_staff_listing_custom_name_singular') );
+	$custom_name_plural = stripslashes_deep( get_option('_staff_listing_custom_name_plural') );
 
-	<h3><?php _e( 'Shortcode', 'simple-staff-list' ); ?></h3>
-	<table>
-		<tbody>
-		<tr>
-			<td width="280px"><code>[simple-staff-list]</code></td>
-			<td><?php _e( 'This is the most basic usage of Simple Staff List. Displays all Staff Members on post or page.',
-					'simple-staff-list' ); ?></td>
-		</tr>
-		<tr>
-			<td><code>[simple-staff-list <strong>group="Robots"</strong>]</code></td>
-			<td><?php _e( 'This displays all Staff Members from the group "Robots" sorted by order on the "Order" page. This will also add a class of "Robots" to the outer Staff List container for styling purposes.',
-					'simple-staff-list' ); ?></td>
-		</tr>
-		<tr>
-			<td><code>[simple-staff-list <strong>wrap_class="clearfix"</strong>]</code></td>
-			<td><?php _e( 'This adds a class to the inner Staff Member wrap.', 'simple-staff-list' ); ?></td>
-		</tr>
-		<tr>
-			<td><code>[simple-staff-list <strong>order="ASC"</strong>]</code></td>
-			<td><?php _e( 'This displays Staff Members sorted by ascending or descending order according to the "Order" page. You may use "ASC" or "DESC" but the default is "ASC"',
-					'simple-staff-list' ); ?></td>
-		</tr>
-		</tbody>
-	</table>
+} else {
+	$custom_slug = stripslashes_deep( get_option('_staff_listing_custom_slug') );
+	$custom_name_singular = stripslashes_deep( get_option('_staff_listing_custom_name_singular') );
+	$custom_name_plural = stripslashes_deep( get_option('_staff_listing_custom_name_plural') );	
+}
 
-	<p><?php _e( 'To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">here',
-			'simple-staff-list' ); ?></a>.</p>
-</div>
+
+$output = '<div class="wrap sslp-options">';
+	$output .= '<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div>';
+	$output .= '<h2>' . __( 'Simple Staff List' , 'simple-staff-list' ) . '</h2>';
+	$output .= '<h2>' . __( 'Options', 'simple-staff-list' ) . '</h2>';
+	
+	$output .= '<div>';
+		$output .= '<form method="post" action="">';
+			$output .= '<fieldset id="staff-listing-field-slug" class="sslp-fieldset">';
+			$output .= '<legend class="sslp-field-label">' . __( 'Staff Members URL Slug' , 'simple-staff-list' ) . '</legend>';
+			$output .= '<input type="text" name="staff-listing-slug" value="' . $custom_slug . '"></fieldset>';
+			$output .= '<p>' . __( 'The slug used for building the staff members URL. The current URL is: ' , 'simple-staff-list' );
+			$output .= site_url($custom_slug) . '/';
+			$output .= '</p>';
+			$output .= '<fieldset id="staff-listing-field-name-plural" class="sslp-fieldset">';
+			$output .= '<legend class="sslp-field-label">' . __( 'Staff Member title' , 'simple-staff-list' ) . '</legend>';
+			$output .= '<input type="text" name="staff-listing-name-plural" value="' . $custom_name_plural . '"></fieldset>';
+			$output .= '<p>' . __( 'The title that displays on the Staff Member archive page. Default is "Staff Members"' , 'simple-staff-list' ) . '</p>';
+			$output .= '<fieldset id="staff-listing-field-name-singular" class="sslp-fieldset">';
+			$output .= '<legend class="sslp-field-label">' . __( 'Staff Member singular title' , 'simple-staff-list' ) . '</legend>';
+			$output .= '<input type="text" name="staff-listing-name-singular" value="' . $custom_name_singular . '"></fieldset>';
+			$output .= '<p>' . __( 'The Staff Member taxonomy singular name. No need to change this unless you need to use the singular_name field in your theme. Default is "Staff Member"', 'simple-staff-list'  ) . '</p>';
+			
+			$output .= '<p><input type="submit" value="' . __( 'Save ALL Changes' , 'simple-staff-list' ) . '" class="button button-primary button-large"></p><br /><br />';
+			
+			$output .= wp_nonce_field('staff-member-options', 'staff-list-options');
+		$output .= '</form>';
+	$output .= '</div>';
+$output .= '</div>';
+    
+echo $output;
