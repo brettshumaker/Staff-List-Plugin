@@ -126,6 +126,16 @@ class Simple_Staff_List_Admin {
 			'staff-member-usage',
 			array( $this, 'display_usage_page' )
 		);
+		
+		// Options page
+		add_submenu_page(
+			'edit.php?post_type=sslp_staff_member',
+			__( 'Simple Staff List Options', $this->plugin_name ),
+			__( 'Options', $this->plugin_name ),
+			'edit_pages',
+			'staff-member-options',
+			array( $this, 'display_options_page' )
+		);
 
 	}
 
