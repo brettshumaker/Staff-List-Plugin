@@ -46,11 +46,21 @@ class Simple_Staff_List_Public {
 	 * @since    1.2
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
+	 * @param	   array	 $simple_staff_list_shortcode_atts		The default attributes for the [simple_staff_list] shortcode
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		
+		$this->simple_staff_list_shortcode_atts = array(
+		  'single' => 'no',
+		  'group' => '',
+		  'wrap_class' => '',
+		  'order' => 'ASC',
+		);
+		
+		$this->staff_member_register_shortcodes();
 
 	}
 
@@ -196,5 +206,28 @@ class Simple_Staff_List_Public {
 		));
 
 	}
-
+	
+	/**
+	 * Register plugin shortcode(s)
+	 *
+	 * @since 1.2
+	 */
+	public function staff_member_register_shortcodes() {
+		
+		add_shortcode( 'simple-staff-list', array( $this, 'staff_member_simple_staff_list_shortcode_callback' ) );
+		
+	}
+	
+	/**
+	 * Callback for [simple-staff-list]
+	 *
+	 * @since 1.2
+	 */
+	public function staff_member_simple_staff_list_shortcode_callback( $atts = array() ) {
+		
+		$this->simple_staff_list_shortcode_atts = shortcode_atts( $this->simple_staff_list_shortcode_atts, $atts, 'simple-staff-list' );
+		include_once( 'partials/simple-staff-list-shortcode-display.php' );
+		
+	}
+	
 }
