@@ -11,6 +11,8 @@
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/public/partials
  */
+ 
+ 	global $sslp_sc_output;
 
 	$atts = $this->simple_staff_list_shortcode_atts;
 	$single = $atts['single'];
@@ -141,4 +143,4 @@
 	
 	$output = $style_output.$output;
 	
-	echo do_shortcode($output);
+	$sslp_sc_output = do_shortcode($output);

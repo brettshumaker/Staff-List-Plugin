@@ -231,8 +231,10 @@ class Simple_Staff_List_Public {
 	 */
 	public function staff_member_simple_staff_list_shortcode_callback( $atts = array() ) {
 		
+		global $sslp_sc_output;
 		$this->simple_staff_list_shortcode_atts = shortcode_atts( $this->simple_staff_list_shortcode_atts, $atts, 'simple-staff-list' );
 		include_once( 'partials/simple-staff-list-shortcode-display.php' );
+		return $sslp_sc_output;
 		
 	}
 	
