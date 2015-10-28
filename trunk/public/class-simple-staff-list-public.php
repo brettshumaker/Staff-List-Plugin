@@ -39,27 +39,33 @@ class Simple_Staff_List_Public {
 	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
-
+	
 	/**
-	 * Initialize the class and set its properties.
+	 * The default attributes for the shortcode
 	 *
-	 * @since    1.2
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
-	 * @param	   array	 $simple_staff_list_shortcode_atts		The default attributes for the [simple_staff_list] shortcode
+	 * @since 	1.2
+	 * @access 	private
+	 * @var		
 	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-		
-		$this->simple_staff_list_shortcode_atts = array(
+	private $simple_staff_list_shortcode_atts = array(
 		  'single' => 'no',
 		  'group' => '',
 		  'wrap_class' => '',
 		  'order' => 'ASC',
 		);
-		
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since    1.2
+	 * @param    string    $plugin_name       The name of the plugin.
+	 * @param    string    $version    The version of this plugin.
+	 */
+	public function __construct( $plugin_name, $version ) {
+
+		$this->plugin_name = $plugin_name;
+		$this->version     = $version;
+				
 		$this->staff_member_register_shortcodes();
 
 	}
