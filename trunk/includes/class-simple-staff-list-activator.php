@@ -164,7 +164,7 @@ class Simple_Staff_List_Activator {
 			update_option( '_staff_listing_custom_name_plural', $default_name_plural );
 		}
 
-		if ( true == $is_forced ) {
+		if ( true === $is_forced ) {
 			flush_rewrite_rules();
 		}
 	}
