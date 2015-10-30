@@ -31,7 +31,7 @@ class Simple_Staff_List_Activator {
 	 *
 	 * @param    $is_forced
 	 */
-	public static function activate( $is_forced ) {
+	public static function activate( $is_forced = false ) {
 		$default_template = '
 		[staff_loop]
 			<img class="staff-member-photo" src="[staff-photo-url]" alt="[staff-name] : [staff-position]">
