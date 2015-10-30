@@ -103,7 +103,7 @@ class Simple_Staff_List_Admin {
 
 		wp_enqueue_script( $this->plugin_name,
 			plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-admin.js',
-			array( 'jquery' ),
+			array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ),
 			$this->version,
 			false );
 
@@ -117,6 +117,16 @@ class Simple_Staff_List_Admin {
 	 */
 	public function register_menu() {
 
+		// Order page
+		add_submenu_page(
+			'edit.php?post_type=sslp_staff_member',
+			__( 'Simple Staff List Order', $this->plugin_name ),
+			__( 'Order', $this->plugin_name ),
+			'edit_pages',
+			'staff-member-order',
+			array( $this, 'display_order_page' )
+		);
+		
 		// Templates page
 		add_submenu_page(
 			'edit.php?post_type=sslp_staff_member',
@@ -149,6 +159,15 @@ class Simple_Staff_List_Admin {
 
 	}
 
+	/**
+	 * Display Order page content.
+	 *
+	 * @since   1.2
+	 */
+	public function display_order_page() {
+		include_once( 'partials/simple-staff-list-order-display.php' );
+	}
+	
 	/**
 	 * Display Template page content.
 	 *
@@ -531,6 +550,34 @@ class Simple_Staff_List_Admin {
 
 		return apply_filters( 'the_excerpt', $text );
 
+	}
+	
+	/**
+	 * Update Staff Member order.
+	 *
+	 * @since 1.2
+	 *
+	 * @return mixed
+	 */
+	public function update_staff_member_order() {
+		global $wpdb;
+	
+		$post_type     = $_POST['postType'];
+		$order        = $_POST['order'];
+	
+		/**
+		*    Expect: $sorted = array(
+		*                menu_order => post-XX
+		*            );
+		*/
+		foreach( $order as $menu_order => $post_id )
+		{
+			$post_id         = intval( str_ireplace( 'post-', '', $post_id ) );
+			$menu_order     = intval($menu_order);
+			wp_update_post( array( 'ID' => $post_id, 'menu_order' => $menu_order ) );
+		}
+	
+		die( '1' );
 	}
 
 }
