@@ -4,7 +4,7 @@
  * The admin-specific functionality of the plugin.
  *
  * @link       http://www.brettshumaker.com
- * @since      1.2
+ * @since      1.17
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/admin
@@ -25,7 +25,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 * @access   private
 	 * @var      string $plugin_name The ID of this plugin.
 	 */
@@ -34,7 +34,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 * @access   private
 	 * @var      string $version The current version of this plugin.
 	 */
@@ -43,7 +43,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 *
 	 * @param      string $plugin_name The name of this plugin.
 	 * @param      string $version The version of this plugin.
@@ -58,7 +58,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 */
 	public function enqueue_styles() {
 
@@ -85,7 +85,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 */
 	public function enqueue_scripts() {
 
@@ -113,7 +113,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Register admin menu items.
 	 *
-	 * @since   1.2
+	 * @since   1.17
 	 */
 	public function register_menu() {
 
@@ -162,7 +162,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Display Order page content.
 	 *
-	 * @since   1.2
+	 * @since   1.17
 	 */
 	public function display_order_page() {
 		include_once( 'partials/simple-staff-list-order-display.php' );
@@ -171,7 +171,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Display Template page content.
 	 *
-	 * @since   1.2
+	 * @since   1.17
 	 */
 	public function display_templates_page() {
 		include_once( 'partials/simple-staff-list-template-display.php' );
@@ -180,7 +180,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Display Usage page content.
 	 *
-	 * @since   1.2
+	 * @since   1.17
 	 */
 	public function display_usage_page() {
 		include_once( 'partials/simple-staff-list-usage-display.php' );
@@ -189,7 +189,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Display Usage page content.
 	 *
-	 * @since   1.2
+	 * @since   1.17
 	 */
 	public function display_options_page() {
 		include_once( 'partials/simple-staff-list-options-display.php' );
@@ -198,7 +198,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Hide unwanted meta boxes on staff member screen.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 *
 	 * @param $hidden
 	 * @param $screen
@@ -218,7 +218,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Change name of title meta box on staff member screen.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 *
 	 * @param $title string Title box text
 	 *
@@ -238,7 +238,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Handle staff member featured image text
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function staff_member_featured_image_text() {
 
@@ -269,7 +269,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Register staff member meta boxes.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function staff_member_add_meta_boxes() {
 
@@ -292,7 +292,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Register staff member custom columns.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 *
 	 * @param $cols
 	 *
@@ -316,7 +316,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Display staff member info meta box.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function staff_member_info_meta_box() {
 
@@ -404,7 +404,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Display staff member warnings.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function sslp_staff_member_warning_meta_box() {
 
@@ -416,7 +416,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Display staff member bio meta box.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function staff_member_bio_meta_box() {
 
@@ -446,7 +446,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Display staff member custom columns.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 *
 	 * @param $column
 	 */
@@ -485,7 +485,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Save the staff member details post meta.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function save_staff_member_details() {
 
@@ -525,7 +525,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Get staff bio excerpt.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 *
 	 * @param $text string Bio text
 	 * @param $excerpt_length int Excerpt length
@@ -555,7 +555,7 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Update Staff Member order.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 *
 	 * @return mixed
 	 */

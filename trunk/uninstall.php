@@ -20,7 +20,7 @@
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       http://www.brettshumaker.com
- * @since      1.2
+ * @since      1.17
  *
  * @package    Simple_Staff_List
  */
