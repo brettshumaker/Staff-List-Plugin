@@ -4,7 +4,7 @@
  * The public-facing functionality of the plugin.
  *
  * @link       http://www.brettshumaker.com
- * @since      1.2
+ * @since      1.17
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/public
@@ -25,7 +25,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 * @access   private
 	 * @var      string $plugin_name The ID of this plugin.
 	 */
@@ -34,7 +34,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 * @access   private
 	 * @var      string $version The current version of this plugin.
 	 */
@@ -43,7 +43,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * The default attributes for the shortcode
 	 *
-	 * @since  1.2
+	 * @since  1.17
 	 * @access  private
 	 * @var
 	 */
@@ -52,7 +52,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 * @param    string    $plugin_name       The name of the plugin.
 	 * @param    string    $version    The version of this plugin.
 	 */
@@ -74,7 +74,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 */
 	public function enqueue_styles() {
 
@@ -101,7 +101,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 */
 	public function enqueue_scripts() {
 
@@ -128,7 +128,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * Initialize staff member custom post type and taxonomies.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function staff_member_init() {
 
@@ -217,7 +217,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * Register plugin shortcode(s)
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function staff_member_register_shortcodes() {
 
@@ -228,7 +228,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * Callback for [simple-staff-list]
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function staff_member_simple_staff_list_shortcode_callback( $atts = array() ) {
 
