@@ -33,21 +33,13 @@
     margin-bottom: 0; /* Tightens up spacing between title bar and our custom meta boxes */
 }
 
-.wrap.sslp-usage {
-    width:50%;
+.sslp-usage .sslp-content h4 {
+    margin-bottom: .5em;
 }
 
-.wrap.sslp-template p {
-    width:60%;
-}
-
-.sslp-usage table {
-    width: 140%;
-}
-
-.sslp-usage table td {
-    padding:.75em 0;
-    vertical-align: top;
+.sslp-usage .sslp-content h4 + p {
+    margin-top: 0;
+    margin-bottom:3em;
 }
 
 p.sslp-note {
@@ -76,8 +68,11 @@ td.column-order img {
     margin-bottom: 0;
 }
 
+.sslp-template textarea {
+	width: 100%;
+}
+
 .sslp-template .content {
-    width: 60%;
     display: none;
 }
 
@@ -89,11 +84,57 @@ td.column-order img {
     overflow: auto;
 }
 
-.sslp-template .default-css .content pre{
+.sslp-template .default-css .content pre {
     height: 250px;
     overflow: scroll;
 }
 
+
+/**
+ * admin columns
+ */
+.sslp-column {
+    float: left;
+    padding: 1em 1em 1em 0;
+    box-sizing: border-box;
+}
+
+.sslp-column > * {
+	max-width: 100%;
+}
+
+.sslp-column.last {
+    float: right;
+}
+
+.sslp-sidebar-header {
+	background: #0073AA;
+	padding: .5em;
+	color: #fff;
+}
+
+.sslp-sidebar-header span {
+	margin-right: .5em;
+}
+
+
+@media screen and ( min-width: 961px ) {
+	.sslp-column {
+	    float: left;
+	}
+	
+	.sslp-column.last {
+	    float: right;
+	}
+	
+	.sslp-content {
+	    width: 60%;
+	}
+	
+	.sslp-sidebar {
+		width: 35%;
+	}
+}
 
 /*
 	CPT Icon Styles
