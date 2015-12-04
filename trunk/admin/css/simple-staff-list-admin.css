@@ -107,8 +107,22 @@ td.column-order img {
     float: right;
 }
 
+.sslp-sidebar .sidebar-inner {
+	background: #fff;
+	padding: 0 1em 1em;
+	border-style: solid;
+	border-color: #ddd;
+	border-width: 0 thin thin;
+}
+
+.sidebar-inner p:first-child {
+	margin-top: 0;
+	padding-top: 1em;
+}
+
 .sslp-sidebar-header {
 	background: #0073AA;
+	margin: 0;
 	padding: .5em;
 	color: #fff;
 }
