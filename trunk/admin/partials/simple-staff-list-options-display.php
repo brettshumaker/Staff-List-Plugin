@@ -6,7 +6,7 @@
  * This file is used to markup the admin-facing aspects of the plugin.
  *
  * @link       http://www.brettshumaker.com
- * @since      1.0.0
+ * @since      1.17
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/admin/partials
@@ -40,7 +40,7 @@ $output = '<div class="wrap sslp-options">';
 	$output .= '<h2>' . __( 'Simple Staff List' , 'simple-staff-list' ) . '</h2>';
 	$output .= '<h2>' . __( 'Options', 'simple-staff-list' ) . '</h2>';
 	
-	$output .= '<div>';
+	$output .= '<div class="sslp-content sslp-column">';
 		$output .= '<form method="post" action="">';
 			$output .= '<fieldset id="staff-listing-field-slug" class="sslp-fieldset">';
 			$output .= '<legend class="sslp-field-label">' . __( 'Staff Members URL Slug' , 'simple-staff-list' ) . '</legend>';
@@ -61,6 +61,12 @@ $output = '<div class="wrap sslp-options">';
 			
 			$output .= wp_nonce_field('staff-member-options', 'staff-list-options');
 		$output .= '</form>';
+	$output .= '</div>';
+	$output .= '<div class="sslp-sidebar sslp-column last">';
+		// Get the sidebar
+		ob_start();
+		include_once( 'simple-staff-list-admin-sidebar.php' );
+		$output .= ob_get_clean();
 	$output .= '</div>';
 $output .= '</div>';
     
