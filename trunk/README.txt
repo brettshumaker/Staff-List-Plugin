@@ -1,5 +1,5 @@
 === Simple Staff List ===
-Contributors: brettshumaker
+Contributors: brettshumaker, vc27, josiahgoff
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
 Tested up to: 4.4
