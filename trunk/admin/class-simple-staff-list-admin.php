@@ -119,7 +119,7 @@ class Simple_Staff_List_Admin {
 
 		// Order page
 		add_submenu_page(
-			'edit.php?post_type=sslp_staff_member',
+			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Order', $this->plugin_name ),
 			__( 'Order', $this->plugin_name ),
 			'edit_pages',
@@ -129,7 +129,7 @@ class Simple_Staff_List_Admin {
 		
 		// Templates page
 		add_submenu_page(
-			'edit.php?post_type=sslp_staff_member',
+			'edit.php?post_type=staff-member',
 			__( 'Display Templates', $this->plugin_name ),
 			__( 'Templates', $this->plugin_name ),
 			'edit_pages',
@@ -139,7 +139,7 @@ class Simple_Staff_List_Admin {
 		
 		// Usage page
 		add_submenu_page(
-			'edit.php?post_type=sslp_staff_member',
+			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Usage', $this->plugin_name ),
 			__( 'Usage', $this->plugin_name ),
 			'edit_pages',
@@ -149,7 +149,7 @@ class Simple_Staff_List_Admin {
 		
 		// Options page
 		add_submenu_page(
-			'edit.php?post_type=sslp_staff_member',
+			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Options', $this->plugin_name ),
 			__( 'Options', $this->plugin_name ),
 			'edit_pages',
@@ -207,7 +207,7 @@ class Simple_Staff_List_Admin {
 	 */
 	public function hide_meta_boxes( $hidden, $screen ) {
 
-		if ( 'sslp_staff_member' == $screen->id ) {
+		if ( 'staff-member' == $screen->id ) {
 			$hidden = array( 'postexcerpt' );
 		}
 
@@ -228,7 +228,7 @@ class Simple_Staff_List_Admin {
 
 		$screen = get_current_screen();
 
-		if ( $screen->post_type == 'sslp_staff_member' ) {
+		if ( $screen->post_type == 'staff-member' ) {
 			$title = __( 'Staff Name', $this->plugin_name );
 		}
 
@@ -242,14 +242,14 @@ class Simple_Staff_List_Admin {
 	 */
 	public function staff_member_featured_image_text() {
 
-		remove_meta_box( 'postimagediv', 'sslp_staff_member', 'side' );
+		remove_meta_box( 'postimagediv', 'staff-member', 'side' );
 
 		if ( current_theme_supports( 'post-thumbnails' ) ) {
 
 			add_meta_box( 'postimagediv',
 				__( 'Staff Photo', $this->plugin_name ),
 				'post_thumbnail_meta_box',
-				'sslp_staff_member',
+				'staff-member',
 				'normal',
 				'high' );
 
@@ -258,7 +258,7 @@ class Simple_Staff_List_Admin {
 			add_meta_box( 'staff-member-warning',
 				__( 'Staff Photo', $this->plugin_name ),
 				'sslp_staff_member_warning_meta_box',
-				'sslp_staff_member',
+				'staff-member',
 				'normal',
 				'high' );
 
@@ -276,14 +276,14 @@ class Simple_Staff_List_Admin {
 		add_meta_box( 'staff-member-info',
 			__( 'Staff Member Info', $this->plugin_name ),
 			array( $this, 'staff_member_info_meta_box' ),
-			'sslp_staff_member',
+			'staff-member',
 			'normal',
 			'high' );
 
 		add_meta_box( 'staff-member-bio',
 			__( 'Staff Member Bio', $this->plugin_name ),
 			array( $this, 'staff_member_bio_meta_box' ),
-			'sslp_staff_member',
+			'staff-member',
 			'normal',
 			'high' );
 

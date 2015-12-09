@@ -37,7 +37,7 @@
 	  * Set up our WP_Query
 	  */
 	
-	$args = array( 'post_type' => 'sslp_staff_member', 'posts_per_page' => -1, 'orderby' => 'menu_order', 'post_status' => 'publish' );
+	$args = array( 'post_type' => 'staff-member', 'posts_per_page' => -1, 'orderby' => 'menu_order', 'post_status' => 'publish' );
 	
 	// Check user's 'order' value
 	if ($order != 'ASC' && $order != 'DESC') {
