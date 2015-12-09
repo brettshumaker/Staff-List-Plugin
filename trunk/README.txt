@@ -1,114 +1,105 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: http://www.brettshumaker.com
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
+=== Simple Staff List ===
+Contributors: brettshumaker
+Tags: staff list, staff directory, employee list, staff, employee, employees
+Requires at least: 3.0
+Tested up to: 4.3.1
+Stable tag: 1.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+A simple plugin to build and display a staff listing for your website.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+The Simple Staff List plugin allows you to build a staff directory for your website. You get an easy-to-use interface
+which allows you to edit the following fields for each staff member: Name, Photo, Position, Email, Phone Number, and Bio.
+There's also a drag-and-drop interface to set the order of your staff members.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+You'll use the `[simple-staff-list]` shortcode within a page or post to display the full staff listing in the order set
+on the "Order" page. You'll be able to customize the information shown for each staff member on your website by editing a simple template. You can add your own custom CSS to style your staff list as well.
 
-A few notes about the sections above:
+Use the [Simple Staff List support section](http://wordpress.org/support/plugin/simple-staff-list "Simple Staff List support") to post any problems/comments!
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+A "Thanks!" to [@adamtootle](http://twitter.com/adamtootle) for the base idea for this plugin. Simple Staff List is a re-work of his [Staff Directory plugin](http://wordpress.org/extend/plugins/staff-directory/).
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload `simple-staff-list.php` to the `/wp-content/plugins/` directory
+1. Upload the `simple-staff-list` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+1. Place `[simple-staff-list]` in a page or post
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= My Staff List won't show up on my site! =
+Alright, here's a few things to try:
+* Be sure to make sure you've included the `[simple-staff-list]` shortcode somewhere in a page or post.
+* Double check the "Staff Loop Template" on the plugin's "Templates" page. Make sure all of your tags are located between `[staff_loop]` and `[/staff_loop]`.
 
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
+[Visit the Simple Staff List support section to ask a question!](http://wordpress.org/support/plugin/simple-staff-list "Simple Staff List support")
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Add New Staff Member screen
+2. Add/Edit Staff Member screen
+3. Sort Staff Members screen
+4. Templates screen 1
+5. Templates screen 2
 
 == Changelog ==
 
+= 1.17 =
+* Things are happening! Hey guys, I'll be rewriting this plugin with help from some other developers in the [WPNashville Community](http://wpnashville.com). Want to be involved and give some input on the direction of Simple Staff List? Fill out our [survey](http://brettshumaker.com/simple-staff-list-survey/)!
+* UPDATED: Moved plugin to class structure based on [The WordPress Plugin Boilerplate](http://wppb.io)
+
+= 1.16 =
+* UPDATED: Added translation support. (Thanks to grappler on GitHub)
+* UPDATED: Added some template tags to make it easier to access staff member data on a single staff member page (single-staff-member.php) - github pull request #2 from patrickhempel
+* UPDATED: Added option to set a custom URL slug and taxonomy name - github pull request #4 from kaymmm
+* BUGFIX: Fixed a ton of PHP Notices - github issue #2 from asacolips
+* BUGFIX: Menu Icon in WordPress 3.8+
+
+= 1.15 =
+* UPDATED: Added Facebook and Twitter fields for Staff Members
+* UPDATED: Added support for WYSIWYG editor for Staff Bio.
+* UPDATED: Added support for shortcodes within Staff Loop Template and/or Staff Bio field.
+* UPDATED: Removed HTML comments that caused some themes to add an extra <p> tag.
+* BUGFIX: Added post-thumbnail support for 'staff-member' custom post type. Themes that only added post-thumbnail support for 'posts' weren't able to save featured images.
+* BUGFIX: Fixed a rare bug that caused an error on some hosting setups ("Can't Resolve Host" error).
+
+= 1.14 =
+* UPDATED: Now I check to make sure the theme supports post thumbnails and display a warning message on the Add/Edit screen
+* UPDATED: Minor CSS fix for admin screens
+
+= 1.13 =
+* NOTE: If you like using my plugin and want to make sure I can still devote some time to updating it with new features, why not head over to [my website](http://brettshumaker.com) and make a donation? I'd really appreciate it!!
+* FEATURE: Users now have the option to write their custom CSS to an external file (on by default). This allows Multisite users to write their custom styles inline.
+* UPDATED: You can now use either the group name (i.e. "My Cool Group") OR the group slug (i.e. "my-cool-group") in the Simple Staff List shortcode.
+* UPDATED: Passing an empty or non-existent group name no longer results in returning all staff members
+* BUGFIX: Fixed bug where the Staff Loop Template and the Staff Page CSS boxes were blank on initial install...for real this time, guys.
+
+= 1.12 =
+* UPDATED: Staff Loop Template tags now include `[staff-name-slug]` returns the slug of the staff member to allow specific targeting of staff members.
+* BUGFIX: Fixed bug where the Staff Loop Template and the Staff Page CSS boxes were blank on initial install.
+
+= 1.11 =
+* BUGFIX: Fixed minor bug which caused groups to not function properly. My bad.
+
+= 1.10 =
+* FEATURE: You can now sort your Staff Members into Groups! To display different groups just add a Staff Group in Staff Members > Groups then add `group='YOUR-GROUP-NAME'` to the `[simple-staff-list]` shortcode.
+* FEATURE: You can now add a class to the staff-member container! To add a class just add `wrap_class='YOUR-CLASS-NAME'` to the `[simple-staff-list]` shortcode.
+* FEATURE: The plugin now saves your custom CSS to an external file in your theme's directory so you can edit it on the "Templates" page OR in your favorite code editor.
+* UPDATED: Updated default Staff Loop Template and default styling to make your Staff Directory look nicer out-of-the-box.
+* BUGFIX: Trashing a Staff Member no longer causes member information to be lost.
+* BUGFIX: Removed the automatic phone number formatting. My apologies to any non-U.S. users.
+* Other minor tweaks/performance enhances.
+
+= 1.02 =
+* BUGFIX: Corrects a plugin option naming inconsistency which resulted in empty boxes on the Templates page
+
+= 1.01 =
+* I incorrectly tagged release version 1.0 and, as a result, not all files were included in version 1.0 of Simple Staff List.
+* This version adds those required files back into the package.
+
 = 1.0 =
-* A change since the previous version.
-* Another change.
-
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
-
-== Upgrade Notice ==
-
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+* Initial Plugin Launch

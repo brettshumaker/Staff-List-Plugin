@@ -46,10 +46,10 @@
 		$custom_html = stripslashes_deep(get_option('_staff_listing_custom_html'));
 		$custom_css = stripslashes_deep(get_option('_staff_listing_custom_css'));
 		
-		if ( $_POST[ "write-external-css" ] != "yes" ) {
+		if ( !isset($_POST[ "write-external-css" ]) ) {
 			update_option('_staff_listing_write_external_css', "no");
 			$write_external_css = "no";
-		} else {
+		} elseif ( isset($_POST[ "write-external-css" ]) ) {
 			update_option('_staff_listing_write_external_css', $_POST[ "write-external-css" ]);
 			$write_external_css = "yes";
 			

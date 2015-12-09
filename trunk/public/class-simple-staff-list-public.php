@@ -4,7 +4,7 @@
  * The public-facing functionality of the plugin.
  *
  * @link       http://www.brettshumaker.com
- * @since      1.2
+ * @since      1.17
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/public
@@ -25,7 +25,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 * @access   private
 	 * @var      string $plugin_name The ID of this plugin.
 	 */
@@ -34,30 +34,47 @@ class Simple_Staff_List_Public {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 * @access   private
 	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
 
 	/**
+	 * The default attributes for the shortcode
+	 *
+	 * @since  1.17
+	 * @access  private
+	 * @var
+	 */
+	private $simple_staff_list_shortcode_atts;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.2
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @since    1.17
+	 * @param    string    $plugin_name       The name of the plugin.
+	 * @param    string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		$this->simple_staff_list_shortcode_atts = array(
+			'single' => 'no',
+			'group' => '',
+			'wrap_class' => '',
+			'order' => 'ASC',
+		);
+
+		$this->staff_member_register_shortcodes();
 
 	}
 
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 */
 	public function enqueue_styles() {
 
@@ -84,7 +101,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 */
 	public function enqueue_scripts() {
 
@@ -111,7 +128,7 @@ class Simple_Staff_List_Public {
 	/**
 	 * Initialize staff member custom post type and taxonomies.
 	 *
-	 * @since 1.2
+	 * @since 1.17
 	 */
 	public function staff_member_init() {
 
@@ -176,16 +193,16 @@ class Simple_Staff_List_Public {
 		register_post_type( 'sslp_staff_member', $args );
 
 		$group_labels = array(
-				'name'              => _x( 'Groups', 'taxonomy general name', $this->plugin_name ),
-				'singular_name'     => _x( 'Group', 'taxonomy singular name', $this->plugin_name ),
-				'search_items'      => __( 'Search Groups', $this->plugin_name ),
-				'all_items'         => __( 'All Groups', $this->plugin_name ),
-				'parent_item'       => __( 'Parent Group', $this->plugin_name ),
-				'parent_item_colon' => __( 'Parent Group:', $this->plugin_name ),
-				'edit_item'         => __( 'Edit Group', $this->plugin_name ),
-				'update_item'       => __( 'Update Group', $this->plugin_name ),
-				'add_new_item'      => __( 'Add New Group', $this->plugin_name ),
-				'new_item_name'     => __( 'New Group Name', $this->plugin_name ),
+			'name'              => _x( 'Groups', 'taxonomy general name', $this->plugin_name ),
+			'singular_name'     => _x( 'Group', 'taxonomy singular name', $this->plugin_name ),
+			'search_items'      => __( 'Search Groups', $this->plugin_name ),
+			'all_items'         => __( 'All Groups', $this->plugin_name ),
+			'parent_item'       => __( 'Parent Group', $this->plugin_name ),
+			'parent_item_colon' => __( 'Parent Group:', $this->plugin_name ),
+			'edit_item'         => __( 'Edit Group', $this->plugin_name ),
+			'update_item'       => __( 'Update Group', $this->plugin_name ),
+			'add_new_item'      => __( 'Add New Group', $this->plugin_name ),
+			'new_item_name'     => __( 'New Group Name', $this->plugin_name ),
 		);
 		register_taxonomy( 'staff-member-group', array( 'sslp_staff_member' ), array(
 				'hierarchical' => true,
@@ -193,7 +210,32 @@ class Simple_Staff_List_Public {
 				'show_ui' => true,
 				'query_var' => true,
 				'rewrite' => array( 'slug' => 'group' ),
-		));
+			) );
+
+	}
+
+	/**
+	 * Register plugin shortcode(s)
+	 *
+	 * @since 1.17
+	 */
+	public function staff_member_register_shortcodes() {
+
+		add_shortcode( 'simple-staff-list', array( $this, 'staff_member_simple_staff_list_shortcode_callback' ) );
+
+	}
+
+	/**
+	 * Callback for [simple-staff-list]
+	 *
+	 * @since 1.17
+	 */
+	public function staff_member_simple_staff_list_shortcode_callback( $atts = array() ) {
+
+		global $sslp_sc_output;
+		$this->simple_staff_list_shortcode_atts = shortcode_atts( $this->simple_staff_list_shortcode_atts, $atts, 'simple-staff-list' );
+		include_once( 'partials/simple-staff-list-shortcode-display.php' );
+		return $sslp_sc_output;
 
 	}
 

@@ -4,7 +4,7 @@
  * Fired during plugin activation
  *
  * @link       http://www.brettshumaker.com
- * @since      1.2
+ * @since      1.17
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.2
+ * @since      1.17
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/includes
  * @author     Brett Shumaker <brettshumaker@gmail.com>
@@ -27,11 +27,11 @@ class Simple_Staff_List_Activator {
 	 *
 	 * Sets up initial plugin option contents.
 	 *
-	 * @since    1.2
+	 * @since    1.17
 	 *
 	 * @param    $is_forced
 	 */
-	public static function activate( $is_forced ) {
+	public static function activate( $is_forced = false ) {
 		$default_template = '
 		[staff_loop]
 			<img class="staff-member-photo" src="[staff-photo-url]" alt="[staff-name] : [staff-position]">
@@ -164,7 +164,7 @@ class Simple_Staff_List_Activator {
 			update_option( '_staff_listing_custom_name_plural', $default_name_plural );
 		}
 
-		if ( 'forced activation' != $is_forced ) {
+		if ( true === $is_forced ) {
 			flush_rewrite_rules();
 		}
 	}
