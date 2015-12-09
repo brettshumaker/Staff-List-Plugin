@@ -190,7 +190,7 @@ class Simple_Staff_List_Public {
 		}
 
 		// Register post type
-		register_post_type( 'sslp_staff_member', $args );
+		register_post_type( 'staff_member', $args );
 
 		$group_labels = array(
 			'name'              => _x( 'Groups', 'taxonomy general name', $this->plugin_name ),
