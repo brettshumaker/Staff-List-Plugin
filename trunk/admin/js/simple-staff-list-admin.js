@@ -6,15 +6,15 @@
 
         // Fix broken table width on sort
 
-        $('td').each(function () {
+        $('.sslp-order td').each(function () {
             $(this).css('width', $(this).width() + 'px');
         });
 
 
         // Sortable Table
 
-        if ($('#sortable-table').length > 0) {
-            $('#sortable-table tbody').sortable({
+        if ($('.sslp-order#sortable-table').length > 0) {
+            $('.sslp-order#sortable-table tbody').sortable({
                 axis: 'y',
                 handle: '.column-order img',
                 placeholder: 'ui-state-highlight',
