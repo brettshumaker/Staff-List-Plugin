@@ -101,11 +101,15 @@ class Simple_Staff_List_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name,
-			plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-admin.js',
-			array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ),
-			$this->version,
-			false );
+		if ( isset($_GET['post_type']) && $_GET['post_type'] == 'staff-member' ) {
+						
+			wp_enqueue_script( $this->plugin_name,
+				plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-admin.js',
+				array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ),
+				$this->version,
+				false );
+				
+		}
 
 	}
 
