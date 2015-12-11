@@ -16,7 +16,7 @@
 	<div id="icon-edit" class="icon32 icon32-posts-staff-member"><br></div><h2><?php _e( 'Simple Staff List', 'simple-staff-list' ); ?></h2>
 	<h2><?php _e( 'Order Staff', 'simple-staff-list' ); ?></h2>
 	<p><?php _e( 'Simply drag the staff member up or down and they will be saved in that order.', 'simple-staff-list' ); ?></p>
-<?php $staff = new WP_Query( array( 'post_type' => 'sslp_staff_member', 'posts_per_page' => -1, 'order' => 'ASC', 'orderby' => 'menu_order' ) );
+<?php $staff = new WP_Query( array( 'post_type' => 'staff-member', 'posts_per_page' => -1, 'order' => 'ASC', 'orderby' => 'menu_order' ) );
 	  if( $staff->have_posts() ) : ?>
 
 	<table class="wp-list-table widefat fixed posts sslp-order" id="sortable-table">

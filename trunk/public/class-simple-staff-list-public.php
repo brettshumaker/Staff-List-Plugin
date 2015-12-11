@@ -190,7 +190,7 @@ class Simple_Staff_List_Public {
 		}
 
 		// Register post type
-		register_post_type( 'staff_member', $args );
+		register_post_type( 'staff-member', $args );
 
 		$group_labels = array(
 			'name'              => _x( 'Groups', 'taxonomy general name', $this->plugin_name ),
@@ -204,7 +204,7 @@ class Simple_Staff_List_Public {
 			'add_new_item'      => __( 'Add New Group', $this->plugin_name ),
 			'new_item_name'     => __( 'New Group Name', $this->plugin_name ),
 		);
-		register_taxonomy( 'staff-member-group', array( 'sslp_staff_member' ), array(
+		register_taxonomy( 'staff-member-group', array( 'staff-member' ), array(
 				'hierarchical' => true,
 				'labels' => $group_labels, /* NOTICE: Here is where the $labels variable is used */
 				'show_ui' => true,
