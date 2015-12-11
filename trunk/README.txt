@@ -3,7 +3,7 @@ Contributors: brettshumaker, vc27, josiahgoff
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
 Tested up to: 4.4
-Stable tag: 1.17
+Stable tag: 1.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,9 +48,13 @@ Alright, here's a few things to try:
 
 == Changelog ==
 
-= 1.17 =
+= 1.18 =
 * Things are happening! Hey guys, I'll be rewriting this plugin with help from some other developers in the [WPNashville Community](http://wpnashville.com). Want to be involved and give some input on the direction of Simple Staff List? Fill out our [survey](http://brettshumaker.com/simple-staff-list-survey/)!
+* Fixed: Javascript incompatibility with Yoast SEO plugin
 * UPDATED: Moved plugin to class structure based on [The WordPress Plugin Boilerplate](http://wppb.io)
+
+= 1.17 =
+* Sorry about that! Pushed this version too soon!
 
 = 1.16 =
 * UPDATED: Added translation support. (Thanks to grappler on GitHub)
