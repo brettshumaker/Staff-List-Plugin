@@ -95,6 +95,16 @@ class Simple_Staff_List_Public {
 			array(),
 			$this->version,
 			'all' );
+			
+		/**
+		 * Check to see if we should load the external stylesheet
+		 *
+		 * @since 1.19
+		 */
+		if (get_option('_staff_listing_write_external_css') == "yes") {
+			wp_register_style( 'staff-list-custom-css', get_stylesheet_directory_uri() . '/simple-staff-list-custom.css' );
+			wp_enqueue_style ( 'staff-list-custom-css' );
+		}
 
 	}
 
