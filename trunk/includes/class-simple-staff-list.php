@@ -115,8 +115,12 @@ class Simple_Staff_List {
 
 		/**
 		 * A utility class for creating custom post types
+		 *	- not required at this point...it's in here for later
+		 *   *** DOES NOT SUPPORT PHP 5.2 ***
 		 */
-		require_once plugin_dir_path( __FILE__ ) . 'class-custom-post-type.php';
+		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+			require_once plugin_dir_path( __FILE__ ) . 'class-custom-post-type.php';
+		}
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
