@@ -3,7 +3,7 @@ Contributors: brettshumaker, vc27, josiahgoff
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
 Tested up to: 4.4
-Stable tag: 1.18
+Stable tag: 1.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,8 +19,6 @@ You'll use the `[simple-staff-list]` shortcode within a page or post to display 
 on the "Order" page. You'll be able to customize the information shown for each staff member on your website by editing a simple template. You can add your own custom CSS to style your staff list as well.
 
 Use the [Simple Staff List support section](http://wordpress.org/support/plugin/simple-staff-list "Simple Staff List support") to post any problems/comments!
-
-A "Thanks!" to [@adamtootle](http://twitter.com/adamtootle) for the base idea for this plugin. Simple Staff List is a re-work of his [Staff Directory plugin](http://wordpress.org/extend/plugins/staff-directory/).
 
 
 == Installation ==
@@ -47,6 +45,11 @@ Alright, here's a few things to try:
 5. Templates screen 2
 
 == Changelog ==
+
+= 1.19 =
+* BUGFIX: External Custom CSS now loading properly.
+* BUGFIX: Multiple shortcodes on page with "groups" attribute now working properly.
+* BUGFIX: PHP 5.2 white screen. One of our files (not being used yet, but will be in a future update) had an incompatibility with PHP 5.2. We're now checking the PHP version before loading this file and will address it's PHP 5.2 compatibility in a future release.
 
 = 1.18 =
 * Things are happening! Hey guys, I'll be rewriting this plugin with help from some other developers in the [WPNashville Community](http://wpnashville.com). Want to be involved and give some input on the direction of Simple Staff List? Fill out our [survey](http://brettshumaker.com/simple-staff-list-survey/)!
