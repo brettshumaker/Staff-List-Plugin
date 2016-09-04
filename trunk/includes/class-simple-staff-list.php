@@ -69,7 +69,7 @@ class Simple_Staff_List {
 	public function __construct() {
 
 		$this->plugin_name = 'simple-staff-list';
-		$this->version     = '1.17';
+		$this->version     = '1.20';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -173,6 +173,7 @@ class Simple_Staff_List {
 		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'staff_member_display_custom_columns' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_staff_member_details' );
 		$this->loader->add_action( 'wp_ajax_staff_member_update_post_order', $plugin_admin, 'update_staff_member_order' );
+		$this->loader->add_action( 'wp_ajax_staff_member_export', $plugin_admin, 'staff_member_export' );
 
 	}
 

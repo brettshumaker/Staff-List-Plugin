@@ -42,5 +42,30 @@
         });
 
     });
+    
+    $(document).ready(function() {
+		
+		// Export button
+		$('a.export-button').on( 'click', function(e){
+			e.preventDefault();
+			
+			var data = {
+				'action': 'staff_member_export',
+			};
+			
+			$.post( ajaxurl, data, function( response ){
+				
+				if ( response.success ) {
+					window.location = response.data;
+				} else {
+					console.log( response );
+				}
+				
+			});
+			
+		});
+		
+	});
+    
 
 })(jQuery);
