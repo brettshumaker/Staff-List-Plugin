@@ -612,9 +612,7 @@ class Simple_Staff_List_Admin {
 	 */
 	public function staff_member_export() {
 		
-		$access_type = get_filesystem_method();
-		if ( $access_type !== 'direct' )
-			wp_send_json_error( 'You do not have permission to write files to the server.' );
+		$access_type = '';//get_filesystem_method();
 		
 		$args = array(
 			'post_type' => 'staff-member',
@@ -702,34 +700,48 @@ class Simple_Staff_List_Admin {
 				
 			}
 			
-			// Save the file
-			$creds = request_filesystem_credentials();
 			
-			if ( ! WP_filesystem($creds) )
-				wp_send_json_error( 'Problem accessing WP File System' );
-			
-			global $wp_filesystem;
-			
-			$uploads = wp_upload_dir();
-			
-			// Create the sslp directory in uploads if we need to
-			if ( ! is_dir( $uploads['basedir'] . '/sslp' ) ) {
-				$wp_filesystem->mkdir( $uploads['basedir'] . '/sslp' );
-				$wp_filesystem->put_contents( $uploads['basedir'] . '/sslp/index.php', '', FS_CHMOD_FILE );
-			}
-			
-			// Save our file
-			$wp_filesystem->put_contents(
-				$uploads['basedir'] . '/sslp/staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv',
-				$csv_str_out,
-				FS_CHMOD_FILE
-			);
+			if ( 'direct' == $access_type ) {
+				// Save the file
+				$creds = request_filesystem_credentials();
 				
-			wp_send_json_success( $uploads['baseurl'] . '/sslp/staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv' );
+				if ( ! WP_filesystem($creds) )
+					wp_send_json_error( 'Problem accessing WP File System' );
+				
+				global $wp_filesystem;
+				
+				$uploads = wp_upload_dir();
+				
+				// Create the sslp directory in uploads if we need to
+				if ( ! is_dir( $uploads['basedir'] . '/sslp' ) ) {
+					$wp_filesystem->mkdir( $uploads['basedir'] . '/sslp' );
+					$wp_filesystem->put_contents( $uploads['basedir'] . '/sslp/index.php', '', FS_CHMOD_FILE );
+				} else {
+					// Clean out any files that are in there...we're not backing up these exports, although that could be a feature later on
+					$path = $uploads['basedir'] . '/sslp/';
+					$files = $wp_filesystem->dirlist($path);
+						
+					foreach ( $files as $file ) {
+						if ( false !== strpos( $file['name'], 'staff-member-export-' ) )
+							$wp_filesystem->delete( $path . $file['name'] );
+					}
+				}
+				
+				// Save our file
+				$wp_filesystem->put_contents(
+					$uploads['basedir'] . '/sslp/staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv',
+					$csv_str_out,
+					FS_CHMOD_FILE
+				);
+					
+				wp_send_json_success( array( 'created_file' => true, 'url' => $uploads['baseurl'] . '/sslp/staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv' ) );
+			} else {
+				wp_send_json_success( array( 'created_file' => false, 'content' => $csv_str_out, 'filename' => 'staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv' ) );
+			}
 			
 		endif;
 		
-		wp_send_json_success( $csv_str_out );
+		wp_send_json_error( 'No data to export.' );
 		
 	}
 
