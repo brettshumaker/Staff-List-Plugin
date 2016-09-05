@@ -612,7 +612,7 @@ class Simple_Staff_List_Admin {
 	 */
 	public function staff_member_export() {
 		
-		$access_type = '';//get_filesystem_method();
+		$access_type = get_filesystem_method();
 		
 		$args = array(
 			'post_type' => 'staff-member',
@@ -630,8 +630,6 @@ class Simple_Staff_List_Admin {
 			while ( $staff_query->have_posts() ) : $staff_query->the_post();
 				
 				$custom = get_post_custom();
-				
-				//echo '<pre>' . print_r($custom, true) . '</pre>';
 				
 				// Setup our CSV Header line if we haven't already
 				if ( ! $csv_headers ) {
