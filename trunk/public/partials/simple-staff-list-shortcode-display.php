@@ -110,8 +110,9 @@
 		if (function_exists('wpautop')){
 			$bio_format = '<div class="staff-member-bio">'.wpautop($bio).'</div>';
 		}
-		
-		
+
+
+		$phone_link = '<a class="staff-member-phone" href="tel:'.antispambot( $phone ).'" title="Phone '.$name.'">'.antispambot( $phone ).'</a>';
 		$email_mailto = '<a class="staff-member-email" href="mailto:'.antispambot( $email ).'" title="Email '.$name.'">'.antispambot( $email ).'</a>';
 		$email_nolink = antispambot( $email );
 		
@@ -119,7 +120,7 @@
 		$replace_single_values = array($name, $name_slug, $photo_url, $title, $email_nolink, $phone, $bio, $fb_url, $tw_url);
 	
 		$accepted_formatted_tags = $default_formatted_tags;
-		$replace_formatted_values = array('<h3 class="staff-member-name">'.$name.'</h3>', '<h4 class="staff-member-position">'.$title.'</h4>', $photo, $email_mailto, $bio_format );
+		$replace_formatted_values = array('<h3 class="staff-member-name">'.$name.'</h3>', '<h4 class="staff-member-position">'.$title.'</h4>', $photo, $email_mailto, $phone_link, $bio_format );
 	
 		$loop_markup = str_replace($accepted_single_tags, $replace_single_values, $loop_markup);
 		$loop_markup = str_replace($accepted_formatted_tags, $replace_formatted_values, $loop_markup);
