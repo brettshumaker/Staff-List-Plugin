@@ -224,7 +224,27 @@ class Simple_Staff_List_Public {
 			) );
 
 	}
-
+	
+	/**
+	 * Maybe flush rewrite rules
+	 *
+	 * @since 2.0
+	 */
+	public function maybe_flush_rewrite_rules() {
+		
+		if ( get_option( '_staff_listing_flush_rewrite_rules_flag' ) ) {
+			
+			// Flush the rewrite rules
+	        flush_rewrite_rules();
+	        
+	        // Remove our flag
+	        delete_option( '_staff_listing_flush_rewrite_rules_flag' );
+	        
+	    }
+	    
+	}
+	
+	
 	/**
 	 * Register plugin shortcode(s)
 	 *
