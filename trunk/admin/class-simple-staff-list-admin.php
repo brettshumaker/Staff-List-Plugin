@@ -160,6 +160,16 @@ class Simple_Staff_List_Admin {
 			'staff-member-options',
 			array( $this, 'display_options_page' )
 		);
+		
+		// Export
+		add_submenu_page(
+			'edit.php?post_type=staff-member',
+			__( 'Simple Staff List Export', $this->plugin_name ),
+			__( 'Export', $this->plugin_name ),
+			'export',
+			'staff-member-export',
+			array( $this, 'display_export_page' )
+		);
 
 	}
 
@@ -197,6 +207,15 @@ class Simple_Staff_List_Admin {
 	 */
 	public function display_options_page() {
 		include_once( 'partials/simple-staff-list-options-display.php' );
+	}
+	
+	/**
+	 * Display Usage page content.
+	 *
+	 * @since   1.20
+	 */
+	public function display_export_page() {
+		include_once( 'partials/simple-staff-list-export-display.php' );
 	}
 
 	/**
@@ -582,6 +601,146 @@ class Simple_Staff_List_Admin {
 		}
 	
 		die( '1' );
+	}
+	
+	/**
+	 * Staff Member Export
+	 *
+	 * @since 1.20
+	 *
+	 * @return mixed
+	 */
+	public function staff_member_export() {
+		
+		$access_type = get_filesystem_method();
+		
+		$args = array(
+			'post_type' => 'staff-member',
+			'posts_per_page' => -1,
+			'post_status' => 'publish'
+		);
+		
+		$staff_query = new WP_Query( $args );
+		
+		if ( $staff_query->have_posts() ) :
+			
+			$csv_headers = array();
+			$csv_data = array();
+			
+			while ( $staff_query->have_posts() ) : $staff_query->the_post();
+				
+				$custom = get_post_custom();
+				
+				// Setup our CSV Header line if we haven't already
+				if ( ! $csv_headers ) {
+					$csv_headers[] = 'Staff Member Name';
+					$csv_headers[] = 'Staff Member Image URL';
+					
+					foreach ( $custom as $key => $value ) {
+						if ( strpos( $key, '_staff_member_' ) !== false ) {
+							
+							$new_key = trim( str_replace('_', ' ', $key) );
+							
+							$csv_headers[] = ucwords($new_key);
+							
+						}
+					}
+					
+					$csv_data[] = $csv_headers;
+					
+				}
+				
+				// Setup our data line for this Staff Member
+				$csv_new_line = array( get_the_title() );
+				
+				// Get the post image
+				$image_obj = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full', false);
+				if ( false !== $image_obj ) {
+					$csv_new_line[] = $image_obj[0];
+				} else {
+					$csv_new_line[] = '';
+				}
+				
+				// Get the post custom data
+				foreach ( $custom as $key => $value ) {
+					if ( strpos( $key, '_staff_member_' ) !== false ) {
+						
+						$new_value = $value[0];
+						
+						$csv_new_line[] = trim($new_value);
+						
+					}
+				}
+				
+				// Add a new line to the end of our data
+				$csv_data[] = $csv_new_line;
+				
+			
+			endwhile;
+			
+			$csv_str_out = '';
+			foreach ( $csv_data as $line ) {
+				
+				$i = 1;
+				foreach ( $line as $data ) {
+					$data_line_out = '"' . str_replace('"', '""', $data ) . '"';
+					
+					// Replace the newlines with <br> tags
+					$csv_str_out .= str_replace(["\r\n", "\r", "\n"], "<br/>", $data_line_out);
+					
+					if ( $i != count( $line ) )
+						$csv_str_out .= ',';
+					
+					$i++;
+				}
+				
+				$csv_str_out .= "\n";
+				
+			}
+			
+			
+			if ( 'direct' == $access_type ) {
+				// Save the file
+				$creds = request_filesystem_credentials();
+				
+				if ( ! WP_filesystem($creds) )
+					wp_send_json_error( 'Problem accessing WP File System' );
+				
+				global $wp_filesystem;
+				
+				$uploads = wp_upload_dir();
+				
+				// Create the sslp directory in uploads if we need to
+				if ( ! is_dir( $uploads['basedir'] . '/sslp' ) ) {
+					$wp_filesystem->mkdir( $uploads['basedir'] . '/sslp' );
+					$wp_filesystem->put_contents( $uploads['basedir'] . '/sslp/index.php', '', FS_CHMOD_FILE );
+				} else {
+					// Clean out any files that are in there...we're not backing up these exports, although that could be a feature later on
+					$path = $uploads['basedir'] . '/sslp/';
+					$files = $wp_filesystem->dirlist($path);
+						
+					foreach ( $files as $file ) {
+						if ( false !== strpos( $file['name'], 'staff-member-export-' ) )
+							$wp_filesystem->delete( $path . $file['name'] );
+					}
+				}
+				
+				// Save our file
+				$wp_filesystem->put_contents(
+					$uploads['basedir'] . '/sslp/staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv',
+					$csv_str_out,
+					FS_CHMOD_FILE
+				);
+					
+				wp_send_json_success( array( 'created_file' => true, 'url' => $uploads['baseurl'] . '/sslp/staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv' ) );
+			} else {
+				wp_send_json_success( array( 'created_file' => false, 'content' => $csv_str_out, 'filename' => 'staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv' ) );
+			}
+			
+		endif;
+		
+		wp_send_json_error( 'No data to export.' );
+		
 	}
 
 }
