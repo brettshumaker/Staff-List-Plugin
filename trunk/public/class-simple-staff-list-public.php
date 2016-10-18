@@ -66,6 +66,7 @@ class Simple_Staff_List_Public {
 			'group' => '',
 			'wrap_class' => '',
 			'order' => 'ASC',
+			'image_size' => 'full',
 		);
 
 		$this->staff_member_register_shortcodes();
