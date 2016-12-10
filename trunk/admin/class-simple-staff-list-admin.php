@@ -113,7 +113,19 @@ class Simple_Staff_List_Admin {
 
 	}
 
-
+	/**
+	 * Flush Rewrite Rules after saving plugin options
+	 *
+	 * @since   2.0
+	 */
+	public function ajax_flush_rewrite_rules() {
+		
+		flush_rewrite_rules();
+		
+		wp_send_json_success();
+		
+	}
+	
 	/**
 	 * Register admin menu items.
 	 *
