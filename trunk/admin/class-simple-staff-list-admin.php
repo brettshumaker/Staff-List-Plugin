@@ -274,31 +274,32 @@ class Simple_Staff_List_Admin {
 	 * Handle staff member featured image text
 	 *
 	 * @since 1.17
+	 * @deprecated Function deprecated in release 2.0.0
 	 */
 	public function staff_member_featured_image_text() {
 
-		remove_meta_box( 'postimagediv', 'staff-member', 'side' );
+	}
+	
+	/**
+	 * Add theme support for post thumbnails
+	 *
+	 * @since 2.0
+	 */
+	public function add_featured_image_support() {
+		
+		$supportedTypes = get_theme_support( 'post-thumbnails' );
+		
+		if ( $supportedTypes === false ) {
+			
+			add_theme_support( 'post-thumbnails', 'staff-member' );               
 
-		if ( current_theme_supports( 'post-thumbnails' ) ) {
-
-			add_meta_box( 'postimagediv',
-				__( 'Staff Photo', $this->plugin_name ),
-				'post_thumbnail_meta_box',
-				'staff-member',
-				'normal',
-				'high' );
-
-		} else {
-
-			add_meta_box( 'staff-member-warning',
-				__( 'Staff Photo', $this->plugin_name ),
-				'sslp_staff_member_warning_meta_box',
-				'staff-member',
-				'normal',
-				'high' );
-
+		} else if ( is_array( $supportedTypes ) ) {
+			
+			$supportedTypes[0][] = 'staff-member';
+			add_theme_support( 'post-thumbnails', $supportedTypes[0] );
+			
 		}
-
+		
 	}
 
 	/**

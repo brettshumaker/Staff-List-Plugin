@@ -66,6 +66,7 @@ class Simple_Staff_List_Public {
 			'group' => '',
 			'wrap_class' => '',
 			'order' => 'ASC',
+			'image_size' => 'full',
 		);
 
 		$this->staff_member_register_shortcodes();
@@ -161,23 +162,29 @@ class Simple_Staff_List_Public {
 		} else {
 			$name = get_option( '_staff_listing_custom_name_plural' );
 		}
-
+		
+		#TODO Instead of using "Staff" all through here...try to use the custom slug set in options.
+		
 		// Set up post type options
 		$labels = array(
-			'name'                => $name,
-			'singular_name'       => $singular_name,
-			'add_new'             => _x( 'Add New', 'staff member', $this->plugin_name ),
-			'add_new_item'        => __( 'Add New Staff Member', $this->plugin_name ),
-			'edit_item'           => __( 'Edit Staff Member', $this->plugin_name ),
-			'new_item'            => __( 'New Staff Member', $this->plugin_name ),
-			'view_item'           => __( 'View Staff Member', $this->plugin_name ),
-			'search_items'        => __( 'Search Staff Members', $this->plugin_name ),
-			'exclude_from_search' => true,
-			'not_found'           => __( 'No staff members found', $this->plugin_name ),
-			'not_found_in_trash'  => __( 'No staff members found in Trash', $this->plugin_name ),
-			'parent_item_colon'   => '',
-			'all_items'           => __( 'All Staff Members', $this->plugin_name ),
-			'menu_name'           => __( 'Staff Members', $this->plugin_name ),
+			'name'                	=> $name,
+			'singular_name'       	=> $singular_name,
+			'add_new'             	=> _x( 'Add New', 'staff member', $this->plugin_name ),
+			'add_new_item'        	=> __( 'Add New Staff Member', $this->plugin_name ),
+			'edit_item'           	=> __( 'Edit Staff Member', $this->plugin_name ),
+			'new_item'            	=> __( 'New Staff Member', $this->plugin_name ),
+			'view_item'           	=> __( 'View Staff Member', $this->plugin_name ),
+			'search_items'        	=> __( 'Search Staff Members', $this->plugin_name ),
+			'exclude_from_search' 	=> true,
+			'not_found'           	=> __( 'No staff members found', $this->plugin_name ),
+			'not_found_in_trash'  	=> __( 'No staff members found in Trash', $this->plugin_name ),
+			'parent_item_colon'   	=> '',
+			'all_items'           	=> __( 'All Staff Members', $this->plugin_name ),
+			'menu_name'           	=> __( 'Staff Members', $this->plugin_name ),
+			'featured_image'	  	=> __( 'Staff Photo', $this->plugin_name ),
+			'set_featured_image'  	=> __( 'Set Staff Photo', $this->plugin_name ),
+			'remove_featured_image' => __( 'Remove Staff Photo', $this->plugin_name ),
+			'use_featured_image'	=> __( 'Use Staff Photo', $this->plugin_name ),
 		);
 
 		$args = array(

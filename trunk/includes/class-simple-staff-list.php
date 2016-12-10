@@ -168,6 +168,7 @@ class Simple_Staff_List {
 		// Maybe flush rewrite rules after staff_member_init
 		$this->loader->add_action( 'wp_ajax_sslp_flush_rewrite_rules', $plugin_admin, 'ajax_flush_rewrite_rules', 20 );
 
+		$this->loader->add_action( 'after_setup_theme', $plugin_admin, 'add_featured_image_support', 10 );
 		$this->loader->add_filter( 'default_hidden_meta_boxes', $plugin_admin,  'hide_meta_boxes', 10, 2 );
 		$this->loader->add_filter( 'enter_title_here', $plugin_admin, 'staff_member_change_title' );
 		$this->loader->add_action( 'do_meta_boxes', $plugin_admin, 'staff_member_featured_image_text' );
