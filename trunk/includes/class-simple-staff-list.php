@@ -69,7 +69,7 @@ class Simple_Staff_List {
 	public function __construct() {
 
 		$this->plugin_name = 'simple-staff-list';
-		$this->version     = '1.20';
+		$this->version     = '2.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
