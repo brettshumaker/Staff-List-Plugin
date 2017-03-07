@@ -89,17 +89,19 @@
 			
 			$custom 	= get_post_custom();
 			$name 		= get_the_title();
+			$name_formatted = '<h3 class="staff-member-name">'.$name.'</h3>';
 			$name_slug	= basename(get_permalink());
-			$title 		= $custom["_staff_member_title"][0];
-			$email 		= $custom["_staff_member_email"][0];
-			$phone 		= $custom["_staff_member_phone"][0];
-			$bio 		= $custom["_staff_member_bio"][0];
-			$fb_url		= $custom["_staff_member_fb"][0];
-			$tw_url		= 'http://www.twitter.com/' . $custom["_staff_member_tw"][0];
+			$title 		= isset( $custom["_staff_member_title"][0] ) ? $custom["_staff_member_title"][0] : '';
+			$title_formatted = '' !== $title ? '<h4 class="staff-member-position">'.$title.'</h4>' : '';
+			$email 		= isset( $custom["_staff_member_email"][0] ) ? $custom["_staff_member_email"][0] : '';
+			$phone 		= isset( $custom["_staff_member_phone"][0] ) ? $custom["_staff_member_phone"][0] : '';
+			$bio 		= isset( $custom["_staff_member_bio"][0] ) ? $custom["_staff_member_bio"][0] : '';
+			$fb_url		= isset( $custom["_staff_member_fb"][0] ) ? $custom["_staff_member_fb"][0] : '';
+			$tw_url		= isset( $custom["_staff_member_tw"][0] ) ? 'http://www.twitter.com/' . $custom["_staff_member_tw"][0] : '';
+			$email_mailto = '' !== $email ? '<a class="staff-member-email" href="mailto:'.antispambot( $email ).'" title="Email '.$name.'">'.antispambot( $email ).'</a>' : '';
+			$email_nolink = '' !== $email ? antispambot( $email ) : '';
 			
-			
-			
-			if( has_post_thumbnail() ){
+			if ( has_post_thumbnail() ) {
 				
 				$image_size = apply_filters( 'sslp_set_staff_image_size', $atts['image_size'], $post->ID );
 				
@@ -109,32 +111,33 @@
 	            $photo_url = $src;
 	            $photo = '<img class="staff-member-photo" src="'.$photo_url.'" alt = "'.$title.'">';
 	            
-			}else{
+			} else {
 				
 				$photo_url = '';
 				$photo = '';
 				
 			}
 			
-			
-			if (function_exists('wpautop')){
-				$bio_format = '<div class="staff-member-bio">'.wpautop($bio).'</div>';
+			if ( function_exists( 'wpautop' ) ) {
+				
+				$bio_format = '' !== $bio ? '<div class="staff-member-bio">'.wpautop($bio).'</div>' : '';
+				
+			} else {
+				
+				$bio_format = $bio;
+				
 			}
 			
-			
-			$email_mailto = '<a class="staff-member-email" href="mailto:'.antispambot( $email ).'" title="Email '.$name.'">'.antispambot( $email ).'</a>';
-			$email_nolink = antispambot( $email );
-			
 			$accepted_single_tags = $default_tags;
-			$replace_single_values = array($name, $name_slug, $photo_url, $title, $email_nolink, $phone, $bio, $fb_url, $tw_url);
+			$replace_single_values = apply_filters( 'sslp_replace_single_values_filter', array($name, $name_slug, $photo_url, $title, $email_nolink, $phone, $bio, $fb_url, $tw_url), $post->ID );
 		
 			$accepted_formatted_tags = $default_formatted_tags;
-			$replace_formatted_values = array('<h3 class="staff-member-name">'.$name.'</h3>', '<h4 class="staff-member-position">'.$title.'</h4>', $photo, $email_mailto, $bio_format );
+			$replace_formatted_values = apply_filters( 'sslp_replace_formatted_values_filter', array($name_formatted, $title_formatted, $photo, $email_mailto, $bio_format ), $post->ID );
 		
 			$loop_markup = str_replace($accepted_single_tags, $replace_single_values, $loop_markup);
 			$loop_markup = str_replace($accepted_formatted_tags, $replace_formatted_values, $loop_markup);
 		
-			$output .= $loop_markup;
+			$output .= apply_filters( 'sslp_single_loop_markup_filter', $loop_markup, $post->ID );
 		
 			$loop_markup = $loop_markup_reset;
 			
