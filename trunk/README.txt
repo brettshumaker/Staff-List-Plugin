@@ -3,7 +3,7 @@ Contributors: brettshumaker, vc27, josiahgoff
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
 Tested up to: 4.4
-Stable tag: 1.19
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,11 @@ Alright, here's a few things to try:
 5. Templates screen 2
 
 == Changelog ==
+
+= 2.0 =
+* FEATURE: Export Staff Members to CSV
+* FEATURE: Specify which image size to use in the loop by using the "image_size" attribute in the "[simple-staff-list]" shortcode: [simple-staff-list image_size=thumbnail]
+* Fixed: Rewrite rules are now flushed correctly
 
 = 1.19 =
 * BUGFIX: External Custom CSS now loading properly.
