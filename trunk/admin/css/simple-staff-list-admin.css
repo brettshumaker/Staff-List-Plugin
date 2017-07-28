@@ -107,12 +107,27 @@ td.column-order img {
     float: right;
 }
 
+.sslp-sidebar img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+.sslp-widget:not(:last-child) {
+	margin-bottom: 2em;
+}
+
 .sslp-sidebar .sidebar-inner {
 	background: #fff;
 	padding: 0 1em 1em;
 	border-style: solid;
 	border-color: #ddd;
 	border-width: 0 thin thin;
+}
+
+.sidebar-inner h3 {
+	margin-top: 0;
+	padding-top: .75em;
 }
 
 .sidebar-inner p:first-child {
@@ -129,6 +144,12 @@ td.column-order img {
 
 .sslp-sidebar-header span {
 	margin-right: .5em;
+}
+
+.sslp-ticket-link img {
+	width: 250px;
+	display: block;
+	margin: 0 auto;
 }
 
 

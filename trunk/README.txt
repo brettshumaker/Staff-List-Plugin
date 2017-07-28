@@ -46,6 +46,11 @@ Alright, here's a few things to try:
 
 == Changelog ==
 
+= 2.0 =
+* FEATURE: Export Staff Members to CSV
+* FEATURE: Specify which image size to use in the loop by using the "image_size" attribute in the "[simple-staff-list]" shortcode: [simple-staff-list image_size=thumbnail]
+* Fixed: Rewrite rules are now flushed correctly
+
 = 1.19 =
 * BUGFIX: External Custom CSS now loading properly.
 * BUGFIX: Multiple shortcodes on page with "groups" attribute now working properly.

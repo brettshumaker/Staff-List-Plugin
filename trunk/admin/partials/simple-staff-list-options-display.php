@@ -27,20 +27,6 @@ if ( !empty($_POST) && check_admin_referer( 'staff-member-options', 'staff-list-
 	$custom_slug = stripslashes_deep( get_option('_staff_listing_custom_slug') );
 	$custom_name_singular = stripslashes_deep( get_option('_staff_listing_custom_name_singular') );
 	$custom_name_plural = stripslashes_deep( get_option('_staff_listing_custom_name_plural') );
-	
-	// We've updated the options, send off an AJAX request to flush the rewrite rules
-	#TODO# Should move these options to use the Settings API instead of our own custom thing - or maybe just make it all AJAX - no need for a page refresh
-	?>
-	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			var data = {
-				'action': 'sslp_flush_rewrite_rules',
-			}
-			
-			$.post( "<?php echo admin_url( 'admin-ajax.php' ); ?>", data, function(response){});
-		});
-	</script>
-<?php
 
 } else {
 	$custom_slug = stripslashes_deep( get_option('_staff_listing_custom_slug') );

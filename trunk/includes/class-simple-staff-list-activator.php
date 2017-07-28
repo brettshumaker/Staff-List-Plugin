@@ -164,11 +164,8 @@ class Simple_Staff_List_Activator {
 			update_option( '_staff_listing_custom_name_plural', $default_name_plural );
 		}
 
-		// Maybe add flag to signal the need to flush the rewrite rules
-		if ( ! get_option( '_staff_listing_flush_rewrite_rules_flag' ) ) {
-			
-			add_option( '_staff_listing_flush_rewrite_rules_flag', true );
-			
+		if ( true === $is_forced ) {
+			flush_rewrite_rules();
 		}
 	}
 
