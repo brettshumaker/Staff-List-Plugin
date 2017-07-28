@@ -42,5 +42,39 @@
         });
 
     });
+    
+    $(document).ready(function() {
+		
+		// Export button
+		$('a.export-button').on( 'click', function(e){
+			e.preventDefault();
+			$('a.export-button').after('<span class="spinner is-active" style="float:none"></span>');
+			
+			var data = {
+				'action': 'staff_member_export',
+			};
+			
+			$.post( ajaxurl, data, function( response ){
+				
+				if ( response.success && response.data.created_file ) {
+					$('a.export-button + .spinner').fadeOut(300, function(){
+						$(this).remove();
+					});
+					window.location = response.data.url;
+				} else if ( response.success && ! response.data.created_file ) {
+					$('a.export-button + .spinner').fadeOut(300, function(){
+						$(this).remove();
+					});
+					$('a.export-button').hide().after('<a class="button button-primary download-button" download="' + response.data.filename + '">Download</a>');
+					$('a.export-button').remove();
+					$('a.download-button').attr( 'href', "data:text/plain," + encodeURIComponent( response.data.content ) );
+				}
+				
+			});
+			
+		});
+		
+	});
+    
 
 })(jQuery);

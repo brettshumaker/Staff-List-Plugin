@@ -34,6 +34,9 @@
 			
 		<h4><code>[simple-staff-list order="ASC"]</code></h4>
 		<p><?php _e( 'This displays Staff Members sorted by ascending or descending order according to the "Order" page. You may use "ASC" or "DESC" but the default is "ASC"', 'simple-staff-list' ); ?></p>
+		
+		<h4><code>[simple-staff-list image_size=thumbnail]</code></h4>
+		<p><?php _e( 'This displays the Staff Members\' "thumbnail" size image instead of the "full" size image. You can use any image size registered with WordPress in place of "thumbnail."', 'simple-staff-list' ); ?></p>
 	
 		<p><?php _e( 'To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">here', 'simple-staff-list' ); ?></a>.</p>
 	</div>
