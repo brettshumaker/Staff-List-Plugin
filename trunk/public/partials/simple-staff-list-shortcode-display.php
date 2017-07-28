@@ -85,6 +85,7 @@
 		
 		global $post;
 		
+		$index      = $i;
 		$custom 	= get_post_custom();
 		$name 		= get_the_title();
 		$name_slug	= basename(get_permalink());
@@ -116,7 +117,7 @@
 		$email_nolink = antispambot( $email );
 		
 		$accepted_single_tags = $default_tags;
-		$replace_single_values = array($name, $name_slug, $photo_url, $title, $email_nolink, $phone, $bio, $fb_url, $tw_url);
+		$replace_single_values = array($name, $name_slug, $photo_url, $title, $email_nolink, $phone, $bio, $fb_url, $tw_url, $index);
 	
 		$accepted_formatted_tags = $default_formatted_tags;
 		$replace_formatted_values = array('<h3 class="staff-member-name">'.$name.'</h3>', '<h4 class="staff-member-position">'.$title.'</h4>', $photo, $email_mailto, $bio_format );
