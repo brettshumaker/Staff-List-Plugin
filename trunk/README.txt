@@ -46,6 +46,10 @@ Alright, here's a few things to try:
 
 == Changelog ==
 
+= 2.0.1 =
+* FIXED: PHP 5.2 incompatibility introduced in v2.0
+* FIXED: A few images in admin didn't make it into the last commit somehow
+
 = 2.0 =
 * FEATURE: Export Staff Members to CSV
 * FEATURE: Specify which image size to use in the loop by using the "image_size" attribute in the "[simple-staff-list]" shortcode: [simple-staff-list image_size=thumbnail]
