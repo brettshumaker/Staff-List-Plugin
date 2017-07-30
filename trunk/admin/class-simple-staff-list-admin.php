@@ -699,7 +699,7 @@ class Simple_Staff_List_Admin {
 					$data_line_out = '"' . str_replace('"', '""', $data ) . '"';
 					
 					// Replace the newlines with <br> tags
-					$csv_str_out .= str_replace(["\r\n", "\r", "\n"], "<br/>", $data_line_out);
+					$csv_str_out .= str_replace( array( "\r\n", "\r", "\n" ), "<br/>", $data_line_out);
 					
 					if ( $i != count( $line ) )
 						$csv_str_out .= ',';
