@@ -18,8 +18,14 @@
 
 	<h2><?php _e( 'Usage', 'simple-staff-list' ); ?></h2>
 	<div class="sslp-content sslp-column">
-		<p><?php _e( 'The Simple Staff List plugin makes it easy to create and display a staff directory on your website. You can create your own <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">template</a> for displaying staff information as well as <a href="edit.php?post_type=staff-member&page=staff-member-usage" title="Edit Custom CSS for Simple Staff List">add custom css</a> styling to make your staff directory look great.',
-				'simple-staff-list' ); ?></p>
+		<p>
+		<?php
+		_e(
+			'The Simple Staff List plugin makes it easy to create and display a staff directory on your website. You can create your own <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">template</a> for displaying staff information as well as <a href="edit.php?post_type=staff-member&page=staff-member-usage" title="Edit Custom CSS for Simple Staff List">add custom css</a> styling to make your staff directory look great.',
+			'simple-staff-list'
+		);
+				?>
+				</p>
 		
 		<h3><?php _e( 'Shortcode', 'simple-staff-list' ); ?></h3>
 		
@@ -41,6 +47,6 @@
 		<p><?php _e( 'To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set <a href="edit.php?post_type=staff-member&page=staff-member-template" title="Edit the Simple Staff List template.">here', 'simple-staff-list' ); ?></a>.</p>
 	</div>
 	<div class="sslp-sidebar sslp-column last">
-		<?php include_once( 'simple-staff-list-admin-sidebar.php' ); ?>
+		<?php require_once 'simple-staff-list-admin-sidebar.php'; ?>
 	</div>
 </div>

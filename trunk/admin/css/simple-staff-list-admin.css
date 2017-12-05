@@ -4,68 +4,68 @@
  */
 
 #poststuff .stng_admin_wrap h2 {
-    margin:10px 0 0;
+	margin:10px 0 0;
 }
 
 .sslp_admin_wrap input[type="text"] {
-    font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
-    width: 30%;
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+	width: 30%;
 }
 
 #wp-_staff_member_bio-wrap .wp-editor-area {
-    font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
 }
 
 #staff-member-info label {
-    position: relative;
-    display: block;
-    padding-top: 0.5em;
-    margin-bottom: 1.5em;
+	position: relative;
+	display: block;
+	padding-top: 0.5em;
+	margin-bottom: 1.5em;
 }
 
 #staff-member-info label input {
-    position: absolute;
-    left: 110px;
-    top: -0em;
+	position: absolute;
+	left: 110px;
+	top: -0em;
 }
 
 .edit-page-staff-member #post-body-content {
-    margin-bottom: 0; /* Tightens up spacing between title bar and our custom meta boxes */
+	margin-bottom: 0; /* Tightens up spacing between title bar and our custom meta boxes */
 }
 
 .sslp-usage .sslp-content h4 {
-    margin-bottom: .5em;
+	margin-bottom: .5em;
 }
 
 .sslp-usage .sslp-content h4 + p {
-    margin-top: 0;
-    margin-bottom:3em;
+	margin-top: 0;
+	margin-bottom:3em;
 }
 
 p.sslp-note {
-    font-size: .8em;
-    font-style: italic;
-    color: red;
+	font-size: .8em;
+	font-style: italic;
+	color: red;
 }
 
 ul.sslp-tag-list {
-    margin-left: 3em;
+	margin-left: 3em;
 }
 
 ul.sslp-tag-list li {
-    display:inline;
-    padding: .25em 1em;
-    font-weight: bold;
+	display:inline;
+	padding: .25em 1em;
+	font-weight: bold;
 }
 
 td.column-order img {
-    display: block;
-    padding: 24px 42px;
-    cursor: hand;
+	display: block;
+	padding: 24px 42px;
+	cursor: hand;
 }
 
 .sslp-template h4.heading {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .sslp-template textarea {
@@ -73,20 +73,20 @@ td.column-order img {
 }
 
 .sslp-template .content {
-    display: none;
+	display: none;
 }
 
 .sslp-template pre {
-    background: #eee;
-    padding: 1%;
-    border-radius: 3px;
-    border: thin solid #ccc;
-    overflow: auto;
+	background: #eee;
+	padding: 1%;
+	border-radius: 3px;
+	border: thin solid #ccc;
+	overflow: auto;
 }
 
 .sslp-template .default-css .content pre {
-    height: 250px;
-    overflow: scroll;
+	height: 250px;
+	overflow: scroll;
 }
 
 
@@ -94,9 +94,9 @@ td.column-order img {
  * admin columns
  */
 .sslp-column {
-    float: left;
-    padding: 1em 1em 1em 0;
-    box-sizing: border-box;
+	float: left;
+	padding: 1em 1em 1em 0;
+	box-sizing: border-box;
 }
 
 .sslp-column > * {
@@ -104,7 +104,7 @@ td.column-order img {
 }
 
 .sslp-column.last {
-    float: right;
+	float: right;
 }
 
 .sslp-sidebar img {
@@ -155,17 +155,17 @@ td.column-order img {
 
 @media screen and ( min-width: 961px ) {
 	.sslp-column {
-	    float: left;
+		float: left;
 	}
-	
+
 	.sslp-column.last {
-	    float: right;
+		float: right;
 	}
-	
+
 	.sslp-content {
-	    width: 60%;
+		width: 60%;
 	}
-	
+
 	.sslp-sidebar {
 		width: 35%;
 	}
@@ -177,30 +177,30 @@ td.column-order img {
 
 /* Admin Menu - 16px */
 #menu-posts-staff-member .wp-menu-image {
-    background: url('../img/staff-list-icon.png') no-repeat 5px 5px !important;
-    background: url('../img/staff-list-icon.svg') no-repeat 5px 5px !important;
-    background-size: 70% !important;
-    opacity: .5;
+	background: url('../img/staff-list-icon.png') no-repeat 5px 5px !important;
+	background: url('../img/staff-list-icon.svg') no-repeat 5px 5px !important;
+	background-size: 70% !important;
+	opacity: .5;
 }
 #menu-posts-staff-member:hover .wp-menu-image, #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
-    b--ackground-position: 6px -26px !important;
-    opacity: 1;
+	b--ackground-position: 6px -26px !important;
+	opacity: 1;
 }
 
 #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
-    background: url('../img/staff-list-icon-lighter.png') no-repeat 5px 5px !important;
-    background: url('../img/staff-list-icon-lighter.svg') no-repeat 5px 5px !important;
-    background-size: 70% !important;
+	background: url('../img/staff-list-icon-lighter.png') no-repeat 5px 5px !important;
+	background: url('../img/staff-list-icon-lighter.svg') no-repeat 5px 5px !important;
+	background-size: 70% !important;
 }
 body[class*="branch-3-8"] #menu-posts-staff-member .wp-menu-image,
 body[class*="branch-4"] #menu-posts-staff-member .wp-menu-image {
-    background-image: none !important;
+	background-image: none !important;
 }
 /* Post Screen - 32px */
 .icon32-posts-staff-member {
-    background: url('../img/staff-list-icon.png') no-repeat left top !important;
-    background: url('../img/staff-list-icon.svg') no-repeat left top !important;
-    background-size: 100% !important;
-    height: 32px;
-    width: 32px;
+	background: url('../img/staff-list-icon.png') no-repeat left top !important;
+	background: url('../img/staff-list-icon.svg') no-repeat left top !important;
+	background-size: 100% !important;
+	height: 32px;
+	width: 32px;
 }

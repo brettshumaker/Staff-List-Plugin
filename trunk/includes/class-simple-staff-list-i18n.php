@@ -54,7 +54,7 @@ class Simple_Staff_List_i18n {
 	 * Set the domain equal to that of the specified domain.
 	 *
 	 * @since    1.17
-	 * @param    string    $domain    The domain that represents the locale of this plugin.
+	 * @param    string $domain    The domain that represents the locale of this plugin.
 	 */
 	public function set_domain( $domain ) {
 		$this->domain = $domain;

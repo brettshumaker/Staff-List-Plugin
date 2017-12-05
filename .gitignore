@@ -1,2 +1,10 @@
 .DS_Store
 .idea
+trunk/composer.json
+
+trunk/composer.lock
+
+trunk/phpcs.xml
+
+trunk/vendor/*
+wpcs/
