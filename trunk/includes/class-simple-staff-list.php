@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -84,7 +83,7 @@ class Simple_Staff_List {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Simple_Staff_List_Loader. Orchestrates the hooks of the plugin.
-	 * - Simple_Staff_List_i18n. Defines internationalization functionality.
+	 * - Simple_Staff_List_I18n. Defines internationalization functionality.
 	 * - Simple_Staff_List_Admin. Defines all hooks for the admin area.
 	 * - Simple_Staff_List_Public. Defines all hooks for the public side of the site.
 	 *
@@ -114,15 +113,6 @@ class Simple_Staff_List {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-simple-staff-list-admin.php';
 
 		/**
-		 * A utility class for creating custom post types
-		 *	- not required at this point...it's in here for later
-		 *   *** DOES NOT SUPPORT PHP 5.2 ***
-		 */
-		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
-			require_once plugin_dir_path( __FILE__ ) . 'class-custom-post-type.php';
-		}
-
-		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -135,7 +125,7 @@ class Simple_Staff_List {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Simple_Staff_List_i18n class in order to set the domain and to register the hook
+	 * Uses the Simple_Staff_List_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.17
@@ -143,7 +133,7 @@ class Simple_Staff_List {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Simple_Staff_List_i18n();
+		$plugin_i18n = new Simple_Staff_List_I18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
@@ -164,12 +154,12 @@ class Simple_Staff_List {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_menu' );
-		
-		// Maybe flush rewrite rules after staff_member_init
+
+		// Maybe flush rewrite rules after staff_member_init.
 		$this->loader->add_action( 'wp_ajax_sslp_flush_rewrite_rules', $plugin_admin, 'ajax_flush_rewrite_rules', 20 );
 
 		$this->loader->add_action( 'after_setup_theme', $plugin_admin, 'add_featured_image_support', 10 );
-		$this->loader->add_filter( 'default_hidden_meta_boxes', $plugin_admin,  'hide_meta_boxes', 10, 2 );
+		$this->loader->add_filter( 'default_hidden_meta_boxes', $plugin_admin, 'hide_meta_boxes', 10, 2 );
 		$this->loader->add_filter( 'enter_title_here', $plugin_admin, 'staff_member_change_title' );
 		$this->loader->add_action( 'do_meta_boxes', $plugin_admin, 'staff_member_featured_image_text' );
 		$this->loader->add_action( 'do_meta_boxes', $plugin_admin, 'staff_member_add_meta_boxes' );
