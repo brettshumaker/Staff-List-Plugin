@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -103,7 +102,7 @@ class Simple_Staff_List_Admin {
 		 * class.
 		 */
 
-		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'staff-member' ) {
+		if ( isset( $_GET['post_type'] ) && 'staff-member' === $_GET['post_type'] ) {
 
 			wp_enqueue_script(
 				$this->plugin_name,
@@ -137,7 +136,7 @@ class Simple_Staff_List_Admin {
 	 */
 	public function register_menu() {
 
-		// Order page
+		// Order page.
 		add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Order', $this->plugin_name ),
@@ -147,7 +146,7 @@ class Simple_Staff_List_Admin {
 			array( $this, 'display_order_page' )
 		);
 
-		// Templates page
+		// Templates page.
 		add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Display Templates', $this->plugin_name ),
@@ -157,7 +156,7 @@ class Simple_Staff_List_Admin {
 			array( $this, 'display_templates_page' )
 		);
 
-		// Usage page
+		// Usage page.
 		add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Usage', $this->plugin_name ),
@@ -167,7 +166,7 @@ class Simple_Staff_List_Admin {
 			array( $this, 'display_usage_page' )
 		);
 
-		// Options page
+		// Options page.
 		add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Options', $this->plugin_name ),
@@ -177,7 +176,7 @@ class Simple_Staff_List_Admin {
 			array( $this, 'display_options_page' )
 		);
 
-		// Export
+		// Export.
 		add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Export', $this->plugin_name ),
@@ -237,16 +236,16 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Hide unwanted meta boxes on staff member screen.
 	 *
-	 * @since 1.17
+	 * @param array  $hidden Array of hidden meta boxes.
+	 * @param object $screen Contains information about the current screen.
 	 *
-	 * @param $hidden
-	 * @param $screen
+	 * @since 1.17
 	 *
 	 * @return array
 	 */
 	public function hide_meta_boxes( $hidden, $screen ) {
 
-		if ( 'staff-member' == $screen->id ) {
+		if ( 'staff-member' === $screen->id ) {
 			$hidden = array( 'postexcerpt' );
 		}
 
@@ -259,7 +258,7 @@ class Simple_Staff_List_Admin {
 	 *
 	 * @since 1.17
 	 *
-	 * @param $title string Title box text
+	 * @param string $title Title box text.
 	 *
 	 * @return mixed Title box text
 	 */
@@ -267,7 +266,7 @@ class Simple_Staff_List_Admin {
 
 		$screen = get_current_screen();
 
-		if ( $screen->post_type == 'staff-member' ) {
+		if ( 'staff-member' === $screen->post_type ) {
 			$title = __( 'Staff Name', $this->plugin_name );
 		}
 
@@ -291,16 +290,16 @@ class Simple_Staff_List_Admin {
 	 */
 	public function add_featured_image_support() {
 
-		$supportedTypes = get_theme_support( 'post-thumbnails' );
+		$supported_types = get_theme_support( 'post-thumbnails' );
 
-		if ( $supportedTypes === false ) {
+		if ( false === $supported_types ) {
 
 			add_theme_support( 'post-thumbnails', 'staff-member' );
 
-		} elseif ( is_array( $supportedTypes ) ) {
+		} elseif ( is_array( $supported_types ) ) {
 
-			$supportedTypes[0][] = 'staff-member';
-			add_theme_support( 'post-thumbnails', $supportedTypes[0] );
+			$supported_types[0][] = 'staff-member';
+			add_theme_support( 'post-thumbnails', $supported_types[0] );
 
 		}
 
@@ -338,7 +337,7 @@ class Simple_Staff_List_Admin {
 	 *
 	 * @since 1.17
 	 *
-	 * @param $cols
+	 * @param array $cols Array that holds the column data.
 	 *
 	 * @return array Custom columns
 	 */
@@ -376,119 +375,44 @@ class Simple_Staff_List_Admin {
 
 		<div class="sslp_admin_wrap">
 			<label for="_staff-member-title">
-				<?php _e( 'Position:', 'simple-staff-list' ); ?>
+				<?php esc_html_e( 'Position:', $this->plugin_name ); ?>
 				<input type="text"
-					   name="_staff_member_title"
-					   id="_staff_member_title"
-					   placeholder="
-						<?php
-						if ( $_staff_member_title == '' ) {
-							_e(
-								'Staff Member\'s Position',
-								'simple-staff-list'
-							);
-						}
-						?>
-						"
-					   value="
-						<?php
-						if ( $_staff_member_title != '' ) {
-							echo $_staff_member_title;
-						}
-						?>
-						"/>
+						name="_staff_member_title"
+						id="_staff_member_title"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Position', $this->plugin_name ); ?>"
+						value="<?php echo esc_attr( $_staff_member_title ); ?>"/>
 			</label>
 			<label for="_staff-member-email">
-				<?php _e( 'Email:', 'simple-staff-list' ); ?>
+				<?php esc_html_e( 'Email:', $this->plugin_name ); ?>
 				<input type="text"
-					   name="_staff_member_email"
-					   id="_staff_member_email"
-					   placeholder="
-						<?php
-						if ( $_staff_member_email == '' ) {
-							_e(
-								'Staff Member\'s Email',
-								'simple-staff-list'
-							);
-						}
-						?>
-						"
-					   value="
-						<?php
-						if ( $_staff_member_email != '' ) {
-							echo $_staff_member_email;
-						}
-						?>
-						"/>
+						name="_staff_member_email"
+						id="_staff_member_email"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Email', $this->plugin_name ); ?>"
+						value="<?php echo esc_attr( $_staff_member_email ); ?>"/>
 			</label>
 			<label for="_staff-member-title">
-				<?php _e( 'Phone:', 'simple-staff-list' ); ?>
+				<?php esc_html_e( 'Phone:', $this->plugin_name ); ?>
 				<input type="text"
-					   name="_staff_member_phone"
-					   id="_staff_member_phone"
-					   placeholder="
-						<?php
-						if ( $_staff_member_phone == '' ) {
-							_e(
-								'Staff Member\'s Phone',
-								'simple-staff-list'
-							);
-						}
-						?>
-						"
-					   value="
-						<?php
-						if ( $_staff_member_phone != '' ) {
-							echo $_staff_member_phone;
-						}
-						?>
-						"/>
+						name="_staff_member_phone"
+						id="_staff_member_phone"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Phone', $this->plugin_name ); ?>"
+						value="<?php echo esc_attr( $_staff_member_phone ); ?>"/>
 			</label>
 			<label for="_staff-member-fb">
-				<?php _e( 'Facebook URL:', 'simple-staff-list' ); ?>
+				<?php esc_html_e( 'Facebook URL:', $this->plugin_name ); ?>
 				<input type="text"
-					   name="_staff_member_fb"
-					   id="_staff_member_fb"
-					   placeholder="
-						<?php
-						if ( $_staff_member_fb == '' ) {
-							_e(
-								'Staff Member\'s Facebook URL',
-								'simple-staff-list'
-							);
-						}
-						?>
-						"
-					   value="
-						<?php
-						if ( $_staff_member_fb != '' ) {
-							echo $_staff_member_fb;
-						}
-						?>
-						"/>
+						name="_staff_member_fb"
+						id="_staff_member_fb"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Facebook URL', $this->plugin_name ); ?>"
+						value="<?php echo esc_attr( $_staff_member_fb ); ?>"/>
 			</label>
 			<label for="_staff-member-tw">
-				<?php _e( 'Twitter Username:', 'simple-staff-list' ); ?>
+				<?php esc_html_e( 'Twitter Username:', $this->plugin_name ); ?>
 				<input type="text"
-					   name="_staff_member_tw"
-					   id="_staff_member_tw"
-					   placeholder="
-						<?php
-						if ( $_staff_member_tw == '' ) {
-							_e(
-								'Staff Member\'s Twitter Name',
-								'simple-staff-list'
-							);
-						}
-						?>
-						"
-					   value="
-						<?php
-						if ( $_staff_member_tw != '' ) {
-							echo $_staff_member_tw;
-						}
-						?>
-						"/>
+						name="_staff_member_tw"
+						id="_staff_member_tw"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Twitter Name', $this->plugin_name ); ?>"
+						value="<?php echo esc_attr( $_staff_member_tw ); ?>"/>
 			</label>
 		</div>
 		<?php
@@ -502,9 +426,9 @@ class Simple_Staff_List_Admin {
 	 */
 	public function sslp_staff_member_warning_meta_box() {
 
-		_e(
+		esc_html_e(
 			'<p><strong>Your current theme does not support post thumbnails. Unfortunately, you will not be able to add photos for your Staff Members</strong></p>',
-			'simple-staff-list'
+			$this->plugin_name
 		);
 
 	}
@@ -527,7 +451,7 @@ class Simple_Staff_List_Admin {
 			$settings = array(
 				'textarea_rows' => 8,
 				'media_buttons' => false,
-				'tinymce'       => true, // Disables actual TinyMCE buttons // This makes the rich content editor
+				'tinymce'       => true, // Disables actual TinyMCE buttons // This makes the rich content editor.
 				'quicktags'     => true, // Use QuickTags for formatting    // work within a metabox.
 			)
 		);
@@ -546,7 +470,7 @@ class Simple_Staff_List_Admin {
 	 *
 	 * @since 1.17
 	 *
-	 * @param $column
+	 * @param string $column The column id string.
 	 */
 	public function staff_member_display_custom_columns( $column ) {
 
@@ -565,16 +489,16 @@ class Simple_Staff_List_Admin {
 				}
 				break;
 			case '_staff_member_title':
-				echo $_staff_member_title;
+				echo esc_html( $_staff_member_title );
 				break;
 			case '_staff_member_email':
-				echo '<a href="mailto:' . $_staff_member_email . '">' . $_staff_member_email . '</a>';
+				echo '<a href="mailto:' . esc_attr( $_staff_member_email ) . '">' . esc_html( $_staff_member_email ) . '</a>';
 				break;
 			case '_staff_member_phone':
-				echo $_staff_member_phone;
+				echo esc_html( $_staff_member_phone );
 				break;
 			case '_staff_member_bio':
-				echo $this->get_staff_bio_excerpt( $_staff_member_bio, 10 );
+				echo esc_html( $this->get_staff_bio_excerpt( $_staff_member_bio, 10 ) );
 				break;
 		}
 
@@ -589,9 +513,7 @@ class Simple_Staff_List_Admin {
 
 		global $post;
 
-		if ( ! isset( $_POST['sslp_add_edit_staff_member_noncename'] )
-			 || ! wp_verify_nonce( $_POST['sslp_add_edit_staff_member_noncename'], 'sslp_post_nonce' )
-		) {
+		if ( ! isset( $_POST['sslp_add_edit_staff_member_noncename'] ) || ! wp_verify_nonce( $_POST['sslp_add_edit_staff_member_noncename'], 'sslp_post_nonce' ) ) {
 			return;
 		}
 
@@ -637,8 +559,8 @@ class Simple_Staff_List_Admin {
 	 *
 	 * @since 1.17
 	 *
-	 * @param $text string Bio text
-	 * @param $excerpt_length int Excerpt length
+	 * @param string $text Bio text.
+	 * @param int    $excerpt_length Excerpt length.
 	 *
 	 * @return mixed
 	 */
@@ -650,7 +572,7 @@ class Simple_Staff_List_Admin {
 			$excerpt_length = 20;
 		}
 
-		if ( '' != $text ) {
+		if ( '' !== $text ) {
 			$text         = strip_shortcodes( $text );
 			$text         = apply_filters( 'the_content', $text );
 			$text         = str_replace( ']]>', ']]>', $text );
@@ -676,10 +598,10 @@ class Simple_Staff_List_Admin {
 		$order     = $_POST['order'];
 
 		/**
-		*    Expect: $sorted = array(
-		*                menu_order => post-XX
-		*            );
-		*/
+		 *    Expect: $sorted = array(
+		 *                menu_order => post-XX
+		 *            );
+		 */
 		foreach ( $order as $menu_order => $post_id ) {
 			$post_id    = intval( str_ireplace( 'post-', '', $post_id ) );
 			$menu_order = intval( $menu_order );
@@ -723,7 +645,7 @@ class Simple_Staff_List_Admin {
 
 				$custom = get_post_custom();
 
-				// Setup our CSV Header line if we haven't already
+				// Setup our CSV Header line if we haven't already.
 				if ( ! $csv_headers ) {
 					$csv_headers[] = 'Staff Member Name';
 					$csv_headers[] = 'Staff Member Image URL';
@@ -742,10 +664,10 @@ class Simple_Staff_List_Admin {
 
 				}
 
-				// Setup our data line for this Staff Member
+				// Setup our data line for this Staff Member.
 				$csv_new_line = array( get_the_title() );
 
-				// Get the post image
+				// Get the post image.
 				$image_obj = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full', false );
 				if ( false !== $image_obj ) {
 					$csv_new_line[] = $image_obj[0];
@@ -753,7 +675,7 @@ class Simple_Staff_List_Admin {
 					$csv_new_line[] = '';
 				}
 
-				// Get the post custom data
+				// Get the post custom data.
 				foreach ( $custom as $key => $value ) {
 					if ( strpos( $key, '_staff_member_' ) !== false ) {
 
@@ -764,7 +686,7 @@ class Simple_Staff_List_Admin {
 					}
 				}
 
-				// Add a new line to the end of our data
+				// Add a new line to the end of our data.
 				$csv_data[] = $csv_new_line;
 
 			endwhile;
@@ -776,10 +698,10 @@ class Simple_Staff_List_Admin {
 				foreach ( $line as $data ) {
 					$data_line_out = '"' . str_replace( '"', '""', $data ) . '"';
 
-					// Replace the newlines with <br> tags
+					// Replace the newlines with <br> tags.
 					$csv_str_out .= str_replace( array( "\r\n", "\r", "\n" ), '<br/>', $data_line_out );
 
-					if ( $i != count( $line ) ) {
+					if ( count( $line ) !== $i ) {
 						$csv_str_out .= ',';
 					}
 
@@ -790,8 +712,9 @@ class Simple_Staff_List_Admin {
 
 			}
 
-			if ( 'direct' == $access_type ) {
-				// Save the file
+			if ( 'direct' === $access_type ) {
+
+				// Save the file.
 				$creds = request_filesystem_credentials();
 
 				if ( ! WP_filesystem( $creds ) ) {
@@ -802,23 +725,29 @@ class Simple_Staff_List_Admin {
 
 				$uploads = wp_upload_dir();
 
-				// Create the sslp directory in uploads if we need to
+				// Create the sslp directory in uploads if we need to.
 				if ( ! is_dir( $uploads['basedir'] . '/sslp' ) ) {
+
 					$wp_filesystem->mkdir( $uploads['basedir'] . '/sslp' );
 					$wp_filesystem->put_contents( $uploads['basedir'] . '/sslp/index.php', '', FS_CHMOD_FILE );
+
 				} else {
-					// Clean out any files that are in there...we're not backing up these exports, although that could be a feature later on
+
+					// Clean out any files that are in there...we're not backing up these exports, although that could be a feature later on.
 					$path  = $uploads['basedir'] . '/sslp/';
 					$files = $wp_filesystem->dirlist( $path );
 
 					foreach ( $files as $file ) {
+
 						if ( false !== strpos( $file['name'], 'staff-member-export-' ) ) {
+
 							$wp_filesystem->delete( $path . $file['name'] );
+
 						}
 					}
 				}
 
-				// Save our file
+				// Save our file.
 				$wp_filesystem->put_contents(
 					$uploads['basedir'] . '/sslp/staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv',
 					$csv_str_out,

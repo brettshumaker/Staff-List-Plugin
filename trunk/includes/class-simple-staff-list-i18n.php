@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -24,7 +23,7 @@
  * @subpackage Simple_Staff_List/includes
  * @author     Brett Shumaker <brettshumaker@gmail.com>
  */
-class Simple_Staff_List_i18n {
+class Simple_Staff_List_I18n {
 
 	/**
 	 * The domain specified for this plugin.

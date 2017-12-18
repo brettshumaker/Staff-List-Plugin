@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin activation
  *
@@ -29,7 +28,7 @@ class Simple_Staff_List_Activator {
 	 *
 	 * @since    1.17
 	 *
-	 * @param    $is_forced
+	 * @param    bool $is_forced Whether or not the "activation" function was forced to run.
 	 */
 	public static function activate( $is_forced = false ) {
 		$default_template = '
@@ -147,7 +146,7 @@ class Simple_Staff_List_Activator {
 		if ( ! get_option( '_staff_listing_custom_css' ) && ! file_exists( $filename ) ) {
 			update_option( '_staff_listing_custom_css', get_option( '_staff_listing_default_css' ) );
 
-			// Save custom css to a file in current theme directory
+			// Save custom css to a file in current theme directory.
 			file_put_contents( $filename, get_option( '_staff_listing_default_css' ) );
 		} elseif ( file_exists( $filename ) ) {
 			$custom_css = file_get_contents( $filename );
@@ -163,7 +162,7 @@ class Simple_Staff_List_Activator {
 			update_option( '_staff_listing_custom_name_plural', $default_name_plural );
 		}
 
-		// Maybe add flag to signal the need to flush the rewrite rules
+		// Maybe add flag to signal the need to flush the rewrite rules.
 		if ( ! get_option( '_staff_listing_flush_rewrite_rules_flag' ) ) {
 
 			add_option( '_staff_listing_flush_rewrite_rules_flag', true );

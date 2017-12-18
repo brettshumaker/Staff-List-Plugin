@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a public-facing view for the plugin
  *
@@ -12,7 +11,7 @@
  * @subpackage Simple_Staff_List/public/partials
  */
 
-	 global $sslp_sc_output;
+	global $sslp_sc_output;
 
 	$atts       = $this->simple_staff_list_shortcode_atts;
 	$single     = $atts['single'];
@@ -20,7 +19,7 @@
 	$wrap_class = $atts['wrap_class'];
 	$order      = $atts['order'];
 
-	// Get Template and CSS
+	// Get Template and CSS.
 	$custom_html            = stripslashes_deep( get_option( '_staff_listing_custom_html' ) );
 	$custom_css             = stripslashes_deep( get_option( '_staff_listing_custom_css' ) );
 	$default_tags           = get_option( '_staff_listing_default_tags' );
@@ -33,8 +32,8 @@
 	$use_external_css = get_option( '_staff_listing_write_external_css' );
 
 	/**
-	  * Set up our WP_Query
-	  */
+	 * Set up our WP_Query
+	 */
 
 	$args = array(
 		'post_type'      => 'staff-member',
@@ -43,29 +42,30 @@
 		'post_status'    => 'publish',
 	);
 
-	// Check user's 'order' value
-	if ( $order != 'ASC' && $order != 'DESC' ) {
+	// Check user's 'order' value.
+	if ( 'ASC' !== $order && 'DESC' !== $order ) {
 		$order = 'ASC';
 	}
 
-	// Set 'order' in our query args
+	// Set 'order' in our query args.
 	$args['order']              = $order;
 	$args['staff-member-group'] = $group;
 
 	$staff = new WP_Query( $args );
 
 	/**
-	  * Set up our loop_markup
-	  */
+	 * Set up our loop_markup
+	 */
 
-	$loop_markup = $loop_markup_reset = str_replace( '[staff_loop]', '', substr( $custom_html, strpos( $custom_html, '[staff_loop]' ), strpos( $custom_html, '[/staff_loop]' ) - strpos( $custom_html, '[staff_loop]' ) ) );
+	$loop_markup_reset = str_replace( '[staff_loop]', '', substr( $custom_html, strpos( $custom_html, '[staff_loop]' ), strpos( $custom_html, '[/staff_loop]' ) - strpos( $custom_html, '[staff_loop]' ) ) );
+	$loop_markup       = $loop_markup_reset;
 
 
 	// Doing this so I can concatenate class names for current and possibly future use.
 	$staff_member_classes = $wrap_class;
 
-	// Prepare to output styles if not using external style sheet
-	if ( $use_external_css == 'no' ) {
+	// Prepare to output styles if not using external style sheet.
+	if ( 'no' === $use_external_css ) {
 		$style_output = '<style>' . $custom_css . '</style>';
 	} else {
 		$style_output = ''; }
@@ -81,7 +81,7 @@
 
 			global $post;
 
-			if ( $i == ( $staff->found_posts ) - 1 ) {
+			if ( ( $staff->found_posts ) - 1 === $i ) {
 				$staff_member_classes .= ' last';
 			}
 
@@ -150,7 +150,7 @@
 
 
 			$output .= '</div> <!-- Close staff-member -->';
-			$i      += 1;
+			$i++;
 
 
 		endwhile;

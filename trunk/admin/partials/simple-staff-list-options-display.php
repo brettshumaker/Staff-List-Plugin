@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a admin area view for the plugin
  *
@@ -12,13 +11,12 @@
  * @subpackage Simple_Staff_List/admin/partials
  */
 
-
-// Get existing options
+// Get existing options.
 $default_slug          = get_option( '_staff_listing_default_slug' );
 $default_name_singular = get_option( '_staff_listing_default_name_singular' );
 $default_name_plural   = get_option( '_staff_listing_default_name_plural' );
 
-// Check Nonce and then update options
+// Check Nonce and then update options.
 if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-options', 'staff-list-options' ) ) {
 	update_option( '_staff_listing_custom_slug', wp_unique_term_slug( $_POST['staff-listing-slug'], 'staff-member' ) );
 	update_option( '_staff_listing_custom_name_singular', $_POST['staff-listing-name-singular'] );
@@ -28,17 +26,17 @@ if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-options', 'staff-li
 	$custom_name_singular = stripslashes_deep( get_option( '_staff_listing_custom_name_singular' ) );
 	$custom_name_plural   = stripslashes_deep( get_option( '_staff_listing_custom_name_plural' ) );
 
-	// We've updated the options, send off an AJAX request to flush the rewrite rules
-	// TODO# Should move these options to use the Settings API instead of our own custom thing - or maybe just make it all AJAX - no need for a page refresh
+	// We've updated the options, send off an AJAX request to flush the rewrite rules.
+	// TODO# Should move these options to use the Settings API instead of our own custom thing - or maybe just make it all AJAX - no need for a page refresh.
 	?>
 	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			var data = {
-				'action': 'sslp_flush_rewrite_rules',
-			}
-			
-			$.post( "<?php echo admin_url( 'admin-ajax.php' ); ?>", data, function(response){});
-		});
+	jQuery(document).ready(function($) {
+		var data = {
+			'action': 'sslp_flush_rewrite_rules',
+		}
+		
+		$.post( "<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>", data, function(response){});
+	});
 	</script>
 <?php
 
@@ -77,11 +75,11 @@ $output      = '<div class="wrap sslp-options">';
 		$output     .= '</form>';
 	$output         .= '</div>';
 	$output         .= '<div class="sslp-sidebar sslp-column last">';
-		// Get the sidebar
+		// Get the sidebar.
 		ob_start();
 		require_once 'simple-staff-list-admin-sidebar.php';
 		$output .= ob_get_clean();
 	$output     .= '</div>';
 $output         .= '</div>';
 
-echo $output;
+echo esc_html( $output );

@@ -45,7 +45,7 @@ class Simple_Staff_List_Public {
 	 *
 	 * @since  1.17
 	 * @access  private
-	 * @var
+	 * @var array $simple_staff_list_shortcode_atts Attributes passed in with the shortcode.
 	 */
 	private $simple_staff_list_shortcode_atts;
 
@@ -105,7 +105,7 @@ class Simple_Staff_List_Public {
 		 *
 		 * @since 1.19
 		 */
-		if ( get_option( '_staff_listing_write_external_css' ) == 'yes' ) {
+		if ( 'yes' === get_option( '_staff_listing_write_external_css' ) ) {
 			wp_register_style( 'staff-list-custom-css', get_stylesheet_directory_uri() . '/simple-staff-list-custom.css' );
 			wp_enqueue_style( 'staff-list-custom-css' );
 		}
@@ -131,14 +131,6 @@ class Simple_Staff_List_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script(
-			$this->plugin_name,
-			plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-public.js',
-			array( 'jquery' ),
-			$this->version,
-			false
-		);
-
 	}
 
 	/**
@@ -150,7 +142,7 @@ class Simple_Staff_List_Public {
 
 		global $wp_version;
 
-		// Get user options for post type labels
+		// Get user options for post type labels.
 		if ( ! get_option( '_staff_listing_custom_slug' ) ) {
 			$slug = get_option( '_staff_listing_default_slug' );
 		} else {
@@ -168,7 +160,7 @@ class Simple_Staff_List_Public {
 		}
 
 		// TODO Instead of using "Staff" all through here...try to use the custom slug set in options.
-		// Set up post type options
+		// Set up post type options.
 		$labels = array(
 			'name'                  => $name,
 			'singular_name'         => $singular_name,
@@ -213,7 +205,7 @@ class Simple_Staff_List_Public {
 			$args['menu_icon'] = 'dashicons-groups';
 		}
 
-		// Register post type
+		// Register post type.
 		register_post_type( 'staff-member', $args );
 
 		$group_labels = array(
@@ -249,10 +241,10 @@ class Simple_Staff_List_Public {
 
 		if ( get_option( '_staff_listing_flush_rewrite_rules_flag' ) ) {
 
-			// Flush the rewrite rules
+			// Flush the rewrite rules.
 			flush_rewrite_rules();
 
-			// Remove our flag
+			// Remove our flag.
 			delete_option( '_staff_listing_flush_rewrite_rules_flag' );
 
 		}
@@ -275,6 +267,7 @@ class Simple_Staff_List_Public {
 	 * Callback for [simple-staff-list]
 	 *
 	 * @since 1.17
+	 * @param array $atts Array of attributes passed in with the shortcode.
 	 */
 	public function staff_member_simple_staff_list_shortcode_callback( $atts = array() ) {
 

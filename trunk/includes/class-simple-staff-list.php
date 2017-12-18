@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -84,7 +83,7 @@ class Simple_Staff_List {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Simple_Staff_List_Loader. Orchestrates the hooks of the plugin.
-	 * - Simple_Staff_List_i18n. Defines internationalization functionality.
+	 * - Simple_Staff_List_I18n. Defines internationalization functionality.
 	 * - Simple_Staff_List_Admin. Defines all hooks for the admin area.
 	 * - Simple_Staff_List_Public. Defines all hooks for the public side of the site.
 	 *
@@ -135,7 +134,7 @@ class Simple_Staff_List {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Simple_Staff_List_i18n class in order to set the domain and to register the hook
+	 * Uses the Simple_Staff_List_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.17
@@ -143,7 +142,7 @@ class Simple_Staff_List {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Simple_Staff_List_i18n();
+		$plugin_i18n = new Simple_Staff_List_I18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
@@ -165,7 +164,7 @@ class Simple_Staff_List {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_menu' );
 
-		// Maybe flush rewrite rules after staff_member_init
+		// Maybe flush rewrite rules after staff_member_init.
 		$this->loader->add_action( 'wp_ajax_sslp_flush_rewrite_rules', $plugin_admin, 'ajax_flush_rewrite_rules', 20 );
 
 		$this->loader->add_action( 'after_setup_theme', $plugin_admin, 'add_featured_image_support', 10 );

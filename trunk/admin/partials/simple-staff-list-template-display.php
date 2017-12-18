@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a admin area view for the plugin
  *
@@ -12,7 +11,7 @@
  * @subpackage Simple_Staff_List/admin/partials
  */
 
-// Get options for default HTML CSS
+// Get options for default HTML CSS.
 	$default_html                 = get_option( '_staff_listing_default_html' );
 	$default_css                  = get_option( '_staff_listing_default_css' );
 	$default_tag_string           = get_option( '_staff_listing_default_tag_string' );
@@ -38,7 +37,7 @@ foreach ( $default_formatted_tags as $tag ) {
 	$default_formatted_tag_ul .= '</ul>';
 
 
-	// Check Nonce and then update options
+	// Check Nonce and then update options.
 if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-list-template' ) ) {
 	update_option( '_staff_listing_custom_html', $_POST['staff-listing-html'] );
 	update_option( '_staff_listing_custom_css', $_POST['staff-listing-css'] );
@@ -60,12 +59,13 @@ if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-l
 } else {
 	$custom_html = stripslashes_deep( get_option( '_staff_listing_custom_html' ) );
 
-	if ( $write_external_css == 'yes' ) {
+	if ( 'yes' === $write_external_css ) {
 
 		$filename = get_stylesheet_directory() . '/simple-staff-list-custom.css';
 
 		if ( file_exists( $filename ) ) {
-			$custom_css = file_get_contents( $filename );
+			$custom_css_response = wp_remote_get( $filename );
+			$custom_css          = wp_remote_retrieve_body( $custom_css_response );
 			update_option( '_staff_listing_custom_css', $custom_css );
 		} else {
 			$custom_css = stripslashes_deep( get_option( '_staff_listing_default_css' ) );
@@ -77,7 +77,7 @@ if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-l
 	}
 }
 
-if ( $write_external_css == 'yes' ) {
+if ( 'yes' === $write_external_css ) {
 	$ext_css_check = 'checked';
 } else {
 	$ext_css_check = '';
@@ -133,7 +133,7 @@ if ( $write_external_css == 'yes' ) {
 			$output .= '</form>';
 		$output     .= '</div>';
 		$output     .= '<div class="sslp-sidebar sslp-column last">';
-			// Get the sidebar
+			// Get the sidebar.
 			ob_start();
 			require_once 'simple-staff-list-admin-sidebar.php';
 			$output .= ob_get_clean();

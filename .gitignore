@@ -7,4 +7,6 @@ trunk/composer.lock
 trunk/phpcs.xml
 
 trunk/vendor/*
+
+phpcs-report*.txt
 wpcs/
