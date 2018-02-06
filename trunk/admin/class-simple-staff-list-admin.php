@@ -594,6 +594,10 @@ class Simple_Staff_List_Admin {
 	public function update_staff_member_order() {
 		global $wpdb;
 
+		if ( ! isset( $_POST['nonce'] ) || ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( $_POST['nonce'], 'sslp-order' ) ) ) {
+			wp_send_json_error( "Cheatin' uh?" );
+		}
+
 		$post_type = $_POST['postType'];
 		$order     = $_POST['order'];
 
@@ -613,7 +617,7 @@ class Simple_Staff_List_Admin {
 			);
 		}
 
-		die( '1' );
+		wp_send_json_success( 'Order updated' );
 	}
 
 	/**

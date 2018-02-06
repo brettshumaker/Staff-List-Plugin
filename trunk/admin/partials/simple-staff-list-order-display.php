@@ -26,6 +26,8 @@ $staff = new WP_Query(
 	)
 );
 if ( $staff->have_posts() ) :
+
+	wp_nonce_field( 'sslp-order', 'sslp-order' );
 		?>
 
 	<table class="wp-list-table widefat fixed posts sslp-order" id="sortable-table">
@@ -48,7 +50,7 @@ if ( $staff->have_posts() ) :
 			$custom = get_post_custom();
 		?>
 			<tr id="post-<?php the_ID(); ?>">
-				<td class="column-order"><img src="<?php echo STAFFLIST_URI . 'admin/img/move-icon.png'; ?>" title="" alt="Move Icon" width="24" height="24" class="" /></td>
+				<td class="column-order"><img src="<?php echo esc_attr( STAFFLIST_URI ) . 'admin/img/move-icon.png'; ?>" title="" alt="Move Icon" width="24" height="24" class="" /></td>
 				<td class="column-photo">
 				<?php
 				if ( has_post_thumbnail() ) {
@@ -56,10 +58,10 @@ if ( $staff->have_posts() ) :
 ?>
 </td>
 				<td class="column-name"><strong><?php the_title(); ?></strong></td>
-				<td class="column-title"><?php esc_html_e( $custom['_staff_member_title'][0], 'simple-staff-list' ); ?></td>
-				<td class="column-email"><?php esc_html_e( $custom['_staff_member_email'][0], 'simple-staff-list' ); ?></td>
-				<td class="column-phone"><?php esc_html_e( $custom['_staff_member_phone'][0], 'simple-staff-list' ); ?></td>
-				<td class="column-bio"><?php esc_html_e( Simple_Staff_List_Admin::get_staff_bio_excerpt( $custom['_staff_member_bio'][0], 10 ), 'simple-staff-list' ); ?></td>
+				<td class="column-title"><?php esc_html( $custom['_staff_member_title'][0] ); ?></td>
+				<td class="column-email"><?php esc_html( $custom['_staff_member_email'][0] ); ?></td>
+				<td class="column-phone"><?php esc_html( $custom['_staff_member_phone'][0] ); ?></td>
+				<td class="column-bio"><?php esc_html( Simple_Staff_List_Admin::get_staff_bio_excerpt( $custom['_staff_member_bio'][0], 10 ) ); ?></td>
 			</tr>
 		<?php endwhile; ?>
 		</tbody>
@@ -78,6 +80,7 @@ if ( $staff->have_posts() ) :
 
 <?php else : ?>
 
+	<?php // translators: The placeholder below is the "Create New Staff Member" post. ?>
 	<p><?php echo sprintf( wp_kses( __( 'No staff members found, why not <a href="%s">create one?</a>', 'simple-staff-list' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( 'post-new.php?post_type=staff-member' ) ); ?></p>
 
 <?php endif; ?>
