@@ -25,7 +25,8 @@
                     var data = {
                         action: 'staff_member_update_post_order',
                         postType: $(this).attr('data-post-type'),
-                        order: theOrder
+                        order: theOrder,
+                        nonce: $('#sslp-order').val()
                     };
 
                     $.post(ajaxurl, data);
