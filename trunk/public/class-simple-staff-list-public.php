@@ -194,15 +194,19 @@ class Simple_Staff_List_Public {
 			'hierarchical'       => false,
 			'menu_position'      => 100,
 			'rewrite'            => array(
-				'slug'       => $slug,
-				'with_front' => false,
+				'slug'       	 => $slug,
+				'with_front' 	 => false,
 			),
 			'supports'           => array( 'title', 'thumbnail', 'excerpt' ),
+			'menu_icon' 		 => 'dashicons-groups'
 		);
 
-		if ( version_compare( $wp_version, '3.8', '>=' ) ) {
-			$args['menu_icon'] = 'dashicons-groups';
-		}
+		/**
+		 * Removing this version check - only 4.7% of WordPress installs are now at or below version 3.8.
+		 */
+		// if ( version_compare( $wp_version, '3.8', '>=' ) ) {
+		// 	$args['menu_icon'] = 'dashicons-groups';
+		// }
 
 		// Register post type.
 		register_post_type( 'staff-member', $args );
