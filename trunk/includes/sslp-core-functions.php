@@ -4,6 +4,8 @@
  *
  * General core functions available everywhere.
  *
+ * @since      2.1
+ * 
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/public
  * @author     Brett Shumaker <brettshumaker@gmail.com>
@@ -19,7 +21,7 @@ function sslp_get_template_part( $slug = '' ) {
 	}
 	
     // Look in yourtheme/slug.php.
-	if ( '' !== $slug ) {
+	if ( ! $template && '' !== $slug ) {
 		$template = locate_template( array( "{$slug}.php" ) );
 	}
 

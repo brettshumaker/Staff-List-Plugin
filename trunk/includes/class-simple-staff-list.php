@@ -96,14 +96,20 @@ class Simple_Staff_List {
 	private function load_dependencies() {
 
 		/**
-		 * General core functions available everywhere
+		 * General core functions available everywhere.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sslp-core-functions.php';
 		
 		/**
-		 * General template functions available everywhere
+		 * Templating functions.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sslp-template-functions.php';
+		
+		/**
+		 * Templating hooks.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sslp-template-hooks.php';
+		
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
