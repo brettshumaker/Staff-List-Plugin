@@ -4,8 +4,8 @@
  */
 
 .single-staff-member .staff-meta .title {
-    display: block;
-    margin-bottom: 5px;
+	display: block;
+	margin-bottom: 5px;
 }
 
 .single-staff-member .staff-meta svg {
@@ -14,7 +14,7 @@
 }
 
 .single-staff-member .staff-content {
-    margin-top: 1.5em;
+	margin-top: 1.5em;
 }
 
 /** Hide single staff image on twentyseventeen **/

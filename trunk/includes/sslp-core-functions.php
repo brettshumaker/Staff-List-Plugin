@@ -5,7 +5,7 @@
  * General core functions available everywhere.
  *
  * @since      2.1
- * 
+ *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/public
  * @author     Brett Shumaker <brettshumaker@gmail.com>
@@ -13,14 +13,14 @@
 
 function sslp_get_template_part( $slug = '' ) {
 
-    $template = '';
+	$template = '';
 
-    // Look in yourtheme/sslp-templates/slug.php.
+	// Look in yourtheme/sslp-templates/slug.php.
 	if ( '' !== $slug ) {
 		$template = locate_template( array( "sslp-templates/{$slug}.php" ) );
 	}
-	
-    // Look in yourtheme/slug.php.
+
+	// Look in yourtheme/slug.php.
 	if ( ! $template && '' !== $slug ) {
 		$template = locate_template( array( "{$slug}.php" ) );
 	}
@@ -47,14 +47,14 @@ function sslp_get_template_part( $slug = '' ) {
  * theme root > theme/sslp-templates > plugin/public/templates
  */
 function sslp_template_include( $template ) {
-	
+
 	if ( ! is_singular( 'staff-member' ) ) {
 		return $template;
 	}
 
 	// Check in the folder we've told users to add the template to.
 	$template = locate_template( array( '/sslp-templates/single-staff-member.php' ) );
-	
+
 	// If it's not found, look in the theme root.
 	if ( ! $template ) {
 		$template = locate_template( array( 'single-staff-member.php' ) );

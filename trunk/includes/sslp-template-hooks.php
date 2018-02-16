@@ -3,7 +3,7 @@
  * Simple Staff List Template Hooks
  *
  * These are the template hooks you are looking for.
- * 
+ *
  * @since      2.1
  *
  * @package    Simple_Staff_List
@@ -11,9 +11,9 @@
  * @author     Brett Shumaker <brettshumaker@gmail.com>
  */
 
- /**
-  * Content wrappers.
-  */
+/**
+ * Content wrappers.
+ */
 add_action( 'sslp_before_single_staff_member', 'sslp_output_content_wrapper', 10 );
 add_action( 'sslp_after_single_staff_member', 'sslp_output_content_wrapper_end', 10 );
 

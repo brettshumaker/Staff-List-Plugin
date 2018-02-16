@@ -1,23 +1,23 @@
 <?php
 /**
  * The template for displaying all single staff members.
- * 
+ *
  * This template can be overridden by copying it to yourtheme/sslp-templates/single-staff-member.php
- * 
+ *
  * @since      2.1
- * 
+ *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/public/templates
  * @version    1.0
  */
 
- if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 get_header(); ?>
 
-    <?php
+	<?php
 	/**
 	 * sslp_before_single_staff_member hook.
 	 *
@@ -25,13 +25,16 @@ get_header(); ?>
 	 */
 	do_action( 'sslp_before_single_staff_member' );
 	?>
-    <?php while ( have_posts() ) : the_post(); ?>
+	<?php
+	while ( have_posts() ) :
+		the_post();
+?>
 
-    <?php sslp_get_template_part( 'content-staff-member' ); ?>
+	<?php sslp_get_template_part( 'content-staff-member' ); ?>
 
-    <?php endwhile; ?>
+	<?php endwhile; ?>
 
-    <?php
+	<?php
 	/**
 	 * sslp_after_single_staff_member hook.
 	 *
@@ -40,4 +43,5 @@ get_header(); ?>
 	do_action( 'sslp_after_single_staff_member' );
 	?>
 
-<?php get_footer();
+<?php
+get_footer();

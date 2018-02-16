@@ -194,11 +194,11 @@ class Simple_Staff_List_Public {
 			'hierarchical'       => false,
 			'menu_position'      => 100,
 			'rewrite'            => array(
-				'slug'       	 => $slug,
-				'with_front' 	 => false,
+				'slug'       => $slug,
+				'with_front' => false,
 			),
 			'supports'           => array( 'title', 'thumbnail', 'excerpt' ),
-			'menu_icon' 		 => 'dashicons-groups'
+			'menu_icon'          => 'dashicons-groups',
 		);
 
 		/**
