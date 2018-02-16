@@ -47,7 +47,7 @@ Alright, here's a few things to try:
 == Changelog ==
 
 = 2.0.3 =
-* FIXED: I got a little carried away with my cleaning and broke some admin pages. Sorry about that. :)
+* FIXED: I got a little carried away with my code clean up and broke some admin pages. Sorry about that. :)
 
 = 2.0.2 =
 * CLEANED UP: A bunch of code formatting
