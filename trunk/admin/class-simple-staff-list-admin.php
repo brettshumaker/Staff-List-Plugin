@@ -719,7 +719,8 @@ class Simple_Staff_List_Admin {
 			if ( 'direct' === $access_type ) {
 
 				// Save the file.
-				$creds = request_filesystem_credentials();
+				$url   = wp_nonce_url( 'edit.php?post_type=staff-member&page=staff-member-export', 'sslp-staff-export' );
+				$creds = request_filesystem_credentials( $url, '', false, false, null );
 
 				if ( ! WP_filesystem( $creds ) ) {
 					wp_send_json_error( 'Problem accessing WP File System' );
