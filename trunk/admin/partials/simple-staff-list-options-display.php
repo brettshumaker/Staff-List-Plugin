@@ -82,4 +82,5 @@ $output      = '<div class="wrap sslp-options">';
 	$output     .= '</div>';
 $output         .= '</div>';
 
+// @codingStandardsIgnoreLine
 echo $output;

@@ -2,8 +2,8 @@
 Contributors: brettshumaker
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
-Tested up to: 4.9.4
-Stable tag: 2.0.3
+Tested up to: 4.9.6
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,12 @@ Alright, here's a few things to try:
 5. Templates screen 2
 
 == Changelog ==
+
+
+= 2.1.0 =
+* FEATURE: Single Staff Member Templates - Learn more in this [blog post](https://brettshumaker.com/simple-staff-list-single-staff-member-templates "Simple Staff List - Single Staff Member Templates)
+* FIXED: Bug with staff member export.
+* CLEANED UP: A bit more code formatting
 
 = 2.0.3 =
 * FIXED: I got a little carried away with my code clean up and broke some admin pages. Sorry about that. :)

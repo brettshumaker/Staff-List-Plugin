@@ -33,4 +33,5 @@ if ( 'direct' !== $access_type ) {
 	$output     .= '</div>';
 $output         .= '</div>';
 
+// @codingStandardsIgnoreLine
 echo $output;
