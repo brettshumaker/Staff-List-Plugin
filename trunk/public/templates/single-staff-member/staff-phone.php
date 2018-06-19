@@ -17,5 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $phone = get_post_meta( $post->ID, '_staff_member_phone', true );
 if ( '' !== $phone ) {
-	echo '<span class="phone"><a class="staff-member-phone" href="tel:' . esc_attr( $phone ) . '">' . file_get_contents( STAFFLIST_URI . 'public/svg/phone.svg' ) . '</a></span>';
+
+	$icon = '';
+	$svg  = wp_remote_get( STAFFLIST_URI . 'public/svg/phone.svg' );
+	if ( '404' !== $svg['response']['code'] ) {
+		$icon = $svg['body'];
+	}
+
+	echo '<span class="phone"><a class="staff-member-phone" href="tel:' . esc_attr( $phone ) . '">' . $icon . '</a></span>';
+
 }
