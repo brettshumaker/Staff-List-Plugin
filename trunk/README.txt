@@ -46,10 +46,14 @@ Alright, here's a few things to try:
 
 == Changelog ==
 
+
 = 2.1.0 =
 * FEATURE: Single Staff Member Templates - Learn more in this [blog post](https://brettshumaker.com/simple-staff-list-single-staff-member-templates "Simple Staff List - Single Staff Member Templates)
 * FIXED: Bug with staff member export.
 * CLEANED UP: A bit more code formatting
+
+= 2.0.3 =
+* FIXED: I got a little carried away with my code clean up and broke some admin pages. Sorry about that. :)
 
 = 2.0.2 =
 * CLEANED UP: A bunch of code formatting
