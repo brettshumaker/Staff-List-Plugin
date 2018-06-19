@@ -44,6 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		/**
 		 * Hook sslp_single_staff_member_content.
+		 * 
+		 * @hooked sslp_get_single_staff_member_bio - 10
 		 */
 		do_action( 'sslp_single_staff_member_content' );
 		?>
