@@ -3,7 +3,7 @@ Contributors: brettshumaker
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
 Tested up to: 4.9.6
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,8 @@ Alright, here's a few things to try:
 
 == Changelog ==
 
+= 2.1.1 =
+* FIXED: post-thumbnail support for staff-member custom post type.
 
 = 2.1.0 =
 * FEATURE: Single Staff Member Templates - Learn more in this [blog post](https://brettshumaker.com/simple-staff-list-single-staff-member-templates "Simple Staff List - Single Staff Member Templates)
