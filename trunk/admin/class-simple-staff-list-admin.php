@@ -290,18 +290,7 @@ class Simple_Staff_List_Admin {
 	 */
 	public function add_featured_image_support() {
 
-		$supported_types = get_theme_support( 'post-thumbnails' );
-
-		if ( false === $supported_types ) {
-
-			add_theme_support( 'post-thumbnails', 'staff-member' );
-
-		} elseif ( is_array( $supported_types ) ) {
-
-			$supported_types[0][] = 'staff-member';
-			add_theme_support( 'post-thumbnails', $supported_types[0] );
-
-		}
+		add_theme_support( 'post-thumbnails', array( 'staff-member' ) );
 
 	}
 
