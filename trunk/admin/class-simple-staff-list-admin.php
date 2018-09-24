@@ -620,11 +620,34 @@ class Simple_Staff_List_Admin {
 
 		$access_type = get_filesystem_method();
 
-		$args = array(
-			'post_type'      => 'staff-member',
-			'posts_per_page' => -1,
-			'post_status'    => 'publish',
-		);
+		$the_group = $_POST['group'];
+
+		//check for group
+		if( $the_group ){
+			//add tax_query to args if there is a group
+			$args = array(
+				'post_type'      => 'staff-member',
+				'posts_per_page' => -1,
+				'post_status'    => 'publish',
+				// 'category_name'	 => $the_group,
+				'tax_query'		 => array(
+					array(
+						'taxonomy'	=> 'staff-member-group',
+						'field'		=> 'slug',
+						'terms'		=> $the_group,
+					),
+				),
+			);	
+		} else {
+			//otherwise leave off the group
+			$args = array(
+				'post_type'      => 'staff-member',
+				'posts_per_page' => -1,
+				'post_status'    => 'publish',
+			);
+			//for use in the file name
+			$the_group = 'All Groups';
+		}
 
 		$staff_query = new WP_Query( $args );
 
@@ -638,6 +661,10 @@ class Simple_Staff_List_Admin {
 
 				$custom = get_post_custom();
 
+				//At some point, need to change how the custom data is exported. 
+				//Currently does not work well if there are any custom fields.
+	
+		
 				// Setup our CSV Header line if we haven't already.
 				if ( ! $csv_headers ) {
 					$csv_headers[] = 'Staff Member Name';
@@ -678,6 +705,21 @@ class Simple_Staff_List_Admin {
 
 					}
 				}
+		
+				//the department is listed as a wp category. can be more than one
+				$department = "";
+				$terms = get_the_terms( $post->ID, array( 'staff-member-group') );
+				// init counter
+				$i = 1;
+				foreach ( $terms as $term ) {
+				 $department .= $term->name;
+				 //  Add comma (except after the last theme)
+				 $department .= ($i < count($terms))? ", " : "";
+				 // Increment counter
+				 $i++;
+				}
+
+				$csv_new_line[] = $department;
 
 				// Add a new line to the end of our data.
 				$csv_data[] = $csv_new_line;
@@ -743,7 +785,7 @@ class Simple_Staff_List_Admin {
 
 				// Save our file.
 				$wp_filesystem->put_contents(
-					$uploads['basedir'] . '/sslp/staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv',
+					$uploads['basedir'] . '/sslp/staff-member-export-' . $the_group . '-' . date( 'Y-m-d-G-i' ) . '.csv',
 					$csv_str_out,
 					FS_CHMOD_FILE
 				);
@@ -751,7 +793,7 @@ class Simple_Staff_List_Admin {
 				wp_send_json_success(
 					array(
 						'created_file' => true,
-						'url'          => $uploads['baseurl'] . '/sslp/staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv',
+						'url'          => $uploads['baseurl'] . '/sslp/staff-member-export-' . $the_group . '-' . date( 'Y-m-d-G-i' ) . '.csv',
 					)
 				);
 			} else {
@@ -759,14 +801,14 @@ class Simple_Staff_List_Admin {
 					array(
 						'created_file' => false,
 						'content'      => $csv_str_out,
-						'filename'     => 'staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv',
+						'filename'     => 'staff-member-export-' . date( 'Y-m-d-G-i' ) . $the_group . '-' . '.csv',
 					)
 				);
 			}
 
 		endif;
 
-		wp_send_json_error( 'No data to export.' );
+		wp_send_json_error( 'No data to export for ' . $the_group );
 
 	}
 
