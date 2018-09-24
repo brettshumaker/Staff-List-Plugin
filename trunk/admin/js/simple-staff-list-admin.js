@@ -58,9 +58,17 @@
 					e.preventDefault();
 					$( 'a.export-button' ).after( '<span class="spinner is-active" style="float:none"></span>' );
 
+					//get category/group from the dropdown
+					var group = $('#cat').val();
+					
+					//add group to the ajax data
 					var data = {
 						'action': 'staff_member_export',
+						'group'	: group,
 					};
+					
+					//remove fail-response, if there were any previous failed attempts
+					$('.fail-reponse').remove();
 
 					$.post(
 						ajaxurl, data, function( response ){
@@ -81,6 +89,14 @@
 								$( 'a.export-button' ).hide().after( '<a class="button button-primary download-button" download="' + response.data.filename + '">Download</a>' );
 								$( 'a.export-button' ).remove();
 								$( 'a.download-button' ).attr( 'href', "data:text/plain," + encodeURIComponent( response.data.content ) );
+							} else {
+								//if response returns a fail, report it the user
+								$( 'a.export-button + .spinner' ).fadeOut(
+									300, function(){
+										$( this ).remove();
+									}
+								);
+								$( 'a.export-button' ).parent().append('<p class="fail-reponse">' + response.data +'</p>');
 							}
 
 						}
