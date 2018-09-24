@@ -22,8 +22,22 @@ $output          = '<div class="wrap sslp-template">';
 if ( 'direct' !== $access_type ) {
 	$output .= '<p>' . __( "After clicking 'Export Staff Members' a Download button will appear.", 'simple-staff-list' ) . '</p>';
 }
+	//add group dropdown
+	$tax_args = array(
+		  'taxonomy'     => 'staff-member-group',
+		  'orderby'      => 'name',
+		  'show_option_all'	=> 'All Departments',
+		  'show_count'   => 0,
+		  'hierarchical' => 1,
+		  'value_field'	 => 'slug',
+		  'class'		 => 'directory-dropdown',
+		  'aria-label'	 => 'Select Department',
+		  'echo'		 => 0,
+		  'hide_empty'	 => 0,
+		);
+	$output .= wp_dropdown_categories($tax_args);
 
-		$output .= '<a href="#" class="button button-primary export-button">' . __( 'Export Staff Members', 'simple-staff-list' ) . '</a>';
+	$output .= '<a href="#" class="button button-primary export-button">' . __( 'Export Staff Members', 'simple-staff-list' ) . '</a>';
 	$output     .= '</div>';
 	$output     .= '<div class="sslp-sidebar sslp-column last">';
 		// Get the sidebar.
