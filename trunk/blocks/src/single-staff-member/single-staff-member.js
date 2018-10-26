@@ -27,7 +27,7 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
  */
 registerBlockType( 'sslp/single-staff-member', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Single Staff Member' ), // Block title.
+	title: __( 'Single Staff Memberz' ), // Block title.
 	icon: 'groups',
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
