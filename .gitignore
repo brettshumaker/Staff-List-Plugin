@@ -12,3 +12,5 @@ trunk/vendor/*
 
 phpcs-report*.txt
 wpcs/
+
+trunk/blocks/node_modules*

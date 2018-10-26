@@ -74,6 +74,7 @@ class Simple_Staff_List {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->load_guten_blocks();
 
 	}
 
@@ -202,6 +203,10 @@ class Simple_Staff_List {
 		$this->loader->add_action( 'init', $plugin_public, 'staff_member_init', 10 );
 		$this->loader->add_action( 'init', $plugin_public, 'maybe_flush_rewrite_rules', 20 );
 
+	}
+
+	private function load_guten_blocks() {
+		include_once STAFFLIST_PATH . 'blocks/blocks.php';
 	}
 
 	/**
