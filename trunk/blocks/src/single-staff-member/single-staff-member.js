@@ -25,7 +25,7 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'sslp/block-single-staff-member', {
+registerBlockType( 'sslp/single-staff-member', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: __( 'Single Staff Member' ), // Block title.
 	icon: 'groups',
