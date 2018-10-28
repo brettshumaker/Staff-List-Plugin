@@ -193,6 +193,7 @@ class Simple_Staff_List_Public {
 			'has_archive'        => true,
 			'hierarchical'       => false,
 			'menu_position'      => 100,
+			'show_in_rest'       => true,
 			'rewrite'            => array(
 				'slug'       => $slug,
 				'with_front' => false,
