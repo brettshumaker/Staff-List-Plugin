@@ -6,11 +6,11 @@ const { BlockIcon } = wp.blocks;
 const { Component } = wp.element;
 
 /**
- * PostSelector Component
+ * StaffSelector Component
  */
-export class PostSelector extends Component {
+export class StaffSelector extends Component {
 	/**
-	 * Constructor for PostSelector Component.
+	 * Constructor for StaffSelector Component.
 	 * Sets up state, and creates bindings for functions.
 	 * @param object props - current component properties.
 	 */
@@ -58,7 +58,7 @@ export class PostSelector extends Component {
 				this.setState({
 					types: data
 				}, () => {
-					this.retrieveSelectedPosts()
+					this.retrieveSelectedStaff()
 						.then(() => {
 							this.setState({
 								initialLoading: false,
@@ -154,7 +154,7 @@ export class PostSelector extends Component {
 	 * Gets the selected posts by id from the `posts` state object and sorts them by their position in the selected array.
 	 * @returns Array of objects.
 	 */
-	getSelectedPosts() {
+	getSelectedStaff() {
 		const { selectedPosts } = this.props;
 		return this.state.posts
 			.filter(({ id }) => selectedPosts.indexOf(id) !== -1)
@@ -178,7 +178,7 @@ export class PostSelector extends Component {
 	 * Makes the necessary api calls to fetch the selected posts and returns a promise.
 	 * @returns {*}
 	 */
-	retrieveSelectedPosts() {
+	retrieveSelectedStaff() {
 		const selected = this.props.selectedPosts;
 		const { types } = this.state;
 
@@ -298,7 +298,7 @@ export class PostSelector extends Component {
 	}
 
 	/**
-	 * Renders the PostSelector component.
+	 * Renders the StaffSelector component.
 	 */
 	render() {
 		const isFiltered = this.state.filtering;
@@ -345,7 +345,7 @@ export class PostSelector extends Component {
 						icon={addIcon}
 					/>
 					<PostList
-						posts={this.getSelectedPosts()}
+						posts={this.getSelectedStaff()}
 						loading={this.state.initialLoading}
 						action={this.removePost}
 						icon={removeIcon}

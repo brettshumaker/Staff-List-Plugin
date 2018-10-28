@@ -9,7 +9,7 @@
 import './style.scss';
 import './editor.scss';
 
-import { PostSelector } from './components/PostSelector';
+import { StaffSelector } from './components/StaffSelector';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, PlainText } = wp.blocks; // Import registerBlockType() from wp.blocks
@@ -76,7 +76,7 @@ registerBlockType( 'sslp/single-staff-member', {
 
 			return (
 				<div className={className}>
-					<PostSelector
+					<StaffSelector
 						selectedPosts={this.props.attributes.selectedPosts}
 						updateSelectedPosts={this.updateSelectedPosts}
 					/>
