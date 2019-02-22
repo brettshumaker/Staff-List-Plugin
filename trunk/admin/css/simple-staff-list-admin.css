@@ -3,6 +3,14 @@
  * included in this file.
  */
 
+.post-type-staff-member .column-id {
+    width: 4em;
+}
+
+.post-type-staff-member td.column-id {
+    text-align: center;
+}
+
 #poststuff .stng_admin_wrap h2 {
 	margin:10px 0 0;
 }

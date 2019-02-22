@@ -334,6 +334,7 @@ class Simple_Staff_List_Admin {
 
 		$cols = array(
 			'cb'                  => '<input type="checkbox" />',
+			'id'                  => __( 'Staff ID', $this->plugin_name ),
 			'title'               => __( 'Name', $this->plugin_name ),
 			'photo'               => __( 'Photo', $this->plugin_name ),
 			'_staff_member_title' => __( 'Position', $this->plugin_name ),
@@ -472,6 +473,9 @@ class Simple_Staff_List_Admin {
 		$_staff_member_bio   = isset( $custom['_staff_member_bio'][0] ) ? $custom['_staff_member_bio'][0] : '';
 
 		switch ( $column ) {
+			case 'id':
+				echo $post->ID;
+				break;
 			case 'photo':
 				if ( has_post_thumbnail() ) {
 					echo get_the_post_thumbnail( $post->ID, array( 75, 75 ) );
