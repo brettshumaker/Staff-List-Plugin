@@ -61,7 +61,7 @@ class Simple_Staff_List_Public {
 		$this->version                                   = $version;
 		$this->simple_staff_list_shortcode_atts          = array();
 		$this->simple_staff_list_shortcode_atts_defaults = array(
-			'single'     => 'no',
+			'id'         => '',
 			'group'      => '',
 			'wrap_class' => '',
 			'order'      => 'ASC',

@@ -14,7 +14,7 @@
 	global $sslp_sc_output;
 
 	$atts       = $this->simple_staff_list_shortcode_atts;
-	$single     = $atts['single'];
+	$staff_id   = $atts['id'];
 	$group      = $atts['group'];
 	$wrap_class = $atts['wrap_class'];
 	$order      = $atts['order'];
@@ -49,7 +49,14 @@
 
 	// Set 'order' in our query args.
 	$args['order']              = $order;
-	$args['staff-member-group'] = $group;
+
+	if ( '' !== $atts['group'] ) {
+		$args['staff-member-group'] = $group;
+	}
+
+	if ( '' !== $staff_id && 'staff-member' === get_post_type( intval( $staff_id ) ) ) {
+		$args['p'] = intval( $staff_id );
+	}
 
 	$staff = new WP_Query( $args );
 
