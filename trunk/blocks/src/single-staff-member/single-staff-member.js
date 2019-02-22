@@ -9,11 +9,8 @@
 import './style.scss';
 import './editor.scss';
 
-import { StaffSelector } from './components/StaffSelector';
-
 const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType, PlainText } = wp.blocks; // Import registerBlockType() from wp.blocks
-const { Component } = wp.element;
+const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 /**
  * Register: aa Gutenberg Block.
@@ -40,10 +37,10 @@ registerBlockType( 'sslp/single-staff-member', {
 	],
 
 	attributes: {
-		selectedPosts: {
-			type: 'array',
-			default: []
-		},
+		content: {
+            source: 'html',
+            selector: 'p',
+        }
 	},
 
 	/**
@@ -54,35 +51,24 @@ registerBlockType( 'sslp/single-staff-member', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: class extends Component {
-		constructor(props) {
-			super(...arguments);
-			this.props = props;
-
-			this.onTitleChange = this.onTitleChange.bind(this);
-			this.updateSelectedPosts = this.updateSelectedPosts.bind(this);
-		}
-
-		onTitleChange(blockTitle = '') {
-			this.props.setAttributes({ blockTitle });
-		}
-
-		updateSelectedPosts( selectedPosts ) {
-			this.props.setAttributes({ selectedPosts });
-		}
-
-		render() {
-			const { className } = this.props;
-
-			return (
-				<div className={className}>
-					<StaffSelector
-						selectedPosts={this.props.attributes.selectedPosts}
-						updateSelectedPosts={this.updateSelectedPosts}
-					/>
-				</div>
-			);
-		}
+	edit: function( props ) {
+		// Creates a <p class='wp-block-cgb-block-blocks'></p>.
+		return (
+			<div className={ props.className }>
+				<p>— Hello from the backend.</p>
+				<p>
+					CGB BLOCK: <code>blocks</code> is a new Gutenberg block
+				</p>
+				<p>
+					It was created via{ ' ' }
+					<code>
+						<a href="https://github.com/ahmadawais/create-guten-block">
+							create-guten-block
+						</a>
+					</code>.
+				</p>
+			</div>
+		);
 	},
 
 	/**
@@ -93,7 +79,22 @@ registerBlockType( 'sslp/single-staff-member', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: () => {
-		return null;
+	save: function( props ) {
+		return (
+			<div>
+				<p>— Hello from the frontend.</p>
+				<p>
+					CGB BLOCK: <code>blocks</code> is a new Gutenberg block.
+				</p>
+				<p>
+					It was created via{ ' ' }
+					<code>
+						<a href="https://github.com/ahmadawais/create-guten-block">
+							create-guten-block
+						</a>
+					</code>.
+				</p>
+			</div>
+		);
 	},
 } );
