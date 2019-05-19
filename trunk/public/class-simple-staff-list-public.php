@@ -181,6 +181,15 @@ class Simple_Staff_List_Public {
 			'use_featured_image'    => __( 'Use Staff Photo', $this->plugin_name ),
 		);
 
+		/**
+		 * sslp_enable_staff_member_archive
+		 * 
+		 * Return false on this filter and flush your permalinks to disable the staff-members archive page.
+		 * 
+		 * @since 2.2.0
+		 * 
+		 * @param $enabled bool Whether or not the archive page is enabled. Default is true.
+		 */
 		$args = array(
 			'labels'             => $labels,
 			'public'             => true,
@@ -190,7 +199,7 @@ class Simple_Staff_List_Public {
 			'query_var'          => true,
 			'rewrite'            => true,
 			'capability_type'    => 'page',
-			'has_archive'        => true,
+			'has_archive'        => apply_filters( 'sslp_enable_staff_member_archive', true ),
 			'hierarchical'       => false,
 			'menu_position'      => 100,
 			'rewrite'            => array(
