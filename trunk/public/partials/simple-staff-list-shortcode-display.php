@@ -36,7 +36,7 @@
 	 */
 
 	$args = array(
-		'posts_per_page' => -1,
+		'posts_per_page' => 100,
 		'orderby'        => 'menu_order',
 		'post_status'    => 'publish',
 	);
