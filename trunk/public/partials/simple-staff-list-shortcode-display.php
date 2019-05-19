@@ -36,7 +36,6 @@
 	 */
 
 	$args = array(
-		'post_type'      => 'staff-member',
 		'posts_per_page' => -1,
 		'orderby'        => 'menu_order',
 		'post_status'    => 'publish',
@@ -58,6 +57,25 @@
 		$args['p'] = intval( $staff_id );
 	}
 
+	/**
+	 * sslp_query_args filter.
+	 * 
+	 * Filters the args used to query the staff members.
+	 * 
+	 * @since 2.2.0
+	 * 
+	 * @param $args array The existing args to be used.
+	 * @param $context string The context in which this filter is being run.
+	 */
+	$filtered_args = apply_filters( 'sslp_query_args', $args, 'shortcode' );
+
+	// If we don't get an array back, reset $args back to the default.
+	$args = is_array( $filtered_args ) ? $filtered_args : $args;
+
+	// Make sure this gets set back to staff-member - no reason to be querying anything else here.
+	$args['post_type'] = 'staff-member';
+
+	// Query the staff members.
 	$staff = new WP_Query( $args );
 
 	/**
