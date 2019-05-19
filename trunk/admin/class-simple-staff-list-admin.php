@@ -657,8 +657,9 @@ class Simple_Staff_List_Admin {
 						}
 					}
 
-					$csv_data[] = $csv_headers;
+					$csv_headers[] = 'Groups';
 
+					$csv_data[] = $csv_headers;
 				}
 
 				// Setup our data line for this Staff Member.
@@ -682,6 +683,22 @@ class Simple_Staff_List_Admin {
 
 					}
 				}
+
+				// Get the group data.
+				$groups = get_the_terms( get_the_ID(), 'staff-member-group' );
+
+				$group_names = array();
+
+				// $groups should be an array of WP_Term objects if terms are found. It will be false if no terms exist, and a WP_Error if there was an error.
+				if ( is_array( $groups ) ) {
+					foreach ( $groups as $group ) {
+						// Wrap each group name in quotes.
+						$group_names[] = '"' . $group->name . '"';
+					}
+				}
+
+				// Add the group data to the line.
+				$csv_new_line[] = implode( ',', $group_names );
 
 				// Add a new line to the end of our data.
 				$csv_data[] = $csv_new_line;
