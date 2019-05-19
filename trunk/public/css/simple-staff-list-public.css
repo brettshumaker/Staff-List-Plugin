@@ -1,0 +1,24 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+.single-staff-member .staff-meta .title {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.single-staff-member .staff-meta svg {
+	width: 18px;
+	height: 18px;
+	margin-right: 5px;
+}
+
+.single-staff-member .staff-content {
+	margin-top: 1.5em;
+}
+
+/** Hide single staff image on twentyseventeen **/
+.single-staff-member .single-featured-image-header {
+	display: none;
+}

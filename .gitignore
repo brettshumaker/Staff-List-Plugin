@@ -1,1 +1,14 @@
 .DS_Store
+.idea
+.vscode
+
+trunk/composer.json
+
+trunk/composer.lock
+
+trunk/phpcs.xml
+
+trunk/vendor/*
+
+phpcs-report*.txt
+wpcs/

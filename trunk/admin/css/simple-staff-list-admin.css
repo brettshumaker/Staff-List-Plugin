@@ -1,0 +1,205 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+#poststuff .stng_admin_wrap h2 {
+	margin:10px 0 0;
+}
+
+.sslp_admin_wrap input[type="text"] {
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+	width: 30%;
+}
+
+#wp-_staff_member_bio-wrap .wp-editor-area {
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+}
+
+#staff-member-info label {
+	position: relative;
+	display: block;
+	padding-top: 0.5em;
+	margin-bottom: 1.5em;
+}
+
+#staff-member-info label input {
+	position: absolute;
+	left: 110px;
+	top: -0em;
+}
+
+.edit-page-staff-member #post-body-content {
+	margin-bottom: 0; /* Tightens up spacing between title bar and our custom meta boxes */
+}
+
+.sslp-usage .sslp-content h4 {
+	margin-bottom: .5em;
+}
+
+.sslp-usage .sslp-content h4 + p {
+	margin-top: 0;
+	margin-bottom:3em;
+}
+
+p.sslp-note {
+	font-size: .8em;
+	font-style: italic;
+	color: red;
+}
+
+ul.sslp-tag-list {
+	margin-left: 3em;
+}
+
+ul.sslp-tag-list li {
+	display:inline;
+	padding: .25em 1em;
+	font-weight: bold;
+}
+
+td.column-order img {
+	display: block;
+	padding: 24px 42px;
+	cursor: hand;
+}
+
+.sslp-template h4.heading {
+	margin-bottom: 0;
+}
+
+.sslp-template textarea {
+	width: 100%;
+}
+
+.sslp-template .content {
+	display: none;
+}
+
+.sslp-template pre {
+	background: #eee;
+	padding: 1%;
+	border-radius: 3px;
+	border: thin solid #ccc;
+	overflow: auto;
+}
+
+.sslp-template .default-css .content pre {
+	height: 250px;
+	overflow: scroll;
+}
+
+
+/**
+ * admin columns
+ */
+.sslp-column {
+	float: left;
+	padding: 1em 1em 1em 0;
+	box-sizing: border-box;
+}
+
+.sslp-column > * {
+	max-width: 100%;
+}
+
+.sslp-column.last {
+	float: right;
+}
+
+.sslp-sidebar img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+.sslp-widget:not(:last-child) {
+	margin-bottom: 2em;
+}
+
+.sslp-sidebar .sidebar-inner {
+	background: #fff;
+	padding: 0 1em 1em;
+	border-style: solid;
+	border-color: #ddd;
+	border-width: 0 thin thin;
+}
+
+.sidebar-inner h3 {
+	margin-top: 0;
+	padding-top: .75em;
+}
+
+.sidebar-inner p:first-child {
+	margin-top: 0;
+	padding-top: 1em;
+}
+
+.sslp-sidebar-header {
+	background: #0073AA;
+	margin: 0;
+	padding: .5em;
+	color: #fff;
+}
+
+.sslp-sidebar-header span {
+	margin-right: .5em;
+}
+
+.sslp-ticket-link img {
+	width: 250px;
+	display: block;
+	margin: 0 auto;
+}
+
+
+@media screen and ( min-width: 961px ) {
+	.sslp-column {
+		float: left;
+	}
+
+	.sslp-column.last {
+		float: right;
+	}
+
+	.sslp-content {
+		width: 60%;
+	}
+
+	.sslp-sidebar {
+		width: 35%;
+	}
+}
+
+/*
+	CPT Icon Styles
+*/
+
+/* Admin Menu - 16px */
+
+body[class*="branch-2"] #menu-posts-staff-member:hover .wp-menu-image, #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image,
+body[class*="branch-3"]:not([class*="branch-3-8"]):not([class*="branch-3-9"]) #menu-posts-staff-member:hover .wp-menu-image, #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
+	opacity: 1;
+}
+
+body[class*="branch-2"] #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image,
+body[class*="branch-3"]:not([class*="branch-3-8"]):not([class*="branch-3-9"]) #menu-posts-staff-member.wp-has-current-submenu .wp-menu-image {
+	background: url('../img/staff-list-icon-lighter.png') no-repeat 5px 5px !important;
+	background: url('../img/staff-list-icon-lighter.svg') no-repeat 5px 5px !important;
+	background-size: 70% !important;
+}
+body[class*="branch-2"] #menu-posts-staff-member .wp-menu-image,
+body[class*="branch-3"]:not([class*="branch-3-8"]):not([class*="branch-3-9"]) #menu-posts-staff-member .wp-menu-image {
+	background: url('../img/staff-list-icon.png') no-repeat 5px 5px !important;
+	background: url('../img/staff-list-icon.svg') no-repeat 5px 5px !important;
+	background-size: 70% !important;
+	opacity: .5;
+}
+/* Post Screen - 32px */
+.icon32-posts-staff-member {
+	background: url('../img/staff-list-icon.png') no-repeat left top !important;
+	background: url('../img/staff-list-icon.svg') no-repeat left top !important;
+	background-size: 100% !important;
+	height: 32px;
+	width: 32px;
+}
