@@ -2,8 +2,8 @@
 Contributors: brettshumaker
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
-Tested up to: 4.9.6
-Stable tag: 2.1.1
+Tested up to: 5.2.1
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,13 @@ Alright, here's a few things to try:
 5. Templates screen 2
 
 == Changelog ==
+
+= 2.2.0 =
+* FEATURE: Use the `id` shortcode parameter to show a single Staff Member block
+* FEATURE: Use the `sslp_enable_staff_member_archive` filter to disable the `/staff-member` archive page. This filter defaults to `true` - pass `false` to turn off the archive page. You will need to [flush the permalinks](https://typerocket.com/flushing-permalinks-in-wordpress/) for this to take effect.
+* FEATURE: Use the `sslp_query_args` filter to change the WP_Query arguments used to query the Staff Members
+* ADDED: Staff Group data to the CSV export
+* FIXED: Previously, the `[simple-staff-list]` shortcode would request all staff members from the database, this could lead to poor performance on sites with large numbers of staff members, so now the default is 100. This should not affect most users.
 
 = 2.1.1 =
 * FIXED: post-thumbnail support for staff-member custom post type.

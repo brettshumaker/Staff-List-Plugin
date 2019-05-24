@@ -48,6 +48,8 @@
 		<p><?php esc_html_e( 'This is the most basic usage of Simple Staff List. Displays all Staff Members on post or page.', 'simple-staff-list' ); ?></p>
 		<h4><code>[simple-staff-list group="Robots"]</code></h4>
 		<p><?php esc_html_e( 'This displays all Staff Members from the group "Robots" sorted by order on the "Order" page. This will also add a class of "Robots" to the outer Staff List container for styling purposes.', 'simple-staff-list' ); ?></p>
+		<h4><code>[simple-staff-list id=12]</code></h4>
+		<p><?php esc_html_e( 'This will display the Staff Member ID "12". The Staff Member ID can be found on the "All Staff Members" page.', 'simple-staff-list' ); ?></p>
 		<h4><code>[simple-staff-list wrap_class="clearfix"]</code></h4>
 		<p><?php esc_html_e( 'This adds a class to the inner Staff Member wrap.', 'simple-staff-list' ); ?></p>
 		<h4><code>[simple-staff-list order="ASC"]</code></h4>

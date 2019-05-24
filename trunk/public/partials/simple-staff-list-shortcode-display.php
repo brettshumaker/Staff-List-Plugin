@@ -14,7 +14,7 @@
 	global $sslp_sc_output;
 
 	$atts       = $this->simple_staff_list_shortcode_atts;
-	$single     = $atts['single'];
+	$staff_id   = $atts['id'];
 	$group      = $atts['group'];
 	$wrap_class = $atts['wrap_class'];
 	$order      = $atts['order'];
@@ -36,8 +36,7 @@
 	 */
 
 	$args = array(
-		'post_type'      => 'staff-member',
-		'posts_per_page' => -1,
+		'posts_per_page' => 100,
 		'orderby'        => 'menu_order',
 		'post_status'    => 'publish',
 	);
@@ -49,8 +48,34 @@
 
 	// Set 'order' in our query args.
 	$args['order']              = $order;
-	$args['staff-member-group'] = $group;
 
+	if ( '' !== $atts['group'] ) {
+		$args['staff-member-group'] = $group;
+	}
+
+	if ( '' !== $staff_id && 'staff-member' === get_post_type( intval( $staff_id ) ) ) {
+		$args['p'] = intval( $staff_id );
+	}
+
+	/**
+	 * sslp_query_args filter.
+	 * 
+	 * Filters the args used to query the staff members.
+	 * 
+	 * @since 2.2.0
+	 * 
+	 * @param $args array The existing args to be used.
+	 * @param $context string The context in which this filter is being run.
+	 */
+	$filtered_args = apply_filters( 'sslp_query_args', $args, 'shortcode' );
+
+	// If we don't get an array back, reset $args back to the default.
+	$args = is_array( $filtered_args ) ? $filtered_args : $args;
+
+	// Make sure this gets set back to staff-member - no reason to be querying anything else here.
+	$args['post_type'] = 'staff-member';
+
+	// Query the staff members.
 	$staff = new WP_Query( $args );
 
 	/**
