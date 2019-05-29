@@ -636,6 +636,9 @@ class Simple_Staff_List_Admin {
 
 			$csv_headers = array();
 			$csv_data    = array();
+		
+			//store keys to reference directly
+			$custom_keys = array();
 
 			while ( $staff_query->have_posts() ) :
 				$staff_query->the_post();
@@ -653,6 +656,8 @@ class Simple_Staff_List_Admin {
 							$new_key = trim( str_replace( '_', ' ', $key ) );
 
 							$csv_headers[] = ucwords( $new_key );
+							
+							$custom_keys[] = $key;
 
 						}
 					}
@@ -673,14 +678,13 @@ class Simple_Staff_List_Admin {
 					$csv_new_line[] = '';
 				}
 
-				// Get the post custom data.
-				foreach ( $custom as $key => $value ) {
-					if ( strpos( $key, '_staff_member_' ) !== false ) {
+				//Get the post custom data by direct reference instead of the original way which required columns (keys?) be in a specific order
+				foreach ( $custom_keys as $the_key ) {
+					if ( strpos( $the_key, '_staff_member_' ) !== false ){
+						
+						$new_value = $custom[$the_key][0];
 
-						$new_value = $value[0];
-
-						$csv_new_line[] = trim( $new_value );
-
+						$csv_new_line[] = trim( $new_value );	
 					}
 				}
 
