@@ -15,8 +15,8 @@ const stopEventPropagation = event => event.stopPropagation();
 
 const panelImageStyle = {
 	'width': '20%',
-    'border-radius': '100%',
-    'margin-right': '5%'
+    'borderRadius': '100%',
+    'marginRight': '5%'
 }
 
 function debounce(func, wait = 100) {
