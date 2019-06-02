@@ -84,17 +84,6 @@ export default registerBlockType(
         },
         save: () => {
           return null;
-          console.log('save',attributes.staffMember);
-          return (
-            <div>
-              {attributes.staffMember.map(staffMember => (
-                <p>
-                  {staffMember.title}
-                </p>
-              ))}
-            <p>{attributes.staffMember.length === 0 ? 'Have no staff members :(' : ''}</p>
-            </div>
-          );
         },
     },
 );
