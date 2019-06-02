@@ -44,22 +44,27 @@ export default registerBlockType(
             __( 'Shout Out', 'simple-staff-list' ),
         ],
         edit: props => {
-          const { className, attributes, setAttributes } = props;
+          const { 
+            attributes: { staffMember, id },
+            className, setAttributes } = props;
+
           return (
             <div className={ className }>
               <InspectorControls>
                 <PostSelector
                   onPostSelect={post => {
-                    attributes.staffMember.push(post);
+                    console.log('postSelector onPostSelect', post);
+                    staffMember.push(post);
                     setAttributes({
-                      staffMember: [...attributes.staffMember],
+                      staffMember: [...staffMember],
                       id: post.id
                     });
                   }}
                   inputPlaceholder='Type to search Staff Members'
                   hideInputOnLimit={true}
-                  posts={attributes.staffMember ? attributes.staffMember : [] }
+                  posts={staffMember ? staffMember : [] }
                   onChange={newValue => {
+                    console.log('postSelector onChange', post);
                     setAttributes({
                       staffMember: [...newValue],
                       id: newValue.id
@@ -70,12 +75,12 @@ export default registerBlockType(
                 />
               </InspectorControls>
               <div>
-                {attributes.staffMember.map(staffMember => (
+                {staffMember.map(staffMember => (
                   <p key={staffMember.id}>
                     {staffMember.title}
                   </p>
                 ))}
-              <p>{attributes.staffMember.length === 0 ? 'Please choose a Staff Member' : ''}</p>
+              <p>{staffMember.length === 0 ? 'Please choose a Staff Member' : ''}</p>
               </div>
             </div>
           );
