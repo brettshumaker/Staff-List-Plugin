@@ -117,6 +117,33 @@ class Simple_Staff_List_Admin {
 	}
 
 	/**
+	 * Loads the block editor assets
+	 *
+	 * @since    2.3.0
+	 */
+	public function enqueue_block_editor_assets() {
+		// Make paths variables so we don't write em twice ;)
+		$block_path = '/js/editor.blocks.js';
+		$style_path = '/css/blocks.editor.css';
+
+		// Enqueue the bundled block JS file
+		wp_enqueue_script(
+			'sslp-blocks-js',
+			plugin_dir_url( __FILE__ ) . $block_path,
+			array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' ),
+			filemtime( plugin_dir_url( __FILE__ ) . $block_path )
+		);
+
+		// Enqueue optional editor only styles
+		wp_enqueue_style(
+			'sslp-blocks-editor-css',
+			plugin_dir_url( __FILE__ ) . $style_path,
+			[ ],
+			filemtime( plugin_dir_url( __FILE__ ) . $style_path )
+		);
+	}
+
+	/**
 	 * Flush Rewrite Rules after saving plugin options
 	 *
 	 * @since   2.0

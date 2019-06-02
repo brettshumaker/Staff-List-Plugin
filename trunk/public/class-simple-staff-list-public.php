@@ -133,6 +133,41 @@ class Simple_Staff_List_Public {
 	}
 
 	/**
+	 * Enqueue front end and editor JavaScript and CSS assets.
+	 *
+	 * @since    2.3.0
+	 */
+	public function enqueue_block_assets() {
+		$style_path = '/css/blocks.style.css';
+		wp_enqueue_style(
+			'sslp-blocks',
+			plugin_dir_url( __FILE__ ) . $style_path,
+			null,
+			filemtime( plugin_dir_url( __FILE__ ) . $style_path )
+		);
+	}
+
+	/**
+	 * Enqueue frontend JavaScript and CSS assets.
+	 *
+	 * @since    2.3.0
+	 */
+	public function enqueue_frontend_block_assets() {
+		// If in the backend, bail out.
+		if ( is_admin() ) {
+			return;
+		}
+
+		$block_path = '/js/frontend.blocks.js';
+		wp_enqueue_script(
+			'sslp-blocks-frontend',
+			plugin_dir_url( __FILE__ ) . $block_path,
+			[],
+			filemtime( plugin_dir_url( __FILE__ ) . $block_path )
+		);
+	}
+
+	/**
 	 * Initialize staff member custom post type and taxonomies.
 	 *
 	 * @since 1.17
@@ -208,6 +243,7 @@ class Simple_Staff_List_Public {
 			),
 			'supports'           => array( 'title', 'thumbnail', 'excerpt' ),
 			'menu_icon'          => 'dashicons-groups',
+			'show_in_rest'       => true,
 		);
 
 		/**
@@ -243,6 +279,21 @@ class Simple_Staff_List_Public {
 		);
 
 	}
+
+	/**
+	 * Registering meta fields for block attributes that use meta storage
+	 */
+	function staff_member_register_gb_meta() {
+		register_meta(
+			array( 'post', 'page' ),
+			'staff_member_gb_metabox',
+			[
+				'type'         => 'string',
+				'single'       => true,
+				'show_in_rest' => true,
+			] );
+	}
+
 
 	/**
 	 * Maybe flush rewrite rules
@@ -291,4 +342,78 @@ class Simple_Staff_List_Public {
 
 	}
 
+	public function rest_dispatch_request( $dispatch_result, $request, $route, $handler )
+	{
+		/**
+		 * Filter: sslp-allow-rest-requests
+		 * 
+		 * Whether or not to allow unauthenticated REST API requests for the staff-member post type. Default is false.
+		 */
+		$allow_staff_member_api_requests = apply_filters( 'sslp-allow-rest-requests', false, $dispatch_result, $request, $route, $handler );
+
+		if ( $allow_staff_member_api_requests ) {
+			return $dispatch_result;
+		}
+
+	    $target_base = '/wp/v2/staff-member';
+	
+	    $pattern1 = untrailingslashit( $target_base );
+	    $pattern2 = trailingslashit( $target_base );
+	
+	    if( $pattern1 !== $route && $pattern2 !== substr( $route, 0, strlen( $pattern2 ) ) )
+	        return $dispatch_result;
+	
+	    // Additional permission check
+	    if( is_user_logged_in() )
+	        return $dispatch_result;
+	
+	    // Target GET method
+	    if( WP_REST_Server::READABLE !== $request->get_method() ) 
+	        return $dispatch_result;
+	
+	    return new \WP_Error( 
+	        'rest_forbidden', 
+	        esc_html__( 'Sorry, you are not allowed to do that.', 'simple-staff-list' ), 
+	        [ 'status' => 403 ] 
+	    );
+	
+	}
+
+	public function register_dynamic_blocks() {
+
+		if ( ! function_exists( 'register_block_type' ) ) {
+			return;
+		}
+
+		register_block_type( 'simple-staff-list/single-staff-member', [
+			'render_callback' => array( $this, 'staff_member_simple_staff_list_shortcode_callback' )
+		] );
+	}
+
 }
+
+// add_filter( 'rest_dispatch_request', function( $dispatch_result, $request, $route, $hndlr )
+// {
+//     $target_base = '/wp/v2/staff-member';
+
+//     $pattern1 = untrailingslashit( $target_base );
+//     $pattern2 = trailingslashit( $target_base );
+
+//     if( $pattern1 !== $route && $pattern2 !== substr( $route, 0, strlen( $pattern2 ) ) )
+//         return $dispatch_result;
+
+//     // Additional permission check
+//     if( is_user_logged_in() )
+//         return $dispatch_result;
+
+//     // Target GET method
+//     if( WP_REST_Server::READABLE !== $request->get_method() ) 
+//         return $dispatch_result;
+
+//     return new \WP_Error( 
+//         'rest_forbidden', 
+//         esc_html__( 'Sorry, you are not allowed to do that.', 'simple-staff-list' ), 
+//         [ 'status' => 403 ] 
+//     );
+
+// }, 10, 4 );
