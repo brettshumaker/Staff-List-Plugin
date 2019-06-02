@@ -45,14 +45,12 @@ export default registerBlockType(
         ],
         edit: props => {
           const { className, attributes, setAttributes } = props;
-          console.log('edit',attributes.staffMember);
           return (
             <div className={ className }>
               <InspectorControls>
                 <PostSelector
                   onPostSelect={post => {
                     attributes.staffMember.push(post);
-                    console.log('onPostSelect post', post)
                     setAttributes({
                       staffMember: [...attributes.staffMember],
                       id: post.id
@@ -73,11 +71,11 @@ export default registerBlockType(
               </InspectorControls>
               <div>
                 {attributes.staffMember.map(staffMember => (
-                  <p>
+                  <p key={staffMember.id}>
                     {staffMember.title}
                   </p>
                 ))}
-              <p>{attributes.staffMember.length === 0 ? 'Have no staff members :(' : ''}</p>
+              <p>{attributes.staffMember.length === 0 ? 'Please choose a Staff Member' : ''}</p>
               </div>
             </div>
           );
