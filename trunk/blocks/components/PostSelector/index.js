@@ -51,17 +51,17 @@ class PostSelector extends Component {
 
     this.suggestionNodes = [];
 
-    this.postTypes = null;
+	this.postTypes = null;
+	
+	console.log('PostSelector constructor', this.props);
 
     this.state = {
-      posts: [],
+	  posts: [],
       showSuggestions: false,
       selectedSuggestion: null,
       input: ''
-    };
+	};
   }
-
-  componentDidUpdate() { }
 
   componentWillUnmount() {
     delete this.suggestionsRequest;
@@ -135,7 +135,7 @@ class PostSelector extends Component {
   }
 
   onChange(event) {
-    const inputValue = event.target.value;
+	const inputValue = event.target.value;
     this.setState({ input: inputValue });
     this.updateSuggestions(inputValue);
   }
@@ -170,7 +170,8 @@ class PostSelector extends Component {
       case ENTER: {
         if (this.state.selectedSuggestion !== null) {
           event.stopPropagation();
-          const post = this.state.posts[this.state.selectedSuggestion];
+		  const post = this.state.posts[this.state.selectedSuggestion];
+		  console.log( "ENTER pushed", post, this.state.posts );
           this.selectLink(post);
         }
       }
@@ -178,6 +179,7 @@ class PostSelector extends Component {
   }
 
   selectLink(post) {
+	  console.log('selectLink');
     // get the "full" post data if a post was selected. this may be something to add as a prop in the future for custom use cases.
     if (this.props.data) {
       // if data already exists in the post object, there's no need to make an API call.
@@ -220,10 +222,10 @@ class PostSelector extends Component {
 		media: response._embedded['wp:featuredmedia'][0]
       };
       // send data to the block;
-      this.props.onPostSelect(fullpost);
-    });
+	  this.props.onPostSelect(fullpost);
+	});
 
-    this.setState({
+	this.setState({
       input: '',
       selectedSuggestion: null,
       showSuggestions: false
@@ -245,21 +247,39 @@ class PostSelector extends Component {
 	)
   }
 
-  renderSelectedPosts() {
-	// show each post in the list.
-    return (
-      <ul>
-        {this.props.posts.map((post, i) => (
-          <li style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'nowrap' }} key={post.id}>
+  renderPostTitle( post ) {
+	  return (
+		  <h3
+		  	style={{
+				flexGrow: '1',
+				alignSelf: 'center',
+				margin: '0',
+			}}
+		  >
+		  	{post.title}
+		  </h3>
+	  )
+  }
+
+  renderPostItem( post, i ) {
+	  console.log( 'renderPostItem', post, i );
+
+	  if ( ! post.id ) {
+		
+		return;
+	  }
+
+	  return(
+		<li style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'nowrap' }} key={post.id}>
 
             {
-			  /* render the post type if we have the data to support it */
-              // this.hasPostTypeData() && <span style={subtypeStyle}>{this.getPostTypeData(post.type).displayName}</span>
-			  // I think maybe do their avatar here?
 			  this.renderPostImage( post )
-            }
+			}
+			
+			{
+			  this.renderPostTitle( post )
+			}
 
-            <span style={{ flex: 1 }}>{post.title}</span>
             <span>
               {i !== 0 ? (
                 <IconButton
@@ -289,7 +309,9 @@ class PostSelector extends Component {
                 style={{ display: 'inline-flex', textAlign: 'center' }}
                 icon="no"
                 onClick={() => {
-                  this.props.posts.splice(i, 1);
+				  console.log( 'delete click, before props.posts splice', this.props.posts );
+				  this.props.posts.splice(i, 1);
+				  console.log( 'delete click, after props.posts splice', this.props.posts );
                   this.props.onChange(this.props.posts);
                   // force a re-render.
                   this.setState({ state: this.state });
@@ -297,7 +319,18 @@ class PostSelector extends Component {
               />
             </span>
           </li>
-        ))}
+	  );
+  }
+
+  renderSelectedPosts() {
+	// console.log( 'renderSelectedPosts props', this.props.posts, this.state.posts );
+	// show each post in the list.
+    return (
+      <ul>
+        {this.props.posts.map((post, i) => {
+			console.log( 'should be mapping over posts', i, post );
+			return this.renderPostItem(post,i);
+		})}
       </ul>
     );
   }
@@ -372,6 +405,8 @@ class PostSelector extends Component {
     this.resolvePostTypes(this.props.sourcePostTypes);
     const { autoFocus = true, instanceId, limit } = this.props;
 	const { showSuggestions, posts, selectedSuggestion, loading, input } = this.state;
+
+	console.log( 'PostSelector render method', this.props );
 	
     /* eslint-disable jsx-a11y/no-autofocus */
     return (
@@ -393,7 +428,10 @@ class PostSelector extends Component {
                     id={`block-editor-url-input-suggestion-${instanceId}-${index}`}
                     ref={this.bindSuggestionNode(index)}
                     className={`block-editor-url-input__suggestion ${index === selectedSuggestion ? 'is-selected' : ''}`}
-                    onClick={() => this.selectLink(post)}
+                    onClick={() => {
+						console.log(post);
+						this.selectLink(post)
+					}}
                     aria-selected={index === selectedSuggestion}
                   >
                     <div style={{ display: 'flex', alignItems: 'center' }}>

@@ -143,7 +143,8 @@ class Simple_Staff_List_Public {
 			'sslp-blocks',
 			plugin_dir_url( __FILE__ ) . $style_path,
 			null,
-			filemtime( plugin_dir_url( __FILE__ ) . $style_path )
+			date('U')
+			// filemtime( plugin_dir_url( __FILE__ ) . $style_path )
 		);
 	}
 
@@ -163,7 +164,8 @@ class Simple_Staff_List_Public {
 			'sslp-blocks-frontend',
 			plugin_dir_url( __FILE__ ) . $block_path,
 			[],
-			filemtime( plugin_dir_url( __FILE__ ) . $block_path )
+			date('U')
+			// filemtime( plugin_dir_url( __FILE__ ) . $block_path )
 		);
 	}
 
@@ -380,40 +382,38 @@ class Simple_Staff_List_Public {
 	}
 
 	public function register_dynamic_blocks() {
-
 		if ( ! function_exists( 'register_block_type' ) ) {
 			return;
 		}
 
-		register_block_type( 'simple-staff-list/single-staff-member', [
-			'render_callback' => array( $this, 'staff_member_simple_staff_list_shortcode_callback' )
-		] );
+		register_block_type(
+			'simple-staff-list/single-staff-member',
+			array(
+				'attributes' => array(
+					// 'staffMember' => array(
+					// 	'type' => 'array',
+					// 	'default' => array(),
+					// ),
+					'id' => array(
+						'type' => 'number'
+					)
+				),
+				'render_callback' => array( $this, 'single_staff_member_render_callback' )
+			)
+		);
+	}
+
+	public function single_staff_member_render_callback( $attributes ) {
+		// staff_member_simple_staff_list_shortcode_callback
+		// if ( ! is_admin() && ! wp_doing_ajax() )
+		// 	echo '<pre>' . var_export( $attributes, true ) . '</pre>';
+
+		if ( $attributes['id'] ) {
+			return do_shortcode( '[simple-staff-list id=' . $attributes['id'] . ']' );
+		} else {
+			return '<div><p><em>Please choose a Staff Member.</em></p></div>';
+		}
+		return '<!-- Empty single Staff Member block -->';
 	}
 
 }
-
-// add_filter( 'rest_dispatch_request', function( $dispatch_result, $request, $route, $hndlr )
-// {
-//     $target_base = '/wp/v2/staff-member';
-
-//     $pattern1 = untrailingslashit( $target_base );
-//     $pattern2 = trailingslashit( $target_base );
-
-//     if( $pattern1 !== $route && $pattern2 !== substr( $route, 0, strlen( $pattern2 ) ) )
-//         return $dispatch_result;
-
-//     // Additional permission check
-//     if( is_user_logged_in() )
-//         return $dispatch_result;
-
-//     // Target GET method
-//     if( WP_REST_Server::READABLE !== $request->get_method() ) 
-//         return $dispatch_result;
-
-//     return new \WP_Error( 
-//         'rest_forbidden', 
-//         esc_html__( 'Sorry, you are not allowed to do that.', 'simple-staff-list' ), 
-//         [ 'status' => 403 ] 
-//     );
-
-// }, 10, 4 );
