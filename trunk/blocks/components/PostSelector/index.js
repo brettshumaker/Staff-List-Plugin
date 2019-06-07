@@ -52,8 +52,6 @@ class PostSelector extends Component {
     this.suggestionNodes = [];
 
 	this.postTypes = null;
-	
-	console.log('PostSelector constructor', this.props);
 
     this.state = {
 	  posts: [],
@@ -171,7 +169,6 @@ class PostSelector extends Component {
         if (this.state.selectedSuggestion !== null) {
           event.stopPropagation();
 		  const post = this.state.posts[this.state.selectedSuggestion];
-		  console.log( "ENTER pushed", post, this.state.posts );
           this.selectLink(post);
         }
       }
@@ -179,7 +176,6 @@ class PostSelector extends Component {
   }
 
   selectLink(post) {
-	  console.log('selectLink');
     // get the "full" post data if a post was selected. this may be something to add as a prop in the future for custom use cases.
     if (this.props.data) {
       // if data already exists in the post object, there's no need to make an API call.
@@ -262,12 +258,8 @@ class PostSelector extends Component {
   }
 
   renderPostItem( post, i ) {
-	  console.log( 'renderPostItem', post, i );
-
-	  if ( ! post.id ) {
-		
+	  if ( ! post.id )
 		return;
-	  }
 
 	  return(
 		<li style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'nowrap' }} key={post.id}>
@@ -309,9 +301,7 @@ class PostSelector extends Component {
                 style={{ display: 'inline-flex', textAlign: 'center' }}
                 icon="no"
                 onClick={() => {
-				  console.log( 'delete click, before props.posts splice', this.props.posts );
 				  this.props.posts.splice(i, 1);
-				  console.log( 'delete click, after props.posts splice', this.props.posts );
                   this.props.onChange(this.props.posts);
                   // force a re-render.
                   this.setState({ state: this.state });
@@ -323,12 +313,10 @@ class PostSelector extends Component {
   }
 
   renderSelectedPosts() {
-	// console.log( 'renderSelectedPosts props', this.props.posts, this.state.posts );
 	// show each post in the list.
     return (
       <ul>
         {this.props.posts.map((post, i) => {
-			console.log( 'should be mapping over posts', i, post );
 			return this.renderPostItem(post,i);
 		})}
       </ul>
@@ -405,8 +393,6 @@ class PostSelector extends Component {
     this.resolvePostTypes(this.props.sourcePostTypes);
     const { autoFocus = true, instanceId, limit } = this.props;
 	const { showSuggestions, posts, selectedSuggestion, loading, input } = this.state;
-
-	console.log( 'PostSelector render method', this.props );
 	
     /* eslint-disable jsx-a11y/no-autofocus */
     return (
@@ -428,10 +414,7 @@ class PostSelector extends Component {
                     id={`block-editor-url-input-suggestion-${instanceId}-${index}`}
                     ref={this.bindSuggestionNode(index)}
                     className={`block-editor-url-input__suggestion ${index === selectedSuggestion ? 'is-selected' : ''}`}
-                    onClick={() => {
-						console.log(post);
-						this.selectLink(post)
-					}}
+                    onClick={this.selectLink(post)}
                     aria-selected={index === selectedSuggestion}
                   >
                     <div style={{ display: 'flex', alignItems: 'center' }}>
