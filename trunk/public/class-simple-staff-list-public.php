@@ -144,28 +144,6 @@ class Simple_Staff_List_Public {
 			plugin_dir_url( __FILE__ ) . $style_path,
 			null,
 			date('U')
-			// filemtime( plugin_dir_url( __FILE__ ) . $style_path )
-		);
-	}
-
-	/**
-	 * Enqueue frontend JavaScript and CSS assets.
-	 *
-	 * @since    2.3.0
-	 */
-	public function enqueue_frontend_block_assets() {
-		// If in the backend, bail out.
-		if ( is_admin() ) {
-			return;
-		}
-
-		$block_path = '/js/frontend.blocks.js';
-		wp_enqueue_script(
-			'sslp-blocks-frontend',
-			plugin_dir_url( __FILE__ ) . $block_path,
-			[],
-			date('U')
-			// filemtime( plugin_dir_url( __FILE__ ) . $block_path )
 		);
 	}
 

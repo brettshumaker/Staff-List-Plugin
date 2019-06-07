@@ -201,7 +201,6 @@ class Simple_Staff_List {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'enqueue_block_assets', $plugin_public, 'enqueue_block_assets' );
-		$this->loader->add_action( 'enqueue_block_assets', $plugin_public, 'enqueue_frontend_block_assets' );
 		$this->loader->add_action( 'init', $plugin_public, 'staff_member_init', 10 );
 		$this->loader->add_action( 'init', $plugin_public, 'staff_member_register_gb_meta', 10 );
 		$this->loader->add_action( 'init', $plugin_public, 'maybe_flush_rewrite_rules', 20 );
