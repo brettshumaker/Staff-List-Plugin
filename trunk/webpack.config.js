@@ -34,7 +34,6 @@ const extractConfig = {
 module.exports = {
   entry: {
     './admin/js/editor.blocks' : './blocks/index.js',
-    './public/js/frontend.blocks' : './blocks/frontend.js',
   },
   output: {
     path: path.resolve( __dirname ),
