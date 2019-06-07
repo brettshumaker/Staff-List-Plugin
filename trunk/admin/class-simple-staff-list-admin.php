@@ -131,15 +131,17 @@ class Simple_Staff_List_Admin {
 			'sslp-blocks-js',
 			plugin_dir_url( __FILE__ ) . $block_path,
 			array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' ),
-			filemtime( plugin_dir_url( __FILE__ ) . $block_path )
+			date('U')
+			// filemtime( plugin_dir_url( __FILE__ ) . $block_path )
 		);
-
+		
 		// Enqueue optional editor only styles
 		wp_enqueue_style(
 			'sslp-blocks-editor-css',
 			plugin_dir_url( __FILE__ ) . $style_path,
 			[ ],
-			filemtime( plugin_dir_url( __FILE__ ) . $style_path )
+			date('U')
+			// filemtime( plugin_dir_url( __FILE__ ) . $style_path )
 		);
 	}
 
