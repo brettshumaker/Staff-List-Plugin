@@ -47,12 +47,13 @@ export default registerBlockType(
             __( 'staff list', 'simple-staff-list' ),
         ],
         edit: props => {
-          const { className, setAttributes } = props;
+          const { attributes: { id },
+          className, setAttributes } = props;
 
           // Fetch the staff data if we have a staff ID but no staffData. This covers the scenario of opening a post with an existing Single Staff Member block.
           if ( props.attributes.id && ! props.attributes.staffData ) {
             apiFetch({
-              path: `/wp/v2/staff-member/${props.attributes.id}?_embed`
+              path: `/wp/v2/staff-member/${id}?_embed`
             }).then(response => {
               const fullpost = {
                 title: decodeEntities(response.title.rendered),

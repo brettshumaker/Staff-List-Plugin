@@ -368,13 +368,9 @@ class Simple_Staff_List_Public {
 			'simple-staff-list/single-staff-member',
 			array(
 				'attributes' => array(
-					// 'staffMember' => array(
-					// 	'type' => 'array',
-					// 	'default' => array(),
-					// ),
 					'id' => array(
 						'type' => 'number'
-					)
+                    ),
 				),
 				'render_callback' => array( $this, 'single_staff_member_render_callback' )
 			)
@@ -382,13 +378,9 @@ class Simple_Staff_List_Public {
 	}
 
 	public function single_staff_member_render_callback( $attributes ) {
-		// staff_member_simple_staff_list_shortcode_callback
-		// if ( ! is_admin() && ! wp_doing_ajax() )
-		// 	echo '<pre>' . var_export( $attributes, true ) . '</pre>';
-
 		if ( $attributes['id'] ) {
 			return do_shortcode( '[simple-staff-list id=' . $attributes['id'] . ']' );
-		} else {
+		} elseif ( is_admin() ) {
 			return '<div><p><em>Please choose a Staff Member.</em></p></div>';
 		}
 		return '<!-- Empty single Staff Member block -->';
