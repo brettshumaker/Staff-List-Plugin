@@ -414,7 +414,7 @@ class PostSelector extends Component {
                     id={`block-editor-url-input-suggestion-${instanceId}-${index}`}
                     ref={this.bindSuggestionNode(index)}
                     className={`block-editor-url-input__suggestion ${index === selectedSuggestion ? 'is-selected' : ''}`}
-                    onClick={this.selectLink(post)}
+                    onClick={() => this.selectLink(post)}
                     aria-selected={index === selectedSuggestion}
                   >
                     <div style={{ display: 'flex', alignItems: 'center' }}>
