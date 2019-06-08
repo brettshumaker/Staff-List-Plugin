@@ -24,7 +24,7 @@ const renderAdminStaffMember = props => {
     return <p>Please select a Staff Member.</p>;
 
   return <ServerSideRender
-    block="simple-staff-list/single-staff-member"
+    block="simple-staff-list/single-staff-member-legacy"
     attributes={{
       id: props.attributes.id,
     }}
@@ -35,15 +35,15 @@ const renderAdminStaffMember = props => {
  * Register block
  */
 export default registerBlockType(
-    'simple-staff-list/single-staff-member',
+    'simple-staff-list/single-staff-member-legacy',
     {
-        title: __( 'Single Staff Member', 'simple-staff-list' ),
-        description: __( 'Show a single staff member block.', 'simple-staff-list' ),
+        title: __( 'Single Staff Member (Legacy)', 'simple-staff-list' ),
+        description: __( 'Show a single staff member block using the Staff Loop Template.', 'simple-staff-list' ),
         category: 'common',
         icon: 'groups',
         keywords: [
-            __( 'Staff member', 'simple-staff-list' ),
-            __( 'single', 'simple-staff-list' ),
+            __( 'simple staff member', 'simple-staff-list' ),
+            __( 'simple single', 'simple-staff-list' ),
             __( 'staff list', 'simple-staff-list' ),
         ],
         edit: props => {

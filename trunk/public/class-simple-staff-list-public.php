@@ -380,7 +380,7 @@ class Simple_Staff_List_Public {
 		}
 
 		register_block_type(
-			'simple-staff-list/single-staff-member',
+			'simple-staff-list/single-staff-member-legacy',
 			array(
 				'attributes' => array(
 					'id' => array(
