@@ -6,6 +6,6 @@ import "./i18n.js";
 import "./components";
 
 /**
- * Import example blocks
+ * Import blocks
  */
-import "./single-staff-member";
+import "./single-staff-member-legacy";
