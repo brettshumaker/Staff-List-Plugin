@@ -322,6 +322,16 @@ class Simple_Staff_List_Public {
 
 	}
 
+    /**
+     * Allow Authenticated Requests to the Staff Member API endpoint
+     *
+     * @since 2.3.0
+     * @param mixed $dispatch_result Dispatch result, will be used if not empty.
+     * @param WP_REST_Request $request Request used to generate the response.
+     * @param string $route Route matched for the request.
+     * @param array $handler Route handler used for the request.
+     * @return mixed The dispatch result if requests are allowed, otherwise a WP_Error
+     */
 	public function rest_dispatch_request( $dispatch_result, $request, $route, $handler )
 	{
 		/**
@@ -359,6 +369,11 @@ class Simple_Staff_List_Public {
 	
 	}
 
+    /**
+     * Registers our dynamic blocks
+     *
+     * @since 2.3.0
+     */
 	public function register_dynamic_blocks() {
 		if ( ! function_exists( 'register_block_type' ) ) {
 			return;
@@ -377,6 +392,13 @@ class Simple_Staff_List_Public {
 		);
 	}
 
+    /**
+     * The render callback function to handle rendering the single Staff Member dynamic block.
+     *
+     * @since 2.3.0
+     * @param array $attributes The attributes coming from Gutenberg.
+     * @return string The output for the render method.
+     */
 	public function single_staff_member_render_callback( $attributes ) {
 		if ( $attributes['id'] ) {
 			return do_shortcode( '[simple-staff-list id=' . $attributes['id'] . ']' );
