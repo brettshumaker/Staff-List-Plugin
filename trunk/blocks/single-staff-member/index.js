@@ -123,7 +123,7 @@ export default registerBlockType(
                 date: response.date,
                 type: response.type,
                 status: response.status,
-                media: response._embedded['wp:featuredmedia'][0]
+                media: response._embedded && response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0] : null
               };
               // send data to the block;
               setAttributes({
