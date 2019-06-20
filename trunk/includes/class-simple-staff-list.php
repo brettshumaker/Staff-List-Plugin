@@ -108,7 +108,17 @@ class Simple_Staff_List {
 		/**
 		 * Templating hooks.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sslp-template-hooks.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sslp-template-hooks.php';
+        
+        /**
+         * Pluggable render functions for Staff Member fields in Gutenberg Blocks
+         */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sslp-gutenberg-block-field-render-functions.php';
+        
+        /**
+         * Pluggable render functions for Staff Member Gutenberg Blocks layouts
+         */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sslp-gutenberg-block-layout-render-functions.php';
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -206,7 +216,10 @@ class Simple_Staff_List {
 		$this->loader->add_action( 'init', $plugin_public, 'maybe_flush_rewrite_rules', 20 );
 
 		// Allow Authenticated Requests to the Staff Member API endpoint
-		$this->loader->add_filter( 'rest_dispatch_request', $plugin_public, 'rest_dispatch_request', 10, 4 );
+        $this->loader->add_filter( 'rest_dispatch_request', $plugin_public, 'rest_dispatch_request', 10, 4 );
+        
+        // Add custom meta data to Staff Member REST API response
+        $this->loader->add_action( 'rest_api_init', $plugin_public, 'add_staff_custom_to_api' );
 
 		// Add Gutenberg dynamic blocks
 		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'register_dynamic_blocks' );

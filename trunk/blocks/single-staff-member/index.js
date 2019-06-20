@@ -18,6 +18,7 @@ const { InspectorControls } = wp.editor;
 const { decodeEntities } = wp.htmlEntities;
 const { apiFetch } = wp;
 const {
+    ServerSideRender,
     PanelBody,
     PanelRow,
     SelectControl,
@@ -25,12 +26,54 @@ const {
 } = wp.components;
 
 const renderAdminStaffMember = props => {
-    const { id, layout } = props.attributes;
+    const { id, layout, content, className } = props.attributes;
 
     if ( ! id )
         return <p>Please select a Staff Member.</p>;
 
-    return <p>Staff ID: {id}, Layout: {layout}</p>;
+    return (
+        <ServerSideRender
+            block="simple-staff-list/single-staff-member"
+            attributes={{
+                id: id,
+                layout: layout,
+                content: content,
+            }}
+        />
+    );
+}
+
+const maybeShowContentOptions = ( layout, content ) => {
+
+    if ( 'staff-loop-template' !== layout ) {
+        return(
+            <PanelBody
+                title={__("Content Options", "simple-staff-list")}
+                initialOpen={false}
+            >
+                <p>Turn specific fields on or off.</p>
+                {content.map( (option, i) => {
+                    // console.log(option);
+                    return(
+                        <ToggleControl
+                            key={i}
+                            label={__(option.label, "simple-staff-list")}
+                            checked={content[i].value}
+                            onChange={newValue => {
+                                const newContent = content.map(a => ({...a}));
+                                newContent[i].value = newValue;
+                                setAttributes({ 
+                                    content: newContent
+                                })
+                            }}
+                        />
+                    )
+                })}
+            </PanelBody>
+        )
+    }
+
+    return ''
 }
 
 /**
@@ -55,7 +98,7 @@ export default registerBlockType(
             layout: {
                 type: 'string',
                 // TODO: This needs to be dynamic
-                default: 'sslp-left-1'
+                default: 'layout-1'
             },
             content: {
                 type: 'array',
@@ -72,14 +115,14 @@ export default registerBlockType(
                         value: true,
                     },
                     {
-                        name: 'bio',
-                        label: __('Bio', 'simple-staff-list'),
+                        name: 'position',
+                        label: __('Position', 'simple-staff-list'),
                         value: true,
                     },
                     {
-                        name: 'position',
-                        label: __('Position', 'simple-staff-list'),
-                        value: false,
+                        name: 'bio',
+                        label: __('Bio', 'simple-staff-list'),
+                        value: true,
                     },
                     {
                         name: 'email',
@@ -105,30 +148,30 @@ export default registerBlockType(
             }
         },
         edit: props => {
-          const { attributes: { id, layout, content },
+          const { attributes: { id, layout, content, staffData },
           className, setAttributes } = props;
 
-          console.log('content', content);
-
           // Fetch the staff data if we have a staff ID but no staffData. This covers the scenario of opening a post with an existing Single Staff Member block.
-          if ( props.attributes.id && ! props.attributes.staffData ) {
+          if ( id && ! staffData ) {
             apiFetch({
               path: `/wp/v2/staff-member/${id}?_embed`
             }).then(response => {
-              const fullpost = {
-                title: decodeEntities(response.title.rendered),
-                id: response.id,
-                excerpt: decodeEntities(response.excerpt.rendered),
-                url: response.link,
-                date: response.date,
-                type: response.type,
-                status: response.status,
-                media: response._embedded && response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0] : null
-              };
-              // send data to the block;
-              setAttributes({
-                staffData: fullpost
-              });
+                const fullpost = {
+                    title: decodeEntities(response.title.rendered),
+                    id: response.id,
+                    url: response.link,
+                    media: response._embedded && response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0] : null,
+                    position: response.staffData.title,
+                    bio: response.staffData.bio,
+                    phone: response.staffData.phone,
+                    email: response.staffData.email,
+                    fb: response.staffData.fb,
+                    tw: response.staffData.tw,
+                };
+                // send data to the block;
+                setAttributes({
+                    staffData: fullpost
+                });
             });
           }
 
@@ -146,7 +189,7 @@ export default registerBlockType(
                         }}
                         inputPlaceholder='Type to search Staff Members'
                         hideInputOnLimit={true}
-                        posts={ props.attributes.staffData ? [props.attributes.staffData] : [] }
+                        posts={ staffData ? [staffData] : [] }
                         onChange={newValue => {
                             const newStaffData = newValue.length === 0 ? undefined : newValue;
                             setAttributes({
@@ -163,52 +206,29 @@ export default registerBlockType(
                             label={__("Choose Layout", "simple-staff-list")}
                             value={layout}
                             options={[
-                            { value: "il-cr", label: __("Image Left, Content Right", "simple-staff-list") },
-                            { value: "cl-ir", label: __("Content Left, Image Right", "simple-staff-list") },
-                            { value: "it-cb", label: __("Image Top, Content Bottom", "simple-staff-list") }
+                            { value: "staff-loop-template", label: __("Staff Loop Template", "simple-staff-list") },
+                            { value: "layout-1", label: __("Image Left, Content Right", "simple-staff-list") },
+                            { value: "layout-2", label: __("Content Left, Image Right", "simple-staff-list") },
+                            { value: "layout-3", label: __("Image Top, Content Bottom", "simple-staff-list") }
                             ]}
                             onChange={layout => setAttributes({ layout })}
                         />
                     </PanelRow>
                 </PanelBody>
-                <PanelBody
-                    title={__("Content Options", "simple-staff-list")}
-                    initialOpen={false}
-                >
-                    <p>Turn specific fields on or off.</p>
-                    {content.map( (option, i) => {
-                        console.log(option);
-                        return(
-                            <ToggleControl
-                                label={__(option.label, "simple-staff-list")}
-                                checked={content[i].value}
-                                onChange={newValue => {
-                                    content[i].value = newValue;
-                                    setAttributes({ 
-                                        content: content
-                                    })
-                                }}
-                            />
-                        )
-                    })}
-                </PanelBody>
-              </InspectorControls>
-              <div className={`sslp-layout-${props.attributes.layout}`}>
                 {
-                  renderAdminStaffMember(props)
+                    maybeShowContentOptions( layout, content )
+                }
+              </InspectorControls>
+              <div className={`sslp-layout_${layout}`}>
+                {
+                    ! staffData ? <p>Select a Staff Member</p> : renderAdminStaffMember(props)
                 }
               </div>
             </div>
           );
         },
         save: props => {
-          return (
-            <div className={`sslp-layout-${props.attributes.layout}`}>
-                {
-                renderAdminStaffMember(props)
-                }
-            </div>
-          )
+            return null;
         },
     },
 );

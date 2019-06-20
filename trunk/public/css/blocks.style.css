@@ -1,26 +1,2 @@
-.entry-content .wp-block-jsforwpblocks-static,
-.wp-block-jsforwpblocks-static {
-  background: rgba(254, 243, 224, 0.52);
-  border: 5px #f7b733 solid;
-  padding: 1rem; }
-  .entry-content .wp-block-jsforwpblocks-static h2,
-  .wp-block-jsforwpblocks-static h2 {
-    color: #222;
-    font-size: 2rem;
-    margin: 1rem 0; }
-  .entry-content .wp-block-jsforwpblocks-static p,
-  .wp-block-jsforwpblocks-static p {
-    font-size: 1.4rem; }
-.entry-content .wp-block-jsforwpblocks-static,
-.wp-block-jsforwpblocks-static {
-  background: rgba(254, 243, 224, 0.52);
-  border: 5px #f7b733 solid;
-  padding: 1rem; }
-  .entry-content .wp-block-jsforwpblocks-static h2,
-  .wp-block-jsforwpblocks-static h2 {
-    color: #222;
-    font-size: 2rem;
-    margin: 1rem 0; }
-  .entry-content .wp-block-jsforwpblocks-static p,
-  .wp-block-jsforwpblocks-static p {
-    font-size: 1.4rem; }
+.entry-content .wp-block-jsforwpblocks-static,.wp-block-jsforwpblocks-static{background:rgba(254,243,224,0.52);border:5px #f7b733 solid;padding:1rem}.entry-content .wp-block-jsforwpblocks-static h2,.wp-block-jsforwpblocks-static h2{color:#222;font-size:2rem;margin:1rem 0}.entry-content .wp-block-jsforwpblocks-static p,.wp-block-jsforwpblocks-static p{font-size:1.4rem}
+.wp-block-simple-staff-list-single-staff-member.layout-1,.wp-block-simple-staff-list-single-staff-member.layout-2{display:-ms-grid;display:grid;grid-column-gap:20px}@media screen and (min-width: 600px){.wp-block-simple-staff-list-single-staff-member.layout-1{-ms-grid-columns:35%;grid-template-columns:35%}.wp-block-simple-staff-list-single-staff-member.layout-1 img{-ms-grid-column:1;grid-column-start:1}.wp-block-simple-staff-list-single-staff-member.layout-1 .staff-member-content{-ms-grid-column:2;grid-column-start:2}.wp-block-simple-staff-list-single-staff-member.layout-2{-ms-grid-columns:auto 35%;grid-template-columns:auto 35%}.wp-block-simple-staff-list-single-staff-member.layout-2 img{-ms-grid-column:2;grid-column-start:2}.wp-block-simple-staff-list-single-staff-member.layout-2 .staff-member-content{-ms-grid-column:1;grid-column-start:1;-ms-grid-row:1;grid-row-start:1}}.wp-block-simple-staff-list-single-staff-member.layout-1 .contact-link,.wp-block-simple-staff-list-single-staff-member.layout-2 .contact-link,.wp-block-simple-staff-list-single-staff-member.layout-3 .contact-link{display:block}.wp-block-simple-staff-list-single-staff-member.layout-1 .social-icon:not(:last-child),.wp-block-simple-staff-list-single-staff-member.layout-2 .social-icon:not(:last-child),.wp-block-simple-staff-list-single-staff-member.layout-3 .social-icon:not(:last-child){margin-right:.5em}.wp-block-simple-staff-list-single-staff-member.layout-1 .staff-member-photo,.wp-block-simple-staff-list-single-staff-member.layout-2 .staff-member-photo,.wp-block-simple-staff-list-single-staff-member.layout-3 .staff-member-photo{float:none}
