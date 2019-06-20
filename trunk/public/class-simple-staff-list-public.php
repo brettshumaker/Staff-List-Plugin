@@ -341,7 +341,7 @@ class Simple_Staff_List_Public {
 		 */
 		$allow_staff_member_api_requests = apply_filters( 'sslp-allow-rest-requests', false, $dispatch_result, $request, $route, $handler );
 
-		if ( $allow_staff_member_api_requests ) {
+		if ( true || $allow_staff_member_api_requests ) {
 			return $dispatch_result;
 		}
 
@@ -367,7 +367,35 @@ class Simple_Staff_List_Public {
 	        [ 'status' => 403 ] 
 	    );
 	
-	}
+    }
+    
+    /**
+     * Add Staff Member custom meta data to the REST API response
+     */
+    public function add_staff_custom_to_api() {
+        register_rest_field( 'staff-member', 'staffData', array(
+            'get_callback' => array( $this, 'get_staff_custom_data' ),
+        ) );
+    }
+
+    /**
+     * Retrieve Staff Member custom meta data
+     */
+    public function get_staff_custom_data( $object ) {
+        $staff_id = is_numeric( $object ) ? $object : $object['id'] ;
+        $staff_custom = get_post_custom( $staff_id );
+
+        return array(
+            'name' => array( get_the_title( $staff_id ) ),
+            'image' => has_post_thumbnail( $staff_id ) ? array( get_post_thumbnail_id( $staff_id ) ) : null,
+            'position' => $staff_custom['_staff_member_title'],
+            'bio' => $staff_custom['_staff_member_bio'],
+            'email' => $staff_custom['_staff_member_email'],
+            'phone' => $staff_custom['_staff_member_phone'],
+            'fb' => $staff_custom['_staff_member_fb'],
+            'tw' => $staff_custom['_staff_member_tw'],
+        );
+    }
 
     /**
      * Registers our dynamic blocks
@@ -379,6 +407,7 @@ class Simple_Staff_List_Public {
 			return;
 		}
 
+        // Legacy Single Staff List
 		register_block_type(
 			'simple-staff-list/single-staff-member-legacy',
 			array(
@@ -387,10 +416,90 @@ class Simple_Staff_List_Public {
 						'type' => 'number'
                     ),
 				),
+				'render_callback' => array( $this, 'single_staff_member_legacy_render_callback' )
+			)
+        );
+        
+        // Single Staff List w/layout options
+		register_block_type(
+			'simple-staff-list/single-staff-member',
+			array(
+				'attributes' => array(
+					'id' => array(
+						'type' => 'number'
+                    ),
+                    'layout' => array(
+                        'type' => 'string',
+                        // TODO: This needs to be dynamic
+                        'default' => 'layout-1'
+                    ),
+                    'content' => array(
+                        'type' => 'array',
+                        // TODO: These need to be dynamic
+                        'default' => array(
+                            array(
+                                'name' => 'image',
+                                'label' => __('Staff Photo', 'simple-staff-list'),
+                                'value' => true,
+                            ),
+                            array(
+                                'name' => 'name',
+                                'label' => __('Name', 'simple-staff-list'),
+                                'value' => true,
+                            ),
+                            array(
+                                'name' => 'position',
+                                'label' => __('Position', 'simple-staff-list'),
+                                'value' => true,
+                            ),
+                            array(
+                                'name' => 'bio',
+                                'label' => __('Bio', 'simple-staff-list'),
+                                'value' => true,
+                            ),
+                            array(
+                                'name' => 'email',
+                                'label' => __('Email', 'simple-staff-list'),
+                                'value' => true,
+                            ),
+                            array(
+                                'name' => 'phone',
+                                'label' => __('Phone', 'simple-staff-list'),
+                                'value' => true,
+                            ),
+                            array(
+                                'name' => 'fb',
+                                'label' => __('Facebook', 'simple-staff-list'),
+                                'value' => true,
+                            ),
+                            array(
+                                'name' => 'tw',
+                                'label' => __('Twitter', 'simple-staff-list'),
+                                'value' => true,
+                            ),
+                        ),
+                    )
+				),
 				'render_callback' => array( $this, 'single_staff_member_render_callback' )
 			)
 		);
 	}
+
+    /**
+     * The render callback function to handle rendering the single Staff Member legacy dynamic block.
+     *
+     * @since 2.3.0
+     * @param array $attributes The attributes coming from Gutenberg.
+     * @return string The output for the render method.
+     */
+	public function single_staff_member_legacy_render_callback( $attributes ) {
+		if ( $attributes['id'] ) {
+			return do_shortcode( '[simple-staff-list id=' . $attributes['id'] . ']' );
+		} elseif ( is_admin() ) {
+			return '<div><p><em>Please choose a Staff Member.</em></p></div>';
+		}
+		return '<!-- Empty single Staff Member block -->';
+    }
 
     /**
      * The render callback function to handle rendering the single Staff Member dynamic block.
@@ -400,12 +509,50 @@ class Simple_Staff_List_Public {
      * @return string The output for the render method.
      */
 	public function single_staff_member_render_callback( $attributes ) {
+        // If the selected layout is the staff-loop-template, just render the shortcode
+        if ( 'staff-loop-template' === $attributes['layout'] ) {
+            return $this->single_staff_member_legacy_render_callback( $attributes );
+        }
+
 		if ( $attributes['id'] ) {
-			return do_shortcode( '[simple-staff-list id=' . $attributes['id'] . ']' );
+            $post_id = $attributes['id'];
+            $extra_classname = isset( $attributes['className'] ) ? $attributes['className'] : '';
+            $staff_data = $this->retrieve_staff_api_data( $post_id );
+
+            $output = '<div class="wp-block-simple-staff-list-single-staff-member ' . $attributes['layout'] . ' ' . $extra_classname . '">';
+
+            // Build our dynamic function callback name OR fallback to layout-1 if that function doesn't exist.
+            $layout_callback = function_exists( 'sslp_layout_callback_' . str_replace( '-', '_', $attributes['layout'] ) ) ? 'sslp_layout_callback_' . str_replace( '-', '_', $attributes['layout'] ) : 'sslp_layout_callback_layout_1';
+
+            $attributes['content'] = $this->fix_attribute_booleans( $attributes['content'] );
+
+            // Call the layout callback.
+            $output .= $layout_callback( $attributes['content'], $staff_data );
+
+            $output .= '</div>';
+            return $output;
 		} elseif ( is_admin() ) {
 			return '<div><p><em>Please choose a Staff Member.</em></p></div>';
 		}
 		return '<!-- Empty single Staff Member block -->';
-	}
+    }
+    
+    public function retrieve_staff_api_data( $id ) {
+        if ( ! isset( $id ) )
+            return false;
+        
+        $staff_post = get_post( $id );
+        $staff_custom = $this->get_staff_custom_data( $id );
+        $staff_post->staffData = $staff_custom;
+
+        return $staff_post;
+    }
+
+    private function fix_attribute_booleans( $data ) {
+        foreach ( $data as $index => $value ) {
+            $data[$index]['value'] = filter_var( $data[$index]['value'], FILTER_VALIDATE_BOOLEAN );
+        }
+        return $data;
+    }
 
 }

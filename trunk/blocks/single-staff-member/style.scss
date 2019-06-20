@@ -1,22 +1,46 @@
-$black: #222;
-$dark: #f7b733;
-$light: rgba(254, 243, 224, 0.52);
+.wp-block-simple-staff-list-single-staff-member {
+    
+    &.layout-1, &.layout-2 {
+        display: grid;
+        grid-column-gap: 20px;
+    }
+    
+    @media screen and (min-width: 600px) {
+        &.layout-1 {
+            grid-template-columns: 35%;
+            img {
+                grid-column-start: 1;
+            }
+            
+            .staff-member-content {
+                grid-column-start: 2;
+            }
+        }
+        
+        &.layout-2 {
+            grid-template-columns: auto 35%;
+            img {
+                grid-column-start: 2;
+            }
 
-.entry-content .wp-block-jsforwpblocks-static,
-.wp-block-jsforwpblocks-static {
-
-    background: $light;
-    border: 5px $dark solid;
-    padding: 1rem;
-
-    h2 {
-        color: $black;
-        font-size: 2rem;
-        margin: 1rem 0;
+            .staff-member-content {
+                grid-column-start: 1;
+                grid-row-start: 1;
+            }
+        }
     }
 
-    p {
-        font-size: 1.4rem;
-    }
+    &.layout-1, &.layout-2, &.layout-3 {
+        .contact-link {
+            display: block;
+        }
 
+        .social-icon:not(:last-child) {
+            margin-right: .5em;
+        }
+
+        .staff-member-photo {
+            float: none;
+        }
+    }
 }
