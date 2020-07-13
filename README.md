@@ -90,3 +90,6 @@ For testing, you'll need a little bit more:
 ## Issue Tracking
 
 All tickets for the project are being tracked on [GitHub](https://github.com/brettshumaker/simple-staff-list/issues).
+
+
+<p align="right"><a href="https://wordpress.org/plugins/simple-staff-list/"><img src="https://img.shields.io/wordpress/plugin/dt/simple-staff-list?label=wp.org%20downloads&style=for-the-badge">&nbsp;<img src="https://img.shields.io/wordpress/plugin/stars/simple-staff-list?style=for-the-badge"></a></p>
