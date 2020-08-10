@@ -13,4 +13,4 @@
 
 $bio = get_post_meta( $post->ID, '_staff_member_bio', true );
 
-echo wpautop( $bio );
+echo wp_kses( wpautop( $bio ), apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) );

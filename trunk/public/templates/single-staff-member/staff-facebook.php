@@ -24,6 +24,6 @@ if ( '' !== $facebook ) {
 		$icon = $svg['body'];
 	}
 
-	echo '<span class="facebook"><a class="staff-member-facebook" href="' . esc_attr( $facebook ) . '" title="Find ' . esc_attr( get_the_title() ) . ' on Facebook">' . $icon . '</a></span>';
+	echo '<span class="facebook"><a class="staff-member-facebook" href="' . esc_url( $facebook ) . '" title="Find ' . esc_attr( get_the_title() ) . ' on Facebook">' . $icon . '</a></span>';
 
 }
