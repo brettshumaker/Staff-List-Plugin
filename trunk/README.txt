@@ -47,8 +47,10 @@ Alright, here's a few things to try:
 == Changelog ==
 
 = 2.2.1 =
+* ADDED: Use the filter `sslp_staff_member_bio_kses_allowed_html` to change which HTML tags are allowed in the Staff Member bio field - it currently defaults to the `post` context. [Learn more](https://developer.wordpress.org/reference/functions/wp_kses/).
+* FIXED: Added some data sanitization and escaping
 * FIXED: Removed extra spacing on default values
-* CLEANED UP: 
+* CLEANED UP: Removed some old debugging code
 
 = 2.2.0 =
 * FEATURE: Use the `id` shortcode parameter to show a single Staff Member block
