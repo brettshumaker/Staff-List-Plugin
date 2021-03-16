@@ -91,7 +91,7 @@
 
 	// Prepare to output styles if not using external style sheet.
 	if ( 'no' === $use_external_css ) {
-		$style_output = '<style>' . $custom_css . '</style>';
+		$style_output = '<style>' . esc_html( $custom_css ) . '</style>';
 	} else {
 		$style_output = ''; }
 
@@ -120,16 +120,16 @@
 
 			$custom          = get_post_custom();
 			$name            = get_the_title();
-			$name_formatted  = '<h3 class="staff-member-name">' . $name . '</h3>';
+			$name_formatted  = '<h3 class="staff-member-name">' . esc_html( $name ) . '</h3>';
 			$name_slug       = basename( get_permalink() );
 			$title           = isset( $custom['_staff_member_title'][0] ) ? $custom['_staff_member_title'][0] : '';
-			$title_formatted = '' !== $title ? '<h4 class="staff-member-position">' . $title . '</h4>' : '';
+			$title_formatted = '' !== $title ? '<h4 class="staff-member-position">' . esc_html( $title ) . '</h4>' : '';
 			$email           = isset( $custom['_staff_member_email'][0] ) ? $custom['_staff_member_email'][0] : '';
 			$phone           = isset( $custom['_staff_member_phone'][0] ) ? $custom['_staff_member_phone'][0] : '';
 			$bio             = isset( $custom['_staff_member_bio'][0] ) ? $custom['_staff_member_bio'][0] : '';
 			$fb_url          = isset( $custom['_staff_member_fb'][0] ) ? $custom['_staff_member_fb'][0] : '';
 			$tw_url          = isset( $custom['_staff_member_tw'][0] ) ? 'http://www.twitter.com/' . $custom['_staff_member_tw'][0] : '';
-			$email_mailto    = '' !== $email ? '<a class="staff-member-email" href="mailto:' . antispambot( $email ) . '" title="Email ' . $name . '">' . antispambot( $email ) . '</a>' : '';
+			$email_mailto    = '' !== $email ? '<a class="staff-member-email" href="mailto:' . esc_attr( antispambot( $email ) ) . '" title="Email ' . esc_attr( $name ) . '">' . esc_html( antispambot( $email ) ) . '</a>' : '';
 			$email_nolink    = '' !== $email ? antispambot( $email ) : '';
 
 			if ( has_post_thumbnail() ) {
@@ -140,7 +140,7 @@
 				$src       = $image_obj[0];
 
 				$photo_url = $src;
-				$photo     = '<img class="staff-member-photo" src="' . $photo_url . '" alt = "' . $title . '">';
+				$photo     = '<img class="staff-member-photo" src="' . esc_url( $photo_url ) . '" alt = "' . esc_attr( $title ) . '">';
 
 			} else {
 
@@ -151,16 +151,16 @@
 
 			if ( function_exists( 'wpautop' ) ) {
 
-				$bio_format = '' !== $bio ? '<div class="staff-member-bio">' . wpautop( $bio ) . '</div>' : '';
+				$bio_format = '' !== $bio ? '<div class="staff-member-bio">' . wp_kses( wpautop( $bio ), apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) ) . '</div>' : '';
 
 			} else {
 
-				$bio_format = $bio;
+				$bio_format = wp_kses( $bio, apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) );
 
 			}
 
 			$accepted_single_tags  = $default_tags;
-			$replace_single_values = apply_filters( 'sslp_replace_single_values_filter', array( $name, $name_slug, $photo_url, $title, $email_nolink, $phone, $bio, $fb_url, $tw_url ), $post->ID );
+			$replace_single_values = apply_filters( 'sslp_replace_single_values_filter', array( esc_html( $name ), esc_attr( $name_slug ), esc_url( $photo_url ), esc_html( $title ), esc_html( $email_nolink ), esc_html( $phone ), wp_kses( $bio, apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) ), esc_html( $fb_url ), esc_url( $tw_url ) ), $post->ID );
 
 			$accepted_formatted_tags  = $default_formatted_tags;
 			$replace_formatted_values = apply_filters( 'sslp_replace_formatted_values_filter', array( $name_formatted, $title_formatted, $photo, $email_mailto, $bio_format ), $post->ID );

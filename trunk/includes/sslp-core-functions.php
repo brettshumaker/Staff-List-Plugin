@@ -33,8 +33,6 @@ function sslp_get_template_part( $slug = '' ) {
 	// Allow 3rd party plugins to filter template file from their plugin.
 	$template = apply_filters( 'sslp_get_template_part', $template, $slug );
 
-	//wp_die( $template );
-
 	if ( $template ) {
 		load_template( $template, false );
 	}

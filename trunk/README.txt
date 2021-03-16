@@ -2,8 +2,8 @@
 Contributors: brettshumaker
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
-Tested up to: 5.2.1
-Stable tag: 2.2.0
+Tested up to: 5.7
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,12 @@ Alright, here's a few things to try:
 5. Templates screen 2
 
 == Changelog ==
+
+= 2.2.1 =
+* ADDED: Use the filter `sslp_staff_member_bio_kses_allowed_html` to change which HTML tags are allowed in the Staff Member bio field - it currently defaults to the `post` context. [Learn more](https://developer.wordpress.org/reference/functions/wp_kses/).
+* FIXED: Added some data sanitization and escaping
+* FIXED: Removed extra spacing on default values
+* CLEANED UP: Removed some old debugging code
 
 = 2.2.0 =
 * FEATURE: Use the `id` shortcode parameter to show a single Staff Member block

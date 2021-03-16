@@ -474,7 +474,7 @@ class Simple_Staff_List_Admin {
 
 		switch ( $column ) {
 			case 'id':
-				echo $post->ID;
+				echo esc_html( $post->ID );
 				break;
 			case 'photo':
 				if ( has_post_thumbnail() ) {
@@ -517,32 +517,32 @@ class Simple_Staff_List_Admin {
 		update_post_meta(
 			$post->ID,
 			'_staff_member_bio',
-			isset( $_POST['_staff_member_bio'] ) ? $_POST['_staff_member_bio'] : ''
+			isset( $_POST['_staff_member_bio'] ) ? wp_kses( $_POST['_staff_member_bio'], apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) ) : ''
 		);
 		update_post_meta(
 			$post->ID,
 			'_staff_member_title',
-			isset( $_POST['_staff_member_title'] ) ? $_POST['_staff_member_title'] : ''
+			isset( $_POST['_staff_member_title'] ) ? sanitize_text_field( $_POST['_staff_member_title'] ) : ''
 		);
 		update_post_meta(
 			$post->ID,
 			'_staff_member_email',
-			isset( $_POST['_staff_member_email'] ) ? $_POST['_staff_member_email'] : ''
+			isset( $_POST['_staff_member_email'] ) ? sanitize_email( $_POST['_staff_member_email'] ) : ''
 		);
 		update_post_meta(
 			$post->ID,
 			'_staff_member_phone',
-			isset( $_POST['_staff_member_phone'] ) ? $_POST['_staff_member_phone'] : ''
+			isset( $_POST['_staff_member_phone'] ) ? sanitize_text_field( $_POST['_staff_member_phone'] ) : ''
 		);
 		update_post_meta(
 			$post->ID,
 			'_staff_member_fb',
-			isset( $_POST['_staff_member_fb'] ) ? $_POST['_staff_member_fb'] : ''
+			isset( $_POST['_staff_member_fb'] ) ? sanitize_text_field( $_POST['_staff_member_fb'] ) : ''
 		);
 		update_post_meta(
 			$post->ID,
 			'_staff_member_tw',
-			isset( $_POST['_staff_member_tw'] ) ? $_POST['_staff_member_tw'] : ''
+			isset( $_POST['_staff_member_tw'] ) ? sanitize_text_field( $_POST['_staff_member_tw'] ) : ''
 		);
 
 	}
@@ -591,7 +591,6 @@ class Simple_Staff_List_Admin {
 			wp_send_json_error( "Cheatin' uh?" );
 		}
 
-		$post_type = $_POST['postType'];
 		$order     = $_POST['order'];
 
 		/**
