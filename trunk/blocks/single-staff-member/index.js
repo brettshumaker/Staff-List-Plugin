@@ -43,7 +43,7 @@ const renderAdminStaffMember = props => {
     );
 }
 
-const maybeShowContentOptions = ( layout, content ) => {
+const maybeShowContentOptions = ( layout, content, setAttributes ) => {
 
     if ( 'staff-loop-template' !== layout ) {
         return(
@@ -53,7 +53,6 @@ const maybeShowContentOptions = ( layout, content ) => {
             >
                 <p>Turn specific fields on or off.</p>
                 {content.map( (option, i) => {
-                    // console.log(option);
                     return(
                         <ToggleControl
                             key={i}
@@ -91,64 +90,8 @@ export default registerBlockType(
             __( 'simple single', 'simple-staff-list' ),
             __( 'staff list', 'simple-staff-list' ),
         ],
-        attributes: {
-            id: {
-                type: 'number',
-            },
-            layout: {
-                type: 'string',
-                // TODO: This needs to be dynamic
-                default: 'layout-1'
-            },
-            content: {
-                type: 'array',
-                // TODO: These need to be dynamic
-                default: [
-                    {
-                        name: 'image',
-                        label: __('Staff Photo', 'simple-staff-list'),
-                        value: true,
-                    },
-                    {
-                        name: 'name',
-                        label: __('Name', 'simple-staff-list'),
-                        value: true,
-                    },
-                    {
-                        name: 'position',
-                        label: __('Position', 'simple-staff-list'),
-                        value: true,
-                    },
-                    {
-                        name: 'bio',
-                        label: __('Bio', 'simple-staff-list'),
-                        value: true,
-                    },
-                    {
-                        name: 'email',
-                        label: __('Email', 'simple-staff-list'),
-                        value: true,
-                    },
-                    {
-                        name: 'phone',
-                        label: __('Phone', 'simple-staff-list'),
-                        value: true,
-                    },
-                    {
-                        name: 'fb',
-                        label: __('Facebook', 'simple-staff-list'),
-                        value: true,
-                    },
-                    {
-                        name: 'tw',
-                        label: __('Twitter', 'simple-staff-list'),
-                        value: true,
-                    },
-                ]
-            }
-        },
         edit: props => {
-          const { attributes: { id, layout, content, staffData },
+          const { attributes: { id, layout, content, staffData, availableLayouts },
           className, setAttributes } = props;
 
           // Fetch the staff data if we have a staff ID but no staffData. This covers the scenario of opening a post with an existing Single Staff Member block.
@@ -173,6 +116,17 @@ export default registerBlockType(
                     staffData: fullpost
                 });
             });
+          }
+
+          // Fetch the available layouts if we don't have them yet.
+          if ( ! availableLayouts ) {
+              apiFetch({
+                  path: `/sslp/v1/block-layouts/?context=single`
+              }).then(response => {
+                  setAttributes({
+                      availableLayouts: response
+                  })
+              })
           }
 
           return (
@@ -205,18 +159,13 @@ export default registerBlockType(
                         <SelectControl
                             label={__("Choose Layout", "simple-staff-list")}
                             value={layout}
-                            options={[
-                            { value: "staff-loop-template", label: __("Staff Loop Template", "simple-staff-list") },
-                            { value: "layout-1", label: __("Image Left, Content Right", "simple-staff-list") },
-                            { value: "layout-2", label: __("Content Left, Image Right", "simple-staff-list") },
-                            { value: "layout-3", label: __("Image Top, Content Bottom", "simple-staff-list") }
-                            ]}
+                            options={ availableLayouts }
                             onChange={layout => setAttributes({ layout })}
                         />
                     </PanelRow>
                 </PanelBody>
                 {
-                    maybeShowContentOptions( layout, content )
+                    maybeShowContentOptions( layout, content, setAttributes )
                 }
               </InspectorControls>
               <div className={`sslp-layout_${layout}`}>

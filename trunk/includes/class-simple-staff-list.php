@@ -224,6 +224,9 @@ class Simple_Staff_List {
 		// Add Gutenberg dynamic blocks
 		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'register_dynamic_blocks' );
 
+		// Add layouts endpoint
+		$this->loader->add_action( 'rest_api_init', $plugin_public, 'register_layout_endpoint' );
+
 	}
 
 	/**

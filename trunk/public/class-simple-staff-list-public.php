@@ -397,6 +397,88 @@ class Simple_Staff_List_Public {
         );
     }
 
+	/**
+	 * Registers the endpoint that loads the available layouts.
+	 *
+	 * @since    2.3.0
+	 */
+	public function register_layout_endpoint() {
+		register_rest_route( 'sslp/v1', '/block-layouts/', array(
+			'methods' => 'GET',
+			'callback' => array( $this, 'get_block_layouts' ),
+			'args' => array(
+				'context' => array(
+					'validate_callback' => function( $param, $request, $key ) {
+						return is_string( $param );
+					},
+					'sanitize_callback' => function( $param, $request, $key ) {
+						return sanitize_text_field( $param );
+					}
+				)
+			)
+		));
+	}
+
+	/**
+	 * Callback for the sslp/v1/layouts endpoint.
+	 *
+	 * @param array $data
+	 * @since    2.3.0
+	 */
+	public function get_block_layouts( $data ) {
+		if ( empty( $data['context'] ) ) {
+			return new WP_Error( 'no_context', 'Missing context argument.', array( 'status' => 400 ) );
+		}
+
+		$context         = $data['context'];
+		$default_layouts = array(
+			array(
+				'value'    => 'staff-loop-template',
+				'label'    => esc_html__("Staff Loop Template", "simple-staff-list"),
+				'callback' => '',
+				'context'  => 'single',
+			),
+			array(
+				'value'    => 'layout-1',
+				'label'    => esc_html__("Image Left, Content Right", "simple-staff-list"),
+				'callback' => 'sslp_layout_callback_layout_1',
+				'context'  => 'single',
+			),
+			array(
+				'value'    => 'layout-2',
+				'label'    => esc_html__("Content Left, Image Right", "simple-staff-list"),
+				'callback' => 'sslp_layout_callback_layout_2',
+				'context'  => 'single',
+			),
+			array(
+				'value'    => 'layout-3',
+				'label'    => esc_html__("Image Top, Content Bottom", "simple-staff-list"),
+				'callback' => 'sslp_layout_callback_layout_3',
+				'context'  => 'single',
+			),
+		);
+
+		$all_layouts = apply_filters( 'sslp-custom-block-layouts', $default_layouts );
+
+		if ( 'all' === $data['context'] ) {
+			return $all_layouts;
+		}
+
+		$layouts_for_context = array();
+
+		foreach( $all_layouts as $layout ) {
+			if ( $context === $layout['context'] ) {
+				$layouts_for_context[] = $layout;
+			}
+		}
+
+		if ( empty( $layouts_for_context ) ) {
+			return new WP_Error( 'no_layouts_for_context', "No layouts found for $context context.", array( 'status' => 404 ) );
+		}
+
+		return $layouts_for_context;
+	}
+
     /**
      * Registers our dynamic blocks
      *
@@ -419,6 +501,51 @@ class Simple_Staff_List_Public {
 				'render_callback' => array( $this, 'single_staff_member_legacy_render_callback' )
 			)
         );
+
+		// Set the defaults for attributes
+		$single_staff_member_block_attribute_layout  = apply_filters( 'sslp-single-staff-member-block-attribute-default-layout', 'layout-1' );
+		$single_staff_member_block_attribute_content = array(
+				array(
+					'name' => 'image',
+					'label' => __('Staff Photo', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-image', true ),
+				),
+				array(
+					'name' => 'name',
+					'label' => __('Name', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-name', true ),
+				),
+				array(
+					'name' => 'position',
+					'label' => __('Position', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-position', true ),
+				),
+				array(
+					'name' => 'bio',
+					'label' => __('Bio', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-bio', true ),
+				),
+				array(
+					'name' => 'email',
+					'label' => __('Email', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-email', true ),
+				),
+				array(
+					'name' => 'phone',
+					'label' => __('Phone', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-phone', true ),
+				),
+				array(
+					'name' => 'fb',
+					'label' => __('Facebook', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-fb', true ),
+				),
+				array(
+					'name' => 'tw',
+					'label' => __('Twitter', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-tw', true ),
+				),
+			);
         
         // Single Staff List w/layout options
 		register_block_type(
@@ -430,54 +557,11 @@ class Simple_Staff_List_Public {
                     ),
                     'layout' => array(
                         'type' => 'string',
-                        // TODO: This needs to be dynamic
-                        'default' => 'layout-1'
+                        'default' => $single_staff_member_block_attribute_layout
                     ),
                     'content' => array(
                         'type' => 'array',
-                        // TODO: These need to be dynamic
-                        'default' => array(
-                            array(
-                                'name' => 'image',
-                                'label' => __('Staff Photo', 'simple-staff-list'),
-                                'value' => true,
-                            ),
-                            array(
-                                'name' => 'name',
-                                'label' => __('Name', 'simple-staff-list'),
-                                'value' => true,
-                            ),
-                            array(
-                                'name' => 'position',
-                                'label' => __('Position', 'simple-staff-list'),
-                                'value' => true,
-                            ),
-                            array(
-                                'name' => 'bio',
-                                'label' => __('Bio', 'simple-staff-list'),
-                                'value' => true,
-                            ),
-                            array(
-                                'name' => 'email',
-                                'label' => __('Email', 'simple-staff-list'),
-                                'value' => true,
-                            ),
-                            array(
-                                'name' => 'phone',
-                                'label' => __('Phone', 'simple-staff-list'),
-                                'value' => true,
-                            ),
-                            array(
-                                'name' => 'fb',
-                                'label' => __('Facebook', 'simple-staff-list'),
-                                'value' => true,
-                            ),
-                            array(
-                                'name' => 'tw',
-                                'label' => __('Twitter', 'simple-staff-list'),
-                                'value' => true,
-                            ),
-                        ),
+                        'default' => $single_staff_member_block_attribute_content,
                     )
 				),
 				'render_callback' => array( $this, 'single_staff_member_render_callback' )
@@ -522,9 +606,10 @@ class Simple_Staff_List_Public {
             $output = '<div class="wp-block-simple-staff-list-single-staff-member ' . $attributes['layout'] . ' ' . $extra_classname . '">';
 
             // Build our dynamic function callback name OR fallback to layout-1 if that function doesn't exist.
-            $layout_callback = function_exists( 'sslp_layout_callback_' . str_replace( '-', '_', $attributes['layout'] ) ) ? 'sslp_layout_callback_' . str_replace( '-', '_', $attributes['layout'] ) : 'sslp_layout_callback_layout_1';
+			$layout_callback = $this->get_layout_callback( $attributes['layout'] );
+            $layout_callback = function_exists( $layout_callback ) ? $layout_callback : 'sslp_layout_callback_layout_1';
 
-            $attributes['content'] = $this->fix_attribute_booleans( $attributes['content'] );
+            $attributes['content'] = $this->prepare_content_attributes( $attributes['content'] );
 
             // Call the layout callback.
             $output .= $layout_callback( $attributes['content'], $staff_data );
@@ -536,6 +621,21 @@ class Simple_Staff_List_Public {
 		}
 		return '<!-- Empty single Staff Member block -->';
     }
+
+	public function get_layout_callback( $layout ) {
+		$layouts = $this->get_block_layouts( [ 'context' => 'all' ] );
+
+		foreach ( $layouts as $layout_data ) {
+			if( $layout === $layout_data['value'] ) {
+				if( ! $layout_data['callback'] ) {
+					return new WP_Error( 'sslp_layout_missing_callback', 'No callback specified for layout.' );
+				}
+				$callback = $layout_data['callback'];
+			}
+		}
+
+		return apply_filters( 'sslp_layout_callback', $callback, $layout );
+	}
     
     public function retrieve_staff_api_data( $id ) {
         if ( ! isset( $id ) )
@@ -548,11 +648,18 @@ class Simple_Staff_List_Public {
         return $staff_post;
     }
 
-    private function fix_attribute_booleans( $data ) {
-        foreach ( $data as $index => $value ) {
-            $data[$index]['value'] = filter_var( $data[$index]['value'], FILTER_VALIDATE_BOOLEAN );
-        }
-        return $data;
-    }
+	private function prepare_content_attributes( $content_attributes ) {
+		if ( ! is_array( $content_attributes ) ) {
+			return $content_attributes;
+		}
+
+		$prepared_attributes = array();
+		foreach ( $content_attributes as $index => $attribute ) {
+			$attribute['value']                        = filter_var( $attribute['value'], FILTER_VALIDATE_BOOLEAN );
+			$prepared_attributes[ $attribute['name'] ] = $attribute;
+		}
+
+		return $prepared_attributes;
+	}
 
 }

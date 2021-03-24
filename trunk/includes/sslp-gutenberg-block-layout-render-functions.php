@@ -19,6 +19,7 @@ function sslp_layout_callback_layout_1( $content, $staff_data ) {
      */
     $last_field = '';
     $started_meta = false;
+    $count = 0;
 
     foreach( $content as $index => $data ) {
         // $return .= '<!-- ' . $data['name'] . var_export( $data, true ) . ' -->';
@@ -38,7 +39,7 @@ function sslp_layout_callback_layout_1( $content, $staff_data ) {
             $return .= call_user_func_array( 'sslp_gutenberg_render_staff_' . $data['name'], array( $value, $staff_data->ID ) );
         }
 
-        if ( $index === count( $content ) - 1 ) {
+        if ( $count === count( $content ) - 1 ) {
             $return .= '</div>';
 
             if ( $started_meta ) {
@@ -47,6 +48,7 @@ function sslp_layout_callback_layout_1( $content, $staff_data ) {
         }
 
         $last_field = $data['name'];
+        $count++;
     }
     return $return;
 }
