@@ -8,5 +8,4 @@ import "./components";
 /**
  * Import blocks
  */
-import "./single-staff-member-legacy";
 import "./single-staff-member";

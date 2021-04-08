@@ -489,19 +489,6 @@ class Simple_Staff_List_Public {
 			return;
 		}
 
-        // Legacy Single Staff List
-		register_block_type(
-			'simple-staff-list/single-staff-member-legacy',
-			array(
-				'attributes' => array(
-					'id' => array(
-						'type' => 'number'
-                    ),
-				),
-				'render_callback' => array( $this, 'single_staff_member_legacy_render_callback' )
-			)
-        );
-
 		// Set the defaults for attributes
 		$single_staff_member_block_attribute_layout  = apply_filters( 'sslp-single-staff-member-block-attribute-default-layout', 'layout-1' );
 		$single_staff_member_block_attribute_content = array(
