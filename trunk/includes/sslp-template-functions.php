@@ -133,6 +133,20 @@ if ( ! function_exists( 'sslp_get_single_staff_member_phone' ) ) {
 	}
 }
 
+if ( ! function_exists( 'sslp_get_single_staff_member_fax' ) ) {
+
+	/**
+	 * Get the single staff member's fax.
+	 *
+	 * @since    2.1
+	 */
+	function sslp_get_single_staff_member_fax() {
+
+		sslp_get_template_part( 'single-staff-member/staff-fax' );
+
+	}
+}
+
 if ( ! function_exists( 'sslp_get_single_staff_member_facebook' ) ) {
 
 	/**
