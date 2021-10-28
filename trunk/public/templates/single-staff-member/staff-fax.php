@@ -15,15 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$phone = get_post_meta( $post->ID, '_staff_member_phone', true );
-if ( '' !== $phone ) {
-
-	$icon = '';
-	$svg  = wp_remote_get( STAFFLIST_URI . 'public/svg/phone.svg' );
-	if ( '404' !== $svg['response']['code'] ) {
-		$icon = $svg['body'];
-	}
-
-	echo '<span class="phone"><a class="staff-member-phone" href="tel:' . esc_attr( $phone ) . '">' . $icon . '</a></span>';
+$fax = get_post_meta( $post->ID, '_staff_member_fax', true );
+if ( '' !== $fax ) {
+	
+	echo '<span class="fax">Fax: ' . esc_html( $fax ) . '</span>';
 
 }
