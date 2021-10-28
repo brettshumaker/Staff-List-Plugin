@@ -126,6 +126,7 @@
 			$title_formatted = '' !== $title ? '<h4 class="staff-member-position">' . esc_html( $title ) . '</h4>' : '';
 			$email           = isset( $custom['_staff_member_email'][0] ) ? $custom['_staff_member_email'][0] : '';
 			$phone           = isset( $custom['_staff_member_phone'][0] ) ? $custom['_staff_member_phone'][0] : '';
+			$fax           = isset( $custom['_staff_member_fax'][0] ) ? $custom['_staff_member_fax'][0] : '';
 			$bio             = isset( $custom['_staff_member_bio'][0] ) ? $custom['_staff_member_bio'][0] : '';
 			$fb_url          = isset( $custom['_staff_member_fb'][0] ) ? $custom['_staff_member_fb'][0] : '';
 			$tw_url          = isset( $custom['_staff_member_tw'][0] ) ? 'http://www.twitter.com/' . $custom['_staff_member_tw'][0] : '';
@@ -160,7 +161,7 @@
 			}
 
 			$accepted_single_tags  = $default_tags;
-			$replace_single_values = apply_filters( 'sslp_replace_single_values_filter', array( esc_html( $name ), esc_attr( $name_slug ), esc_url( $photo_url ), esc_html( $title ), esc_html( $email_nolink ), esc_html( $phone ), wp_kses( $bio, apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) ), esc_html( $fb_url ), esc_url( $tw_url ) ), $post->ID );
+			$replace_single_values = apply_filters( 'sslp_replace_single_values_filter', array( esc_html( $name ), esc_attr( $name_slug ), esc_url( $photo_url ), esc_html( $title ), esc_html( $email_nolink ), esc_html( $phone ),esc_html( $fax ), wp_kses( $bio, apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) ), esc_html( $fb_url ), esc_url( $tw_url ) ), $post->ID );
 
 			$accepted_formatted_tags  = $default_formatted_tags;
 			$replace_formatted_values = apply_filters( 'sslp_replace_formatted_values_filter', array( $name_formatted, $title_formatted, $photo, $email_mailto, $bio_format ), $post->ID );
