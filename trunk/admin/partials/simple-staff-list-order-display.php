@@ -39,6 +39,7 @@ if ( $staff->have_posts() ) :
 				<th class="column-title"><?php esc_html_e( 'Position', 'simple-staff-list' ); ?></th>
 				<th class="column-email"><?php esc_html_e( 'Email', 'simple-staff-list' ); ?></th>
 				<th class="column-phone"><?php esc_html_e( 'Phone', 'simple-staff-list' ); ?></th>
+				<th class="column-fax"><?php esc_html_e( 'fax', 'simple-staff-list' ); ?></th>
 				<th class="column-bio"><?php esc_html_e( 'Bio', 'simple-staff-list' ); ?></th>
 			</tr>
 		</thead>
@@ -61,6 +62,7 @@ if ( $staff->have_posts() ) :
 				<td class="column-title"><?php esc_html( $custom['_staff_member_title'][0] ); ?></td>
 				<td class="column-email"><?php esc_html( $custom['_staff_member_email'][0] ); ?></td>
 				<td class="column-phone"><?php esc_html( $custom['_staff_member_phone'][0] ); ?></td>
+				<td class="column-fax"><?php esc_html( $custom['_staff_member_fax'][0] ); ?></td>
 				<td class="column-bio"><?php esc_html( Simple_Staff_List_Admin::get_staff_bio_excerpt( $custom['_staff_member_bio'][0], 10 ) ); ?></td>
 			</tr>
 		<?php endwhile; ?>
@@ -73,6 +75,7 @@ if ( $staff->have_posts() ) :
 				<th class="column-title"><?php esc_html_e( 'Position', 'simple-staff-list' ); ?></th>
 				<th class="column-email"><?php esc_html_e( 'Email', 'simple-staff-list' ); ?></th>
 				<th class="column-phone"><?php esc_html_e( 'Phone', 'simple-staff-list' ); ?></th>
+				<th class="column-fax"><?php esc_html_e( 'fax', 'simple-staff-list' ); ?></th>
 				<th class="column-bio"><?php esc_html_e( 'Bio', 'simple-staff-list' ); ?></th>
 			</tr>
 		</tfoot>
