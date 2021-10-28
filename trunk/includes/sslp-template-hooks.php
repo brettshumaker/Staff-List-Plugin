@@ -30,8 +30,9 @@ add_action( 'sslp_single_staff_member_header', 'sslp_get_single_staff_member_met
 add_action( 'sslp_single_staff_member_meta', 'sslp_get_single_staff_member_position', 10 );
 add_action( 'sslp_single_staff_member_meta', 'sslp_get_single_staff_member_email', 15 );
 add_action( 'sslp_single_staff_member_meta', 'sslp_get_single_staff_member_phone', 20 );
-add_action( 'sslp_single_staff_member_meta', 'sslp_get_single_staff_member_facebook', 25 );
-add_action( 'sslp_single_staff_member_meta', 'sslp_get_single_staff_member_twitter', 30 );
+add_action( 'sslp_single_staff_member_meta', 'sslp_get_single_staff_member_fax', 25 );
+add_action( 'sslp_single_staff_member_meta', 'sslp_get_single_staff_member_facebook', 30 );
+add_action( 'sslp_single_staff_member_meta', 'sslp_get_single_staff_member_twitter', 35 );
 
 /**
  * Single staff member content area
