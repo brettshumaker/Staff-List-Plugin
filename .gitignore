@@ -3,14 +3,12 @@
 .vscode
 
 trunk/composer.json
-
 trunk/composer.lock
-
 trunk/phpcs.xml
-
 trunk/vendor/*
 trunk/node-modules/*
-trunk/docker/*
+
+docker/*
 
 phpcs-report*.txt
 wpcs/
