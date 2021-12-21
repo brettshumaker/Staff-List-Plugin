@@ -25,7 +25,7 @@ testing environment in a few easy steps:
    ```
 
 You're done! You should now have a WordPress site available at
-http://localhost:8090/.
+http://localhost:8090/. PHP error logs will be available at `Staff-List-Plugin/trunk/logstash.log`
 
 To access the admin interface, visit http://localhost:8090/wp-admin/ and log
 in with the credentials below:
