@@ -7,6 +7,7 @@ trunk/composer.lock
 trunk/phpcs.xml
 trunk/vendor/*
 trunk/node-modules/*
+trunk/logstash.log
 
 docker/*
 

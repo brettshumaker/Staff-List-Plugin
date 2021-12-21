@@ -1,0 +1,47 @@
+version: '3'
+
+volumes:
+  dockerdirectory:
+
+services:
+  wordpress:
+    build: ./local
+    image: wordpress-xdebug
+    container_name: sslp_wordpress
+    restart: always
+    depends_on:
+      - db
+    links:
+      - db:mysql
+    env_file:
+      - ./local/default.env
+    volumes:
+      - ./docker/wordpress:/var/www/html/
+      - ./docker/logs/apache2/:/var/log/apache2
+      - ./trunk:/var/www/html/wp-content/plugins/simple-staff-list
+      # Avoid recursive binding of the Docker dir
+      - dockerdirectory:/var/www/html/wp-content/plugins/simple-staff-list/docker
+      - ./docker/bin:/var/scripts
+    ports:
+      - "8090:80"
+  db:
+    container_name: sslp_mysql
+    image: mariadb:10.4
+    env_file:
+      - ./local/default.env
+    volumes:
+      - ./docker/data:/var/lib/mysql
+    ports:
+      - "8092:3306"
+  phpMyAdmin:
+    container_name: sslp_phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    env_file:
+      - ./local/default.env
+    ports:
+      - "8091:80"
+  memcached:
+    container_name: sslp_memcached
+    image: memcached:1.6.12
+    env_file:
+      - ./local/default.env
