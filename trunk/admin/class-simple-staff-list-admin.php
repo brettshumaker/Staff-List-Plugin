@@ -406,6 +406,8 @@ class Simple_Staff_List_Admin {
 			</label>
 		</div>
 		<?php
+		
+		do_action( 'sslp_after_staff_member_admin_fields', absint( $post->ID ) );
 
 	}
 
@@ -544,6 +546,8 @@ class Simple_Staff_List_Admin {
 			'_staff_member_tw',
 			isset( $_POST['_staff_member_tw'] ) ? sanitize_text_field( $_POST['_staff_member_tw'] ) : ''
 		);
+		
+		do_action( 'sslp_save_staff_member_details', absint( $post->ID ), $_POST );
 
 	}
 
