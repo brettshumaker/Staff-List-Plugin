@@ -15,9 +15,16 @@
 	margin:10px 0 0;
 }
 
-.sslp_admin_wrap input[type="text"] {
+.sslp_admin_wrap input[type="text"],
+.sslp_admin_wrap input[type="url"]{
 	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
 	width: 30%;
+}
+
+.sslp_admin_wrap textarea{
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+	width:80%;
+	height:100px;
 }
 
 #wp-_staff_member_bio-wrap .wp-editor-area {
