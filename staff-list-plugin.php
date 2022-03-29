@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Lifecycle Insights Product Access Options
-Plugin URI: http://lifecycleinsights.com
-Description: Adds cost of goods to products and generates reports
+Plugin Name: TEMP - Simple Staff List
+Plugin URI: https://github.com/brettshumaker/Staff-List-Plugin
+Description: Duplicates the Simple Staff List plugin with features that are coming but we need now.
 Version: 1.0
-Author: SFNdesign, Curtis McHale
-Author URI: http://sfndesign.ca
+Author: ProudCity, Curtis McHale
+Author URI: http://proudcity.com
 License: GPLv2 or later
 */
 
