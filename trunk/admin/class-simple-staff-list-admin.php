@@ -404,6 +404,9 @@ class Simple_Staff_List_Admin {
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Twitter Name', $this->plugin_name ); ?>"
 						value="<?php echo esc_attr( $_staff_member_tw ); ?>"/>
 			</label>
+			
+			<?php do_action( 'sslp_after_staff_member_admin_fields', absint( $post->ID ) ); ?>
+			
 		</div>
 		<?php
 
@@ -544,6 +547,8 @@ class Simple_Staff_List_Admin {
 			'_staff_member_tw',
 			isset( $_POST['_staff_member_tw'] ) ? sanitize_text_field( $_POST['_staff_member_tw'] ) : ''
 		);
+		
+		do_action( 'sslp_save_staff_member_details', absint( $post->ID ), $_POST );
 
 	}
 
