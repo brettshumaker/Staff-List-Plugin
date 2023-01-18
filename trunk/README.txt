@@ -2,9 +2,9 @@
 Contributors: brettshumaker
 Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
-Tested up to: 5.9
+Tested up to: 6.1.1
 Requires PHP: 5.4
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,8 +47,10 @@ Alright, here's a few things to try:
 
 == Changelog ==
 
-= 2.2.2 =
+= 2.2.3 =
+- FIXED: Added additional escaping
 
+= 2.2.2 =
 - ADDED: `sslp_after_staff_member_admin_fields` which passes `$post->ID` so a user can add their own fields to the metabox
 - ADDED: `sslp_save_staff_member_details' which passes `$post->ID` and `$_POST` so that users can save their own custom fields
 
