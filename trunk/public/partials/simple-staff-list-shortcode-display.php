@@ -111,9 +111,9 @@
 			}
 
 			if ( $i % 2 ) {
-				$output .= '<div class="staff-member odd ' . $staff_member_classes . '">';
+				$output .= '<div class="staff-member odd ' . esc_attr( $staff_member_classes ) . '">';
 			} else {
-				$output .= '<div class="staff-member even ' . $staff_member_classes . '">';
+				$output .= '<div class="staff-member even ' . esc_attr( $staff_member_classes ) . '">';
 			}
 
 			global $post;
