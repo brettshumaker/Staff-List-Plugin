@@ -52,43 +52,41 @@
 	$( document ).ready(
 		function() {
 
-			// Export button
-			$( 'a.export-button' ).on(
-				'click', function(e){
-					e.preventDefault();
-					$( 'a.export-button' ).after( '<span class="spinner is-active" style="float:none"></span>' );
+			$('#sslp-export-form').submit(function(e){
+				e.preventDefault();
 
-					var data = {
-						'action': 'staff_member_export',
-					};
+				$( 'input[type="submit"]' ).after( '<span class="spinner is-active" style="float:none"></span>' );
 
-					$.post(
-						ajaxurl, data, function( response ){
+				var formData = new FormData( e.target );
 
-							if ( response.success && response.data.created_file ) {
-								$( 'a.export-button + .spinner' ).fadeOut(
-									300, function(){
-										$( this ).remove();
-									}
-								);
-								window.location = response.data.url;
-							} else if ( response.success && ! response.data.created_file ) {
-								$( 'a.export-button + .spinner' ).fadeOut(
-									300, function(){
-										$( this ).remove();
-									}
-								);
-								$( 'a.export-button' ).hide().after( '<a class="button button-primary download-button" download="' + response.data.filename + '">Download</a>' );
-								$( 'a.export-button' ).remove();
-								$( 'a.download-button' ).attr( 'href', "data:text/plain," + encodeURIComponent( response.data.content ) );
-							}
-
-						}
-					);
-
+				var data = {
+					'action': 'staff_member_export',
+					'security': formData.get( 'sslp_export_nonce' ),
 				}
-			);
 
+				$.post(
+					ajaxurl, data, function( response ){
+						$( 'input[type="submit"] + .spinner' ).fadeOut(
+							300, function(){
+								$( this ).remove();
+							}
+						);
+
+						if ( response.success && response.data.created_file ) {
+							window.location = response.data.url;
+						} else if ( response.success && ! response.data.created_file ) {
+							$( 'input[type="submit"]' ).hide().after( '<a class="button button-primary download-button" download="' + response.data.filename + '">Download</a>' );
+							$( 'input[type="submit"]' ).remove();
+							$( 'a.download-button' ).attr( 'href', "data:text/plain," + encodeURIComponent( response.data.content ) );
+						} else if ( ! response.success ) {
+							// Display the error message.
+							alert( response.data );
+						}
+
+					}
+				);
+			}
+			);
 		}
 	);
 

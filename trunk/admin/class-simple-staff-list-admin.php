@@ -122,11 +122,13 @@ class Simple_Staff_List_Admin {
 	 * @since   2.0
 	 */
 	public function ajax_flush_rewrite_rules() {
+		// Check the security nonce before doing anything.
+		if ( ! isset( $_POST['security'] ) || ! wp_verify_nonce( $_POST['security'], 'sslp_flush_rewrite_rules' ) ) {
+			wp_send_json_error();
+		}
 
 		flush_rewrite_rules();
-
 		wp_send_json_success();
-
 	}
 
 	/**
@@ -625,6 +627,11 @@ class Simple_Staff_List_Admin {
 	 * @return mixed
 	 */
 	public function staff_member_export() {
+
+		// Check the security nonce.
+		if ( ! isset( $_POST['security'] ) || ! wp_verify_nonce( $_POST['security'], 'sslp-export-nonce' ) ) {
+			wp_send_json_error( 'Refresh the page and try again.' );
+		}
 
 		$access_type = get_filesystem_method();
 

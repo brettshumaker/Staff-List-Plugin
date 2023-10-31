@@ -33,6 +33,7 @@ if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-options', 'staff-li
 	jQuery(document).ready(function($) {
 		var data = {
 			'action': 'sslp_flush_rewrite_rules',
+			'security': '<?php echo esc_attr( wp_create_nonce( 'sslp_flush_rewrite_rules' ) ); ?>'
 		}
 
 		$.post( "<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>", data, function(response){});
