@@ -143,19 +143,19 @@ class Simple_Staff_List_Public {
 
 		// Get user options for post type labels.
 		if ( ! get_option( '_staff_listing_custom_slug' ) ) {
-			$slug = get_option( '_staff_listing_default_slug' );
+			$slug = esc_html( get_option( '_staff_listing_default_slug' ) );
 		} else {
-			$slug = get_option( '_staff_listing_custom_slug' );
+			$slug = esc_html( get_option( '_staff_listing_custom_slug' ) );
 		}
 		if ( ! get_option( '_staff_listing_custom_name_singular' ) ) {
-			$singular_name = get_option( '_staff_listing_default_name_singular' );
+			$singular_name = esc_html( get_option( '_staff_listing_default_name_singular' ) );
 		} else {
-			$singular_name = get_option( '_staff_listing_custom_name_singular' );
+			$singular_name = esc_html( get_option( '_staff_listing_custom_name_singular' ) );
 		}
 		if ( ! get_option( '_staff_listing_custom_name_plural' ) ) {
-			$name = get_option( '_staff_listing_default_name_plural' );
+			$name = esc_html( get_option( '_staff_listing_default_name_plural' ) );
 		} else {
-			$name = get_option( '_staff_listing_custom_name_plural' );
+			$name = esc_html( get_option( '_staff_listing_custom_name_plural' ) );
 		}
 
 		// TODO Instead of using "Staff" all through here...try to use the custom slug set in options.
