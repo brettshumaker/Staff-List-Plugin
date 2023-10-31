@@ -19,11 +19,17 @@ $output          = '<div class="wrap sslp-template">';
 
 		// Check for file access.
 		$access_type = get_filesystem_method();
-if ( 'direct' !== $access_type ) {
-	$output .= '<p>' . __( "After clicking 'Export Staff Members' a Download button will appear.", 'simple-staff-list' ) . '</p>';
-}
+		if ( 'direct' !== $access_type ) {
+			$output .= '<p>' . __( "After clicking 'Export Staff Members' a Download button will appear.", 'simple-staff-list' ) . '</p>';
+		}
 
-		$output .= '<a href="#" class="button button-primary export-button">' . __( 'Export Staff Members', 'simple-staff-list' ) . '</a>';
+		// Output the form and export button.
+		$output .= '<form id="sslp-export-form" method="post" action="' . admin_url( 'admin-ajax.php' ) . '">';
+			$output .= '<input type="hidden" name="action" value="sslp_export_staff_members">';
+			$output .= '<input type="hidden" name="sslp_export_nonce" value="' . wp_create_nonce( 'sslp-export-nonce' ) . '">';
+			$output .= '<input type="submit" class="button button-primary" value="' . __( 'Export Staff Members', 'simple-staff-list' ) . '">';
+		$output .= '</form>';
+
 	$output     .= '</div>';
 	$output     .= '<div class="sslp-sidebar sslp-column last">';
 		// Get the sidebar.

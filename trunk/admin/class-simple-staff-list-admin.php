@@ -626,6 +626,11 @@ class Simple_Staff_List_Admin {
 	 */
 	public function staff_member_export() {
 
+		// Check the security nonce.
+		if ( ! isset( $_POST['security'] ) || ! wp_verify_nonce( $_POST['security'], 'sslp-export-nonce' ) ) {
+			wp_send_json_error( 'Refresh the page and try again.' );
+		}
+
 		$access_type = get_filesystem_method();
 
 		$args = array(
