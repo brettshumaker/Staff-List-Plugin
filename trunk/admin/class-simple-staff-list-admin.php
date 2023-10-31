@@ -122,11 +122,13 @@ class Simple_Staff_List_Admin {
 	 * @since   2.0
 	 */
 	public function ajax_flush_rewrite_rules() {
+		// Check the security nonce before doing anything.
+		if ( ! isset( $_POST['security'] ) || ! wp_verify_nonce( $_POST['security'], 'sslp_flush_rewrite_rules' ) ) {
+			wp_send_json_error();
+		}
 
 		flush_rewrite_rules();
-
 		wp_send_json_success();
-
 	}
 
 	/**
