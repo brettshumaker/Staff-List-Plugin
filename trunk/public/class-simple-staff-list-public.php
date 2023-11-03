@@ -133,6 +133,21 @@ class Simple_Staff_List_Public {
 	}
 
 	/**
+	 * Enqueue front end and editor JavaScript and CSS assets.
+	 *
+	 * @since    2.3.0
+	 */
+	public function enqueue_block_assets() {
+		$style_path = '/css/blocks.style.css';
+		wp_enqueue_style(
+			'sslp-blocks',
+			plugin_dir_url( __FILE__ ) . $style_path,
+			null,
+			date('U')
+		);
+	}
+
+	/**
 	 * Initialize staff member custom post type and taxonomies.
 	 *
 	 * @since 1.17
@@ -208,6 +223,7 @@ class Simple_Staff_List_Public {
 			),
 			'supports'           => array( 'title', 'thumbnail', 'excerpt' ),
 			'menu_icon'          => 'dashicons-groups',
+			'show_in_rest'       => true,
 		);
 
 		/**
@@ -243,6 +259,21 @@ class Simple_Staff_List_Public {
 		);
 
 	}
+
+	/**
+	 * Registering meta fields for block attributes that use meta storage
+	 */
+	function staff_member_register_gb_meta() {
+		register_meta(
+			array( 'post', 'page' ),
+			'staff_member_gb_metabox',
+			[
+				'type'         => 'string',
+				'single'       => true,
+				'show_in_rest' => true,
+			] );
+	}
+
 
 	/**
 	 * Maybe flush rewrite rules
@@ -289,6 +320,333 @@ class Simple_Staff_List_Public {
 		include 'partials/simple-staff-list-shortcode-display.php';
 		return $sslp_sc_output;
 
+	}
+
+    /**
+     * Allow Authenticated Requests to the Staff Member API endpoint
+     *
+     * @since 2.3.0
+     * @param mixed $dispatch_result Dispatch result, will be used if not empty.
+     * @param WP_REST_Request $request Request used to generate the response.
+     * @param string $route Route matched for the request.
+     * @param array $handler Route handler used for the request.
+     * @return mixed The dispatch result if requests are allowed, otherwise a WP_Error
+     */
+	public function rest_dispatch_request( $dispatch_result, $request, $route, $handler )
+	{
+		/**
+		 * Filter: sslp-allow-rest-requests
+		 * 
+		 * Whether or not to allow unauthenticated REST API requests for the staff-member post type. Default is false.
+		 */
+		$allow_staff_member_api_requests = apply_filters( 'sslp-allow-rest-requests', false, $dispatch_result, $request, $route, $handler );
+
+		if ( true || $allow_staff_member_api_requests ) {
+			return $dispatch_result;
+		}
+
+	    $target_base = '/wp/v2/staff-member';
+	
+	    $pattern1 = untrailingslashit( $target_base );
+	    $pattern2 = trailingslashit( $target_base );
+	
+	    if( $pattern1 !== $route && $pattern2 !== substr( $route, 0, strlen( $pattern2 ) ) )
+	        return $dispatch_result;
+	
+	    // Additional permission check
+	    if( is_user_logged_in() )
+	        return $dispatch_result;
+	
+	    // Target GET method
+	    if( WP_REST_Server::READABLE !== $request->get_method() ) 
+	        return $dispatch_result;
+	
+	    return new \WP_Error( 
+	        'rest_forbidden', 
+	        esc_html__( 'Sorry, you are not allowed to do that.', 'simple-staff-list' ), 
+	        [ 'status' => 403 ] 
+	    );
+	
+    }
+    
+    /**
+     * Add Staff Member custom meta data to the REST API response
+     */
+    public function add_staff_custom_to_api() {
+        register_rest_field( 'staff-member', 'staffData', array(
+            'get_callback' => array( $this, 'get_staff_custom_data' ),
+        ) );
+    }
+
+    /**
+     * Retrieve Staff Member custom meta data
+     */
+    public function get_staff_custom_data( $object ) {
+        $staff_id = is_numeric( $object ) ? $object : $object['id'] ;
+        $staff_custom = get_post_custom( $staff_id );
+
+        return array(
+            'name' => array( get_the_title( $staff_id ) ),
+            'image' => has_post_thumbnail( $staff_id ) ? array( get_post_thumbnail_id( $staff_id ) ) : null,
+            'position' => $staff_custom['_staff_member_title'],
+            'bio' => $staff_custom['_staff_member_bio'],
+            'email' => $staff_custom['_staff_member_email'],
+            'phone' => $staff_custom['_staff_member_phone'],
+            'fb' => $staff_custom['_staff_member_fb'],
+            'tw' => $staff_custom['_staff_member_tw'],
+        );
+    }
+
+	/**
+	 * Registers the endpoint that loads the available layouts.
+	 *
+	 * @since    2.3.0
+	 */
+	public function register_layout_endpoint() {
+		register_rest_route( 'sslp/v1', '/block-layouts/', array(
+			'methods' => 'GET',
+			'callback' => array( $this, 'get_block_layouts' ),
+			'args' => array(
+				'context' => array(
+					'validate_callback' => function( $param, $request, $key ) {
+						return is_string( $param );
+					},
+					'sanitize_callback' => function( $param, $request, $key ) {
+						return sanitize_text_field( $param );
+					}
+				)
+			)
+		));
+	}
+
+	/**
+	 * Callback for the sslp/v1/layouts endpoint.
+	 *
+	 * @param array $data
+	 * @since    2.3.0
+	 */
+	public function get_block_layouts( $data ) {
+		if ( empty( $data['context'] ) ) {
+			return new WP_Error( 'no_context', 'Missing context argument.', array( 'status' => 400 ) );
+		}
+
+		$context         = $data['context'];
+		$default_layouts = array(
+			array(
+				'value'    => 'staff-loop-template',
+				'label'    => esc_html__("Staff Loop Template", "simple-staff-list"),
+				'callback' => '',
+				'context'  => 'single',
+			),
+			array(
+				'value'    => 'layout-1',
+				'label'    => esc_html__("Image Left, Content Right", "simple-staff-list"),
+				'callback' => 'sslp_layout_callback_layout_1',
+				'context'  => 'single',
+			),
+			array(
+				'value'    => 'layout-2',
+				'label'    => esc_html__("Content Left, Image Right", "simple-staff-list"),
+				'callback' => 'sslp_layout_callback_layout_2',
+				'context'  => 'single',
+			),
+			array(
+				'value'    => 'layout-3',
+				'label'    => esc_html__("Image Top, Content Bottom", "simple-staff-list"),
+				'callback' => 'sslp_layout_callback_layout_3',
+				'context'  => 'single',
+			),
+		);
+
+		$all_layouts = apply_filters( 'sslp-custom-block-layouts', $default_layouts );
+
+		if ( 'all' === $data['context'] ) {
+			return $all_layouts;
+		}
+
+		$layouts_for_context = array();
+
+		foreach( $all_layouts as $layout ) {
+			if ( $context === $layout['context'] ) {
+				$layouts_for_context[] = $layout;
+			}
+		}
+
+		if ( empty( $layouts_for_context ) ) {
+			return new WP_Error( 'no_layouts_for_context', "No layouts found for $context context.", array( 'status' => 404 ) );
+		}
+
+		return $layouts_for_context;
+	}
+
+    /**
+     * Registers our dynamic blocks
+     *
+     * @since 2.3.0
+     */
+	public function register_dynamic_blocks() {
+		if ( ! function_exists( 'register_block_type' ) ) {
+			return;
+		}
+
+		// Set the defaults for attributes
+		$single_staff_member_block_attribute_layout  = apply_filters( 'sslp-single-staff-member-block-attribute-default-layout', 'layout-1' );
+		$single_staff_member_block_attribute_content = array(
+				array(
+					'name' => 'image',
+					'label' => __('Staff Photo', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-image', true ),
+				),
+				array(
+					'name' => 'name',
+					'label' => __('Name', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-name', true ),
+				),
+				array(
+					'name' => 'position',
+					'label' => __('Position', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-position', true ),
+				),
+				array(
+					'name' => 'bio',
+					'label' => __('Bio', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-bio', true ),
+				),
+				array(
+					'name' => 'email',
+					'label' => __('Email', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-email', true ),
+				),
+				array(
+					'name' => 'phone',
+					'label' => __('Phone', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-phone', true ),
+				),
+				array(
+					'name' => 'fb',
+					'label' => __('Facebook', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-fb', true ),
+				),
+				array(
+					'name' => 'tw',
+					'label' => __('Twitter', 'simple-staff-list'),
+					'value' => apply_filters( 'sslp-single-staff-member-block-attribute-default-content-tw', true ),
+				),
+			);
+        
+        // Single Staff List w/layout options
+		register_block_type(
+			'simple-staff-list/single-staff-member',
+			array(
+				'attributes' => array(
+					'id' => array(
+						'type' => 'number'
+                    ),
+                    'layout' => array(
+                        'type' => 'string',
+                        'default' => $single_staff_member_block_attribute_layout
+                    ),
+                    'content' => array(
+                        'type' => 'array',
+                        'default' => $single_staff_member_block_attribute_content,
+                    )
+				),
+				'render_callback' => array( $this, 'single_staff_member_render_callback' )
+			)
+		);
+	}
+
+    /**
+     * The render callback function to handle rendering the single Staff Member legacy dynamic block.
+     *
+     * @since 2.3.0
+     * @param array $attributes The attributes coming from Gutenberg.
+     * @return string The output for the render method.
+     */
+	public function single_staff_member_legacy_render_callback( $attributes ) {
+		if ( $attributes['id'] ) {
+			return do_shortcode( '[simple-staff-list id=' . $attributes['id'] . ']' );
+		} elseif ( is_admin() ) {
+			return '<div><p><em>Please choose a Staff Member.</em></p></div>';
+		}
+		return '<!-- Empty single Staff Member block -->';
+    }
+
+    /**
+     * The render callback function to handle rendering the single Staff Member dynamic block.
+     *
+     * @since 2.3.0
+     * @param array $attributes The attributes coming from Gutenberg.
+     * @return string The output for the render method.
+     */
+	public function single_staff_member_render_callback( $attributes ) {
+        // If the selected layout is the staff-loop-template, just render the shortcode
+        if ( 'staff-loop-template' === $attributes['layout'] ) {
+            return $this->single_staff_member_legacy_render_callback( $attributes );
+        }
+
+		if ( $attributes['id'] ) {
+            $post_id = $attributes['id'];
+            $extra_classname = isset( $attributes['className'] ) ? $attributes['className'] : '';
+            $staff_data = $this->retrieve_staff_api_data( $post_id );
+
+            $output = '<div class="wp-block-simple-staff-list-single-staff-member ' . $attributes['layout'] . ' ' . $extra_classname . '">';
+
+            // Build our dynamic function callback name OR fallback to layout-1 if that function doesn't exist.
+			$layout_callback = $this->get_layout_callback( $attributes['layout'] );
+            $layout_callback = function_exists( $layout_callback ) ? $layout_callback : 'sslp_layout_callback_layout_1';
+
+            $attributes['content'] = $this->prepare_content_attributes( $attributes['content'] );
+
+            // Call the layout callback.
+            $output .= $layout_callback( $attributes['content'], $staff_data );
+
+            $output .= '</div>';
+            return $output;
+		} elseif ( is_admin() ) {
+			return '<div><p><em>Please choose a Staff Member.</em></p></div>';
+		}
+		return '<!-- Empty single Staff Member block -->';
+    }
+
+	public function get_layout_callback( $layout ) {
+		$layouts = $this->get_block_layouts( [ 'context' => 'all' ] );
+
+		foreach ( $layouts as $layout_data ) {
+			if( $layout === $layout_data['value'] ) {
+				if( ! $layout_data['callback'] ) {
+					return new WP_Error( 'sslp_layout_missing_callback', 'No callback specified for layout.' );
+				}
+				$callback = $layout_data['callback'];
+			}
+		}
+
+		return apply_filters( 'sslp_layout_callback', $callback, $layout );
+	}
+    
+    public function retrieve_staff_api_data( $id ) {
+        if ( ! isset( $id ) )
+            return false;
+        
+        $staff_post = get_post( $id );
+        $staff_custom = $this->get_staff_custom_data( $id );
+        $staff_post->staffData = $staff_custom;
+
+        return $staff_post;
+    }
+
+	private function prepare_content_attributes( $content_attributes ) {
+		if ( ! is_array( $content_attributes ) ) {
+			return $content_attributes;
+		}
+
+		$prepared_attributes = array();
+		foreach ( $content_attributes as $index => $attribute ) {
+			$attribute['value']                        = filter_var( $attribute['value'], FILTER_VALIDATE_BOOLEAN );
+			$prepared_attributes[ $attribute['name'] ] = $attribute;
+		}
+
+		return $prepared_attributes;
 	}
 
 }
