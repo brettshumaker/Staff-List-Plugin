@@ -42,6 +42,7 @@ class Simple_Staff_List_Activator {
 			'[staff-position]',
 			'[staff-email]',
 			'[staff-phone]',
+			'[staff-fax]',
 			'[staff-bio]',
 			'[staff-facebook]',
 			'[staff-twitter]',

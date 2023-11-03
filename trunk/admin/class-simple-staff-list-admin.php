@@ -342,6 +342,7 @@ class Simple_Staff_List_Admin {
 			'_staff_member_title' => __( 'Position', $this->plugin_name ),
 			'_staff_member_email' => __( 'Email', $this->plugin_name ),
 			'_staff_member_phone' => __( 'Phone', $this->plugin_name ),
+			'_staff_member_fax' => __( 'Fax', $this->plugin_name ),
 			'_staff_member_bio'   => __( 'Bio', $this->plugin_name ),
 		);
 
@@ -361,6 +362,7 @@ class Simple_Staff_List_Admin {
 		$_staff_member_title = isset( $custom['_staff_member_title'][0] ) ? $custom['_staff_member_title'][0] : '';
 		$_staff_member_email = isset( $custom['_staff_member_email'][0] ) ? $custom['_staff_member_email'][0] : '';
 		$_staff_member_phone = isset( $custom['_staff_member_phone'][0] ) ? $custom['_staff_member_phone'][0] : '';
+		$_staff_member_fax = isset( $custom['_staff_member_fax'][0] ) ? $custom['_staff_member_fax'][0] : '';
 		$_staff_member_fb    = isset( $custom['_staff_member_fb'][0] ) ? $custom['_staff_member_fb'][0] : '';
 		$_staff_member_tw    = isset( $custom['_staff_member_tw'][0] ) ? $custom['_staff_member_tw'][0] : '';
 		?>
@@ -389,6 +391,14 @@ class Simple_Staff_List_Admin {
 						id="_staff_member_phone"
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Phone', $this->plugin_name ); ?>"
 						value="<?php echo esc_attr( $_staff_member_phone ); ?>"/>
+			</label>
+			<label for="_staff-member-title">
+				<?php esc_html_e( 'fax:', $this->plugin_name ); ?>
+				<input type="text"
+						name="_staff_member_fax"
+						id="_staff_member_fax"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s fax', $this->plugin_name ); ?>"
+						value="<?php echo esc_attr( $_staff_member_fax ); ?>"/>
 			</label>
 			<label for="_staff-member-fb">
 				<?php esc_html_e( 'Facebook URL:', $this->plugin_name ); ?>
@@ -475,6 +485,7 @@ class Simple_Staff_List_Admin {
 		$_staff_member_title = isset( $custom['_staff_member_title'][0] ) ? $custom['_staff_member_title'][0] : '';
 		$_staff_member_email = isset( $custom['_staff_member_email'][0] ) ? $custom['_staff_member_email'][0] : '';
 		$_staff_member_phone = isset( $custom['_staff_member_phone'][0] ) ? $custom['_staff_member_phone'][0] : '';
+		$_staff_member_fax = isset( $custom['_staff_member_fax'][0] ) ? $custom['_staff_member_fax'][0] : '';
 		$_staff_member_bio   = isset( $custom['_staff_member_bio'][0] ) ? $custom['_staff_member_bio'][0] : '';
 
 		switch ( $column ) {
@@ -494,6 +505,9 @@ class Simple_Staff_List_Admin {
 				break;
 			case '_staff_member_phone':
 				echo esc_html( $_staff_member_phone );
+				break;
+			case '_staff_member_fax':
+				echo esc_html( $_staff_member_fax );
 				break;
 			case '_staff_member_bio':
 				echo esc_html( $this->get_staff_bio_excerpt( $_staff_member_bio, 10 ) );
@@ -538,6 +552,11 @@ class Simple_Staff_List_Admin {
 			$post->ID,
 			'_staff_member_phone',
 			isset( $_POST['_staff_member_phone'] ) ? sanitize_text_field( $_POST['_staff_member_phone'] ) : ''
+		);
+		update_post_meta(
+			$post->ID,
+			'_staff_member_fax',
+			isset( $_POST['_staff_member_fax'] ) ? sanitize_text_field( $_POST['_staff_member_fax'] ) : ''
 		);
 		update_post_meta(
 			$post->ID,
