@@ -1,0 +1,4 @@
+/**
+ * Import components
+ */
+import "./PostSelector";

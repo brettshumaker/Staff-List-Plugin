@@ -133,6 +133,21 @@ class Simple_Staff_List_Public {
 	}
 
 	/**
+	 * Enqueue front end and editor JavaScript and CSS assets.
+	 *
+	 * @since    2.3.0
+	 */
+	public function enqueue_block_assets() {
+		$style_path = '/css/blocks.style.css';
+		wp_enqueue_style(
+			'sslp-blocks',
+			plugin_dir_url( __FILE__ ) . $style_path,
+			null,
+			date('U')
+		);
+	}
+
+	/**
 	 * Initialize staff member custom post type and taxonomies.
 	 *
 	 * @since 1.17
@@ -208,6 +223,7 @@ class Simple_Staff_List_Public {
 			),
 			'supports'           => array( 'title', 'thumbnail', 'excerpt' ),
 			'menu_icon'          => 'dashicons-groups',
+			'show_in_rest'       => true,
 		);
 
 		/**
@@ -243,6 +259,21 @@ class Simple_Staff_List_Public {
 		);
 
 	}
+
+	/**
+	 * Registering meta fields for block attributes that use meta storage
+	 */
+	function staff_member_register_gb_meta() {
+		register_meta(
+			array( 'post', 'page' ),
+			'staff_member_gb_metabox',
+			[
+				'type'         => 'string',
+				'single'       => true,
+				'show_in_rest' => true,
+			] );
+	}
+
 
 	/**
 	 * Maybe flush rewrite rules
@@ -289,6 +320,92 @@ class Simple_Staff_List_Public {
 		include 'partials/simple-staff-list-shortcode-display.php';
 		return $sslp_sc_output;
 
+	}
+
+    /**
+     * Allow Authenticated Requests to the Staff Member API endpoint
+     *
+     * @since 2.3.0
+     * @param mixed $dispatch_result Dispatch result, will be used if not empty.
+     * @param WP_REST_Request $request Request used to generate the response.
+     * @param string $route Route matched for the request.
+     * @param array $handler Route handler used for the request.
+     * @return mixed The dispatch result if requests are allowed, otherwise a WP_Error
+     */
+	public function rest_dispatch_request( $dispatch_result, $request, $route, $handler )
+	{
+		/**
+		 * Filter: sslp-allow-rest-requests
+		 * 
+		 * Whether or not to allow unauthenticated REST API requests for the staff-member post type. Default is false.
+		 */
+		$allow_staff_member_api_requests = apply_filters( 'sslp-allow-rest-requests', false, $dispatch_result, $request, $route, $handler );
+
+		if ( $allow_staff_member_api_requests ) {
+			return $dispatch_result;
+		}
+
+	    $target_base = '/wp/v2/staff-member';
+	
+	    $pattern1 = untrailingslashit( $target_base );
+	    $pattern2 = trailingslashit( $target_base );
+	
+	    if( $pattern1 !== $route && $pattern2 !== substr( $route, 0, strlen( $pattern2 ) ) )
+	        return $dispatch_result;
+	
+	    // Additional permission check
+	    if( is_user_logged_in() )
+	        return $dispatch_result;
+	
+	    // Target GET method
+	    if( WP_REST_Server::READABLE !== $request->get_method() ) 
+	        return $dispatch_result;
+	
+	    return new \WP_Error( 
+	        'rest_forbidden', 
+	        esc_html__( 'Sorry, you are not allowed to do that.', 'simple-staff-list' ), 
+	        [ 'status' => 403 ] 
+	    );
+	
+	}
+
+    /**
+     * Registers our dynamic blocks
+     *
+     * @since 2.3.0
+     */
+	public function register_dynamic_blocks() {
+		if ( ! function_exists( 'register_block_type' ) ) {
+			return;
+		}
+
+		register_block_type(
+			'simple-staff-list/single-staff-member',
+			array(
+				'attributes' => array(
+					'id' => array(
+						'type' => 'number'
+                    ),
+				),
+				'render_callback' => array( $this, 'single_staff_member_render_callback' )
+			)
+		);
+	}
+
+    /**
+     * The render callback function to handle rendering the single Staff Member dynamic block.
+     *
+     * @since 2.3.0
+     * @param array $attributes The attributes coming from Gutenberg.
+     * @return string The output for the render method.
+     */
+	public function single_staff_member_render_callback( $attributes ) {
+		if ( $attributes['id'] ) {
+			return do_shortcode( '[simple-staff-list id=' . $attributes['id'] . ']' );
+		} elseif ( is_admin() ) {
+			return '<div><p><em>Please choose a Staff Member.</em></p></div>';
+		}
+		return '<!-- Empty single Staff Member block -->';
 	}
 
 }

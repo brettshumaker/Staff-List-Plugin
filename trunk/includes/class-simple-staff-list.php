@@ -169,6 +169,7 @@ class Simple_Staff_List {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_menu' );
+		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_block_editor_assets' );
 
 		// Maybe flush rewrite rules after staff_member_init.
 		$this->loader->add_action( 'wp_ajax_sslp_flush_rewrite_rules', $plugin_admin, 'ajax_flush_rewrite_rules', 20 );
@@ -199,8 +200,16 @@ class Simple_Staff_List {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'enqueue_block_assets', $plugin_public, 'enqueue_block_assets' );
 		$this->loader->add_action( 'init', $plugin_public, 'staff_member_init', 10 );
+		$this->loader->add_action( 'init', $plugin_public, 'staff_member_register_gb_meta', 10 );
 		$this->loader->add_action( 'init', $plugin_public, 'maybe_flush_rewrite_rules', 20 );
+
+		// Allow Authenticated Requests to the Staff Member API endpoint
+		$this->loader->add_filter( 'rest_dispatch_request', $plugin_public, 'rest_dispatch_request', 10, 4 );
+
+		// Add Gutenberg dynamic blocks
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'register_dynamic_blocks' );
 
 	}
 
