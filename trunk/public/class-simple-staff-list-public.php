@@ -49,6 +49,15 @@ class Simple_Staff_List_Public {
 	private $simple_staff_list_shortcode_atts;
 
 	/**
+	 * The default attributes for the shortcode
+	 *
+	 * @since  1.18
+	 * @access  private
+	 * @var array $simple_staff_list_shortcode_atts_defaults Default attributes passed in with the shortcode.
+	 */
+	private $simple_staff_list_shortcode_atts_defaults;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.17
