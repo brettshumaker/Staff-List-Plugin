@@ -44,7 +44,7 @@ if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-l
 	// Users who can't post unfiltered HTML elsewhere can't save it into the template either.
 	// The option keeps storing the slashed value, so it reads back the same way as before.
 	if ( ! current_user_can( 'unfiltered_html' ) ) {
-		$posted_html = wp_slash( wp_kses_post( wp_unslash( $posted_html ) ) );
+		$posted_html = addslashes( wp_kses_post( stripslashes( $posted_html ) ) );
 	}
 
 	update_option( '_staff_listing_custom_html', $posted_html );

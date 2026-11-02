@@ -92,19 +92,33 @@ class Simple_Staff_List_Upgrader {
 
 		if ( is_array( $exports ) ) {
 			foreach ( $exports as $file ) {
-				wp_delete_file( $file );
+				$this->delete_file( $file );
 			}
 		}
 
 		// Remove the empty index.php the export created, then the folder if nothing else is in it.
 		$index = $dir . '/index.php';
 		if ( is_file( $index ) && 0 === filesize( $index ) ) {
-			wp_delete_file( $index );
+			$this->delete_file( $index );
 		}
 
 		$remaining = glob( $dir . '/*' );
 		if ( is_array( $remaining ) && 0 === count( $remaining ) ) {
 			@rmdir( $dir ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.file_system_operations_rmdir -- Best effort; the folder is empty.
+		}
+	}
+
+	/**
+	 * Delete a file, using wp_delete_file() where it exists (WordPress 4.2+).
+	 *
+	 * @since 2.2.6
+	 * @param string $file Absolute path to the file.
+	 */
+	private function delete_file( $file ) {
+		if ( function_exists( 'wp_delete_file' ) ) {
+			wp_delete_file( $file );
+		} else {
+			@unlink( $file ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.unlink_unlink -- Fallback for WordPress before 4.2.
 		}
 	}
 }
