@@ -33,7 +33,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Define constants for the plugin
  */
 define( 'STAFFLIST_PATH', plugin_dir_path( __FILE__ ) );
-define( 'STAFFLIST_URI', stripos( plugin_dir_url( __FILE__ ), 'localhost' ) === false ? plugin_dir_url( __FILE__ ) : str_replace( 'localhost', 'host.docker.internal', plugin_dir_url( __FILE__ ) ) );
+define( 'STAFFLIST_URI', plugin_dir_url( __FILE__ ) );
 
 /**
  * The code that runs during plugin activation.

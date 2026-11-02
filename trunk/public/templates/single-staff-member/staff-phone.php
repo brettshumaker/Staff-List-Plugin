@@ -19,9 +19,9 @@ $phone = get_post_meta( $post->ID, '_staff_member_phone', true );
 if ( '' !== $phone ) {
 
 	$icon = '';
-	$svg  = wp_remote_get( STAFFLIST_URI . 'public/svg/phone.svg' );
-	if ( '404' !== $svg['response']['code'] ) {
-		$icon = $svg['body'];
+	$svg_file = STAFFLIST_PATH . 'public/svg/phone.svg';
+	if ( is_readable( $svg_file ) ) {
+		$icon = file_get_contents( $svg_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local plugin file, not a remote URL.
 	}
 
 	echo '<span class="phone"><a class="staff-member-phone" href="tel:' . esc_attr( $phone ) . '">' . $icon . '</a></span>';
