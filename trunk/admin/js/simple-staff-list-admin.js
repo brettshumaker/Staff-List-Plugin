@@ -78,6 +78,8 @@
 							$( 'input[type="submit"]' ).hide().after( '<a class="button button-primary download-button" download="' + response.data.filename + '">Download</a>' );
 							$( 'input[type="submit"]' ).remove();
 							$( 'a.download-button' ).attr( 'href', "data:text/plain," + encodeURIComponent( response.data.content ) );
+							// Start the download right away; the button stays as a fallback.
+							$( 'a.download-button' )[0].click();
 						} else if ( ! response.success ) {
 							// Display the error message.
 							alert( response.data );

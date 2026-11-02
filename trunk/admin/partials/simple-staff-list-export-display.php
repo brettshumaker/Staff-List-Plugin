@@ -17,11 +17,8 @@ $output          = '<div class="wrap sslp-template">';
 		$output .= '<h2>' . __( 'Export', 'simple-staff-list' ) . '</h2>';
 		$output .= '<p>' . __( 'Click the export button below to generate a CSV download of your staff member data.', 'simple-staff-list' ) . '</p>';
 
-		// Check for file access.
-		$access_type = get_filesystem_method();
-		if ( 'direct' !== $access_type ) {
-			$output .= '<p>' . __( "After clicking 'Export Staff Members' a Download button will appear.", 'simple-staff-list' ) . '</p>';
-		}
+		// The export is always sent straight to the browser now, so the Download button always appears.
+		$output .= '<p>' . __( "After clicking 'Export Staff Members' a Download button will appear.", 'simple-staff-list' ) . '</p>';
 
 		// Output the form and export button.
 		$output .= '<form id="sslp-export-form" method="post" action="' . admin_url( 'admin-ajax.php' ) . '">';
