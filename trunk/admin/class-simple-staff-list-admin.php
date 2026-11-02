@@ -512,16 +512,29 @@ class Simple_Staff_List_Admin {
 	 *
 	 * @since 1.17
 	 */
-	public function save_staff_member_details() {
-
-		global $post;
+	public function save_staff_member_details( $post_id = 0 ) {
 
 		if ( ! isset( $_POST['sslp_add_edit_staff_member_noncename'] ) || ! wp_verify_nonce( $_POST['sslp_add_edit_staff_member_noncename'], 'sslp_post_nonce' ) ) {
 			return;
 		}
 
+		// Use the ID save_post passes in, not global $post, which can point at a different post.
+		if ( ! $post_id && isset( $GLOBALS['post']->ID ) ) {
+			$post_id = $GLOBALS['post']->ID;
+		}
+
+		$post = get_post( $post_id ); // Local variable; the global $post is left alone.
+
+		if ( ! $post || 'staff-member' !== $post->post_type ) {
+			return;
+		}
+
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return $post->ID;
+		}
+
+		if ( ! current_user_can( 'edit_post', $post->ID ) ) {
+			return;
 		}
 
 		update_post_meta(
