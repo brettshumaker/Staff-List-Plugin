@@ -58,10 +58,10 @@ if ( $staff->have_posts() ) :
 ?>
 </td>
 				<td class="column-name"><strong><?php the_title(); ?></strong></td>
-				<td class="column-title"><?php esc_html( $custom['_staff_member_title'][0] ); ?></td>
-				<td class="column-email"><?php esc_html( $custom['_staff_member_email'][0] ); ?></td>
-				<td class="column-phone"><?php esc_html( $custom['_staff_member_phone'][0] ); ?></td>
-				<td class="column-bio"><?php esc_html( Simple_Staff_List_Admin::get_staff_bio_excerpt( $custom['_staff_member_bio'][0], 10 ) ); ?></td>
+				<td class="column-title"><?php echo esc_html( isset( $custom['_staff_member_title'][0] ) ? $custom['_staff_member_title'][0] : '' ); ?></td>
+				<td class="column-email"><?php echo esc_html( isset( $custom['_staff_member_email'][0] ) ? $custom['_staff_member_email'][0] : '' ); ?></td>
+				<td class="column-phone"><?php echo esc_html( isset( $custom['_staff_member_phone'][0] ) ? $custom['_staff_member_phone'][0] : '' ); ?></td>
+				<td class="column-bio"><?php echo esc_html( wp_strip_all_tags( $this->get_staff_bio_excerpt( isset( $custom['_staff_member_bio'][0] ) ? $custom['_staff_member_bio'][0] : '', 10 ) ) ); ?></td>
 			</tr>
 		<?php endwhile; ?>
 		</tbody>
