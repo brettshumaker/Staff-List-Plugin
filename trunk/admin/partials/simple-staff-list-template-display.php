@@ -39,16 +39,23 @@ foreach ( $default_formatted_tags as $tag ) {
 
 	// Check Nonce and then update options.
 if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-list-template' ) ) {
-	$posted_html = isset( $_POST['staff-listing-html'] ) ? $_POST['staff-listing-html'] : '';
+	// The form only ever sends strings. Anything else (a hand-crafted array, or a missing
+	// field) leaves the saved template/CSS as it was.
+	if ( isset( $_POST['staff-listing-html'] ) && is_string( $_POST['staff-listing-html'] ) ) {
+		$posted_html = $_POST['staff-listing-html'];
 
-	// Users who can't post unfiltered HTML elsewhere can't save it into the template either.
-	// The option keeps storing the slashed value, so it reads back the same way as before.
-	if ( ! current_user_can( 'unfiltered_html' ) ) {
-		$posted_html = addslashes( wp_kses_post( stripslashes( $posted_html ) ) );
+		// Users who can't post unfiltered HTML elsewhere can't save it into the template either.
+		// The option keeps storing the slashed value, so it reads back the same way as before.
+		if ( ! current_user_can( 'unfiltered_html' ) ) {
+			$posted_html = addslashes( wp_kses_post( stripslashes( $posted_html ) ) );
+		}
+
+		update_option( '_staff_listing_custom_html', $posted_html );
 	}
 
-	update_option( '_staff_listing_custom_html', $posted_html );
-	update_option( '_staff_listing_custom_css', $_POST['staff-listing-css'] );
+	if ( isset( $_POST['staff-listing-css'] ) && is_string( $_POST['staff-listing-css'] ) ) {
+		update_option( '_staff_listing_custom_css', $_POST['staff-listing-css'] );
+	}
 
 	$custom_html = stripslashes_deep( get_option( '_staff_listing_custom_html' ) );
 	$custom_css  = stripslashes_deep( get_option( '_staff_listing_custom_css' ) );
