@@ -1,7 +1,7 @@
 === Simple Staff List ===
 Contributors: brettshumaker
 Tags: staff list, staff directory, employee list, staff, employee, employees
-Requires at least: 3.0
+Requires at least: 3.5
 Tested up to: 6.3.2
 Requires PHP: 5.4
 Stable tag: 2.2.6
@@ -55,6 +55,7 @@ Alright, here's a few things to try:
 - FIXED: Position, Email, Phone and Bio are now shown on the Order page.
 - FIXED: PHP 8.2 "dynamic property" deprecation notice. Props Curtis McHale.
 - FIXED: Plugin images on sites whose address contains "localhost".
+- CHANGED: "Requires at least" is now WordPress 3.5. The plugin has needed 3.5 since earlier releases; the readme now says so.
 
 = 2.2.5 =
 - FIXED: Added security nonces
