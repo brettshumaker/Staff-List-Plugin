@@ -39,7 +39,15 @@ foreach ( $default_formatted_tags as $tag ) {
 
 	// Check Nonce and then update options.
 if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-list-template' ) ) {
-	update_option( '_staff_listing_custom_html', $_POST['staff-listing-html'] );
+	$posted_html = isset( $_POST['staff-listing-html'] ) ? $_POST['staff-listing-html'] : '';
+
+	// Users who can't post unfiltered HTML elsewhere can't save it into the template either.
+	// The option keeps storing the slashed value, so it reads back the same way as before.
+	if ( ! current_user_can( 'unfiltered_html' ) ) {
+		$posted_html = wp_slash( wp_kses_post( wp_unslash( $posted_html ) ) );
+	}
+
+	update_option( '_staff_listing_custom_html', $posted_html );
 	update_option( '_staff_listing_custom_css', $_POST['staff-listing-css'] );
 
 	$custom_html = stripslashes_deep( get_option( '_staff_listing_custom_html' ) );
@@ -64,8 +72,12 @@ if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-l
 		$filename = get_stylesheet_directory() . '/simple-staff-list-custom.css';
 
 		if ( file_exists( $filename ) ) {
-			$custom_css_response = wp_remote_get( $filename );
-			$custom_css          = wp_remote_retrieve_body( $custom_css_response );
+			// $filename is a filesystem path, so read it directly. It used to go through
+			// wp_remote_get(), which always failed and wiped the saved CSS.
+			$custom_css = file_get_contents( $filename ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local theme file.
+			if ( false === $custom_css ) {
+				$custom_css = stripslashes_deep( get_option( '_staff_listing_custom_css' ) );
+			}
 			update_option( '_staff_listing_custom_css', $custom_css );
 		} else {
 			$custom_css = stripslashes_deep( get_option( '_staff_listing_default_css' ) );
@@ -111,7 +123,7 @@ if ( 'yes' === $write_external_css ) {
 		    				</div>
 		    			</div><br />';
 
-			$output .= '<textarea name="staff-listing-html" cols="120" rows="16">' . $custom_html . '</textarea>';
+			$output .= '<textarea name="staff-listing-html" cols="120" rows="16">' . esc_textarea( $custom_html ) . '</textarea>';
 			$output .= '<p><input type="submit" value="' . __( 'Save ALL Changes', 'simple-staff-list' ) . '" class="button button-primary button-large"></p><br /><br />';
 
 			$output .= '<h3>' . __( 'Staff Page CSS', 'simple-staff-list' ) . '</h3>';
@@ -126,7 +138,7 @@ if ( 'yes' === $write_external_css ) {
 		    			</div><br />';
 
 			$output .= '<p style="margin-top:0;">' . __( 'Add your custom CSS below to style the output of your staff list. I\'ve included selectors for everything output by the plugin.', 'simple-staff-list' ) . '</p>';
-			$output .= '<textarea name="staff-listing-css" cols="120" rows="16">' . $custom_css . '</textarea>';
+			$output .= '<textarea name="staff-listing-css" cols="120" rows="16">' . esc_textarea( $custom_css ) . '</textarea>';
 
 			$output .= '<p><input type="submit" value="' . __( 'Save ALL Changes', 'simple-staff-list' ) . '" class="button button-primary button-large"></p>';
 			$output .= wp_nonce_field( 'staff-member-template', 'staff-list-template' );
