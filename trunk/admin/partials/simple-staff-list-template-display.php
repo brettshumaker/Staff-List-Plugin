@@ -85,10 +85,12 @@ if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-l
 			if ( false === $custom_css ) {
 				$custom_css = stripslashes_deep( get_option( '_staff_listing_custom_css' ) );
 			}
-			update_option( '_staff_listing_custom_css', $custom_css );
+			// The option is stored slashed (like the $_POST value) and read with stripslashes_deep(),
+			// so slash the plain file contents to keep CSS backslashes such as content: "\201C".
+			update_option( '_staff_listing_custom_css', addslashes( $custom_css ) );
 		} else {
 			$custom_css = stripslashes_deep( get_option( '_staff_listing_default_css' ) );
-			update_option( '_staff_listing_custom_css', $custom_css );
+			update_option( '_staff_listing_custom_css', addslashes( $custom_css ) );
 			file_put_contents( $filename, $custom_css );
 		}
 	} else {
