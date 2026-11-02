@@ -4,7 +4,7 @@ Tags: staff list, staff directory, employee list, staff, employee, employees
 Requires at least: 3.0
 Tested up to: 6.3.2
 Requires PHP: 5.4
-Stable tag: 2.2.5
+Stable tag: 2.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,15 @@ Alright, here's a few things to try:
 5. Templates screen 2
 
 == Changelog ==
+
+= 2.2.6 =
+- IMPROVED: General hardening and code quality improvements. Updating is recommended.
+- CHANGED: Staff exports now download directly in your browser.
+- FIXED: Single staff member pages could show a critical error, or show a "page not found" message inside the email, phone, Facebook or Twitter icons. The icons are now loaded from the plugin's own files.
+- FIXED: Opening the Templates page with "Write to external CSS file" turned on erased your custom CSS, and saving then emptied the theme's CSS file.
+- FIXED: Position, Email, Phone and Bio are now shown on the Order page.
+- FIXED: PHP 8.2 "dynamic property" deprecation notice. Props Curtis McHale.
+- FIXED: Plugin images on sites whose address contains "localhost".
 
 = 2.2.5 =
 - FIXED: Added security nonces
