@@ -50,6 +50,7 @@ Alright, here's a few things to try:
 = 2.2.6 =
 - IMPROVED: General hardening and code quality improvements. Updating is recommended.
 - CHANGED: Staff exports now download directly in your browser.
+- CHANGED: On sites where users can't post unfiltered HTML (such as multisite), the staff list template now allows the same HTML as post content.
 - FIXED: Single staff member pages could show a critical error, or show a "page not found" message inside the email, phone, Facebook or Twitter icons. The icons are now loaded from the plugin's own files.
 - FIXED: Opening the Templates page with "Write to external CSS file" turned on erased your custom CSS, and saving then emptied the theme's CSS file.
 - FIXED: Position, Email, Phone and Bio are now shown on the Order page.
