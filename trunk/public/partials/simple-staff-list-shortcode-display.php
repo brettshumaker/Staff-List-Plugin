@@ -91,7 +91,10 @@
 
 	// Prepare to output styles if not using external style sheet.
 	if ( 'no' === $use_external_css ) {
-		$style_output = '<style>' . esc_html( $custom_css ) . '</style>';
+		// CSS isn't HTML, so esc_html() broke quotes and child selectors (e.g. content: ""; and >).
+		// Inside <style> the only thing that can end the element is "</style", so escape just that.
+		// Stripping tags would also eat CSS such as the default CSS's "/* Clearfix for <= IE7 */" comment.
+		$style_output = '<style>' . preg_replace( '#</(style)#i', '<\\/$1', $custom_css ) . '</style>';
 	} else {
 		$style_output = ''; }
 
