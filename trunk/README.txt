@@ -1,6 +1,6 @@
 === Simple Staff List ===
 Contributors: brettshumaker
-Tags: staff list, staff directory, employee list, staff, employee, employees
+Tags: staff list, staff directory, employee list, staff, employee
 Requires at least: 3.5
 Tested up to: 7.1
 Requires PHP: 5.4
