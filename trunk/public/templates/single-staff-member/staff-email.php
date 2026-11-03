@@ -8,7 +8,7 @@
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/public/templates
- * @version    1.0
+ * @version    1.1
  */
 
 $email = get_post_meta( $post->ID, '_staff_member_email', true );
