@@ -160,7 +160,7 @@
 			}
 
 			$accepted_single_tags  = $default_tags;
-			$replace_single_values = apply_filters( 'sslp_replace_single_values_filter', array( esc_html( $name ), esc_attr( $name_slug ), esc_url( $photo_url ), esc_html( $title ), esc_html( $email_nolink ), esc_html( $phone ), wp_kses( $bio, apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) ), esc_html( $fb_url ), esc_url( $tw_url ) ), $post->ID );
+			$replace_single_values = apply_filters( 'sslp_replace_single_values_filter', array( esc_html( $name ), esc_attr( $name_slug ), esc_url( $photo_url ), esc_html( $title ), esc_html( $email_nolink ), esc_html( $phone ), wp_kses( $bio, apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) ), esc_url( $fb_url ), esc_url( $tw_url ) ), $post->ID );
 
 			$accepted_formatted_tags  = $default_formatted_tags;
 			$replace_formatted_values = apply_filters( 'sslp_replace_formatted_values_filter', array( $name_formatted, $title_formatted, $photo, $email_mailto, $bio_format ), $post->ID );

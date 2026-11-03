@@ -560,7 +560,7 @@ class Simple_Staff_List_Admin {
 		update_post_meta(
 			$post->ID,
 			'_staff_member_fb',
-			isset( $_POST['_staff_member_fb'] ) ? sanitize_text_field( $_POST['_staff_member_fb'] ) : ''
+			isset( $_POST['_staff_member_fb'] ) ? esc_url_raw( trim( $_POST['_staff_member_fb'] ) ) : ''
 		);
 		update_post_meta(
 			$post->ID,
