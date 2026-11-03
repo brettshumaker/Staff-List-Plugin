@@ -178,7 +178,6 @@ class Simple_Staff_List_Public {
 			'new_item'              => __( 'New Staff Member', $this->plugin_name ),
 			'view_item'             => __( 'View Staff Member', $this->plugin_name ),
 			'search_items'          => __( 'Search Staff Members', $this->plugin_name ),
-			'exclude_from_search'   => true,
 			'not_found'             => __( 'No staff members found', $this->plugin_name ),
 			'not_found_in_trash'    => __( 'No staff members found in Trash', $this->plugin_name ),
 			'parent_item_colon'     => '',
@@ -191,6 +190,21 @@ class Simple_Staff_List_Public {
 		);
 
 		/**
+		 * sslp_exclude_staff_member_from_search
+		 *
+		 * Return true to leave staff members out of site search results. Staff members have
+		 * always appeared in search, so the default is false.
+		 *
+		 * WordPress also leaves excluded post types out of taxonomy archives, so returning true
+		 * empties the staff group archive pages too.
+		 *
+		 * @since 2.2.7
+		 *
+		 * @param $exclude bool Whether to exclude staff members from search. Default false.
+		 */
+		$exclude_from_search = (bool) apply_filters( 'sslp_exclude_staff_member_from_search', false );
+
+		/**
 		 * sslp_enable_staff_member_archive
 		 * 
 		 * Return false on this filter and flush your permalinks to disable the staff-members archive page.
@@ -200,23 +214,24 @@ class Simple_Staff_List_Public {
 		 * @param $enabled bool Whether or not the archive page is enabled. Default is true.
 		 */
 		$args = array(
-			'labels'             => $labels,
-			'public'             => true,
-			'publicly_queryable' => true,
-			'show_ui'            => true,
-			'show_in_menu'       => true,
-			'query_var'          => true,
-			'rewrite'            => true,
-			'capability_type'    => 'page',
-			'has_archive'        => apply_filters( 'sslp_enable_staff_member_archive', true ),
-			'hierarchical'       => false,
-			'menu_position'      => 100,
-			'rewrite'            => array(
+			'labels'              => $labels,
+			'public'              => true,
+			'exclude_from_search' => $exclude_from_search,
+			'publicly_queryable'  => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'query_var'           => true,
+			'rewrite'             => true,
+			'capability_type'     => 'page',
+			'has_archive'         => apply_filters( 'sslp_enable_staff_member_archive', true ),
+			'hierarchical'        => false,
+			'menu_position'       => 100,
+			'rewrite'             => array(
 				'slug'       => $slug,
 				'with_front' => false,
 			),
-			'supports'           => array( 'title', 'thumbnail', 'excerpt' ),
-			'menu_icon'          => 'dashicons-groups',
+			'supports'            => array( 'title', 'thumbnail', 'excerpt' ),
+			'menu_icon'           => 'dashicons-groups',
 		);
 
 		/**
