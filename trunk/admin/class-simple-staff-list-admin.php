@@ -501,7 +501,8 @@ class Simple_Staff_List_Admin {
 				echo esc_html( $_staff_member_phone );
 				break;
 			case '_staff_member_bio':
-				echo esc_html( $this->get_staff_bio_excerpt( $_staff_member_bio, 10 ) );
+				// The excerpt is HTML (the_excerpt adds <p>), so strip it to plain text rather than showing the tags.
+				echo esc_html( wp_strip_all_tags( $this->get_staff_bio_excerpt( $_staff_member_bio, 10 ) ) );
 				break;
 		}
 
