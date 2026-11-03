@@ -172,21 +172,21 @@ class Simple_Staff_List_Public {
 		$labels = array(
 			'name'                  => $name,
 			'singular_name'         => $singular_name,
-			'add_new'               => _x( 'Add New', 'staff member', $this->plugin_name ),
-			'add_new_item'          => __( 'Add New Staff Member', $this->plugin_name ),
-			'edit_item'             => __( 'Edit Staff Member', $this->plugin_name ),
-			'new_item'              => __( 'New Staff Member', $this->plugin_name ),
-			'view_item'             => __( 'View Staff Member', $this->plugin_name ),
-			'search_items'          => __( 'Search Staff Members', $this->plugin_name ),
-			'not_found'             => __( 'No staff members found', $this->plugin_name ),
-			'not_found_in_trash'    => __( 'No staff members found in Trash', $this->plugin_name ),
+			'add_new'               => _x( 'Add New', 'staff member', 'simple-staff-list' ),
+			'add_new_item'          => __( 'Add New Staff Member', 'simple-staff-list' ),
+			'edit_item'             => __( 'Edit Staff Member', 'simple-staff-list' ),
+			'new_item'              => __( 'New Staff Member', 'simple-staff-list' ),
+			'view_item'             => __( 'View Staff Member', 'simple-staff-list' ),
+			'search_items'          => __( 'Search Staff Members', 'simple-staff-list' ),
+			'not_found'             => __( 'No staff members found', 'simple-staff-list' ),
+			'not_found_in_trash'    => __( 'No staff members found in Trash', 'simple-staff-list' ),
 			'parent_item_colon'     => '',
-			'all_items'             => __( 'All Staff Members', $this->plugin_name ),
-			'menu_name'             => __( 'Staff Members', $this->plugin_name ),
-			'featured_image'        => __( 'Staff Photo', $this->plugin_name ),
-			'set_featured_image'    => __( 'Set Staff Photo', $this->plugin_name ),
-			'remove_featured_image' => __( 'Remove Staff Photo', $this->plugin_name ),
-			'use_featured_image'    => __( 'Use Staff Photo', $this->plugin_name ),
+			'all_items'             => __( 'All Staff Members', 'simple-staff-list' ),
+			'menu_name'             => __( 'Staff Members', 'simple-staff-list' ),
+			'featured_image'        => __( 'Staff Photo', 'simple-staff-list' ),
+			'set_featured_image'    => __( 'Set Staff Photo', 'simple-staff-list' ),
+			'remove_featured_image' => __( 'Remove Staff Photo', 'simple-staff-list' ),
+			'use_featured_image'    => __( 'Use Staff Photo', 'simple-staff-list' ),
 		);
 
 		/**
@@ -245,16 +245,16 @@ class Simple_Staff_List_Public {
 		register_post_type( 'staff-member', $args );
 
 		$group_labels = array(
-			'name'              => _x( 'Groups', 'taxonomy general name', $this->plugin_name ),
-			'singular_name'     => _x( 'Group', 'taxonomy singular name', $this->plugin_name ),
-			'search_items'      => __( 'Search Groups', $this->plugin_name ),
-			'all_items'         => __( 'All Groups', $this->plugin_name ),
-			'parent_item'       => __( 'Parent Group', $this->plugin_name ),
-			'parent_item_colon' => __( 'Parent Group:', $this->plugin_name ),
-			'edit_item'         => __( 'Edit Group', $this->plugin_name ),
-			'update_item'       => __( 'Update Group', $this->plugin_name ),
-			'add_new_item'      => __( 'Add New Group', $this->plugin_name ),
-			'new_item_name'     => __( 'New Group Name', $this->plugin_name ),
+			'name'              => _x( 'Groups', 'taxonomy general name', 'simple-staff-list' ),
+			'singular_name'     => _x( 'Group', 'taxonomy singular name', 'simple-staff-list' ),
+			'search_items'      => __( 'Search Groups', 'simple-staff-list' ),
+			'all_items'         => __( 'All Groups', 'simple-staff-list' ),
+			'parent_item'       => __( 'Parent Group', 'simple-staff-list' ),
+			'parent_item_colon' => __( 'Parent Group:', 'simple-staff-list' ),
+			'edit_item'         => __( 'Edit Group', 'simple-staff-list' ),
+			'update_item'       => __( 'Update Group', 'simple-staff-list' ),
+			'add_new_item'      => __( 'Add New Group', 'simple-staff-list' ),
+			'new_item_name'     => __( 'New Group Name', 'simple-staff-list' ),
 		);
 		register_taxonomy(
 			'staff-member-group', array( 'staff-member' ), array(

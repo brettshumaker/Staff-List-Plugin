@@ -166,8 +166,8 @@ class Simple_Staff_List_Admin {
 		// Order page.
 		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Simple Staff List Order', $this->plugin_name ),
-			__( 'Order', $this->plugin_name ),
+			__( 'Simple Staff List Order', 'simple-staff-list' ),
+			__( 'Order', 'simple-staff-list' ),
 			'edit_pages',
 			'staff-member-order',
 			array( $this, 'display_order_page' )
@@ -176,8 +176,8 @@ class Simple_Staff_List_Admin {
 		// Templates page.
 		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Display Templates', $this->plugin_name ),
-			__( 'Templates', $this->plugin_name ),
+			__( 'Display Templates', 'simple-staff-list' ),
+			__( 'Templates', 'simple-staff-list' ),
 			'edit_pages',
 			'staff-member-template',
 			array( $this, 'display_templates_page' )
@@ -186,8 +186,8 @@ class Simple_Staff_List_Admin {
 		// Usage page.
 		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Simple Staff List Usage', $this->plugin_name ),
-			__( 'Usage', $this->plugin_name ),
+			__( 'Simple Staff List Usage', 'simple-staff-list' ),
+			__( 'Usage', 'simple-staff-list' ),
 			'edit_pages',
 			'staff-member-usage',
 			array( $this, 'display_usage_page' )
@@ -196,8 +196,8 @@ class Simple_Staff_List_Admin {
 		// Options page.
 		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Simple Staff List Options', $this->plugin_name ),
-			__( 'Options', $this->plugin_name ),
+			__( 'Simple Staff List Options', 'simple-staff-list' ),
+			__( 'Options', 'simple-staff-list' ),
 			'edit_pages',
 			'staff-member-options',
 			array( $this, 'display_options_page' )
@@ -206,8 +206,8 @@ class Simple_Staff_List_Admin {
 		// Export.
 		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Simple Staff List Export', $this->plugin_name ),
-			__( 'Export', $this->plugin_name ),
+			__( 'Simple Staff List Export', 'simple-staff-list' ),
+			__( 'Export', 'simple-staff-list' ),
 			'export',
 			'staff-member-export',
 			array( $this, 'display_export_page' )
@@ -294,7 +294,7 @@ class Simple_Staff_List_Admin {
 		$screen = get_current_screen();
 
 		if ( 'staff-member' === $screen->post_type ) {
-			$title = __( 'Staff Name', $this->plugin_name );
+			$title = __( 'Staff Name', 'simple-staff-list' );
 		}
 
 		return $title;
@@ -330,7 +330,7 @@ class Simple_Staff_List_Admin {
 
 		add_meta_box(
 			'staff-member-info',
-			__( 'Staff Member Info', $this->plugin_name ),
+			__( 'Staff Member Info', 'simple-staff-list' ),
 			array( $this, 'staff_member_info_meta_box' ),
 			'staff-member',
 			'normal',
@@ -339,7 +339,7 @@ class Simple_Staff_List_Admin {
 
 		add_meta_box(
 			'staff-member-bio',
-			__( 'Staff Member Bio', $this->plugin_name ),
+			__( 'Staff Member Bio', 'simple-staff-list' ),
 			array( $this, 'staff_member_bio_meta_box' ),
 			'staff-member',
 			'normal',
@@ -361,13 +361,13 @@ class Simple_Staff_List_Admin {
 
 		$cols = array(
 			'cb'                  => '<input type="checkbox" />',
-			'id'                  => __( 'Staff ID', $this->plugin_name ),
-			'title'               => __( 'Name', $this->plugin_name ),
-			'photo'               => __( 'Photo', $this->plugin_name ),
-			'_staff_member_title' => __( 'Position', $this->plugin_name ),
-			'_staff_member_email' => __( 'Email', $this->plugin_name ),
-			'_staff_member_phone' => __( 'Phone', $this->plugin_name ),
-			'_staff_member_bio'   => __( 'Bio', $this->plugin_name ),
+			'id'                  => __( 'Staff ID', 'simple-staff-list' ),
+			'title'               => __( 'Name', 'simple-staff-list' ),
+			'photo'               => __( 'Photo', 'simple-staff-list' ),
+			'_staff_member_title' => __( 'Position', 'simple-staff-list' ),
+			'_staff_member_email' => __( 'Email', 'simple-staff-list' ),
+			'_staff_member_phone' => __( 'Phone', 'simple-staff-list' ),
+			'_staff_member_bio'   => __( 'Bio', 'simple-staff-list' ),
 		);
 
 		return $cols;
@@ -392,45 +392,45 @@ class Simple_Staff_List_Admin {
 
 		<div class="sslp_admin_wrap">
 			<label for="_staff_member_title">
-				<?php esc_html_e( 'Position:', $this->plugin_name ); ?>
+				<?php esc_html_e( 'Position:', 'simple-staff-list' ); ?>
 				<input type="text"
 						name="_staff_member_title"
 						id="_staff_member_title"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Position', $this->plugin_name ); ?>"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Position', 'simple-staff-list' ); ?>"
 						value="<?php echo esc_attr( $_staff_member_title ); ?>"/>
 			</label>
 			<label for="_staff_member_email">
-				<?php esc_html_e( 'Email:', $this->plugin_name ); ?>
+				<?php esc_html_e( 'Email:', 'simple-staff-list' ); ?>
 				<?php // An older saved value that isn't a valid email would fail the email field's validation and block saving, so keep a text field for it. ?>
 				<input type="<?php echo ( '' === $_staff_member_email || is_email( $_staff_member_email ) ) ? 'email' : 'text'; ?>"
 						name="_staff_member_email"
 						id="_staff_member_email"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Email', $this->plugin_name ); ?>"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Email', 'simple-staff-list' ); ?>"
 						value="<?php echo esc_attr( $_staff_member_email ); ?>"/>
 			</label>
 			<label for="_staff_member_phone">
-				<?php esc_html_e( 'Phone:', $this->plugin_name ); ?>
+				<?php esc_html_e( 'Phone:', 'simple-staff-list' ); ?>
 				<input type="tel"
 						name="_staff_member_phone"
 						id="_staff_member_phone"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Phone', $this->plugin_name ); ?>"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Phone', 'simple-staff-list' ); ?>"
 						value="<?php echo esc_attr( $_staff_member_phone ); ?>"/>
 			</label>
 			<label for="_staff_member_fb">
-				<?php esc_html_e( 'Facebook URL:', $this->plugin_name ); ?>
+				<?php esc_html_e( 'Facebook URL:', 'simple-staff-list' ); ?>
 				<?php // esc_url() adds a missing http://, so an older value without one doesn't fail the URL field's validation and block saving. ?>
 				<input type="url"
 						name="_staff_member_fb"
 						id="_staff_member_fb"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Facebook URL', $this->plugin_name ); ?>"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Facebook URL', 'simple-staff-list' ); ?>"
 						value="<?php echo esc_url( $_staff_member_fb ); ?>"/>
 			</label>
 			<label for="_staff_member_tw">
-				<?php esc_html_e( 'Twitter Username:', $this->plugin_name ); ?>
+				<?php esc_html_e( 'Twitter Username:', 'simple-staff-list' ); ?>
 				<input type="text"
 						name="_staff_member_tw"
 						id="_staff_member_tw"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Twitter Name', $this->plugin_name ); ?>"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Twitter Name', 'simple-staff-list' ); ?>"
 						value="<?php echo esc_attr( $_staff_member_tw ); ?>"/>
 			</label>
 			
