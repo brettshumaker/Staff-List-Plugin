@@ -301,16 +301,6 @@ class Simple_Staff_List_Admin {
 	}
 
 	/**
-	 * Handle staff member featured image text
-	 *
-	 * @since 1.17
-	 * @deprecated Function deprecated in release 2.0.0
-	 */
-	public function staff_member_featured_image_text() {
-
-	}
-
-	/**
 	 * Add theme support for post thumbnails
 	 *
 	 * @since 2.0
@@ -438,20 +428,6 @@ class Simple_Staff_List_Admin {
 			
 		</div>
 		<?php
-
-	}
-
-	/**
-	 * Display staff member warnings.
-	 *
-	 * @since 1.17
-	 */
-	public function sslp_staff_member_warning_meta_box() {
-
-		esc_html_e(
-			'<p><strong>Your current theme does not support post thumbnails. Unfortunately, you will not be able to add photos for your Staff Members</strong></p>',
-			$this->plugin_name
-		);
 
 	}
 

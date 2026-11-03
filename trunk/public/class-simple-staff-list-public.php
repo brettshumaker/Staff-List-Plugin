@@ -88,18 +88,6 @@ class Simple_Staff_List_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Staff_List_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Staff_List_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style(
 			$this->plugin_name,
 			plugin_dir_url( __FILE__ ) . 'css/simple-staff-list-public.css',
@@ -117,27 +105,6 @@ class Simple_Staff_List_Public {
 			wp_register_style( 'staff-list-custom-css', get_stylesheet_directory_uri() . '/simple-staff-list-custom.css' );
 			wp_enqueue_style( 'staff-list-custom-css' );
 		}
-
-	}
-
-	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    1.17
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Staff_List_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Staff_List_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 	}
 
@@ -221,7 +188,6 @@ class Simple_Staff_List_Public {
 			'show_ui'             => true,
 			'show_in_menu'        => true,
 			'query_var'           => true,
-			'rewrite'             => true,
 			'capability_type'     => 'page',
 			'has_archive'         => apply_filters( 'sslp_enable_staff_member_archive', true ),
 			'hierarchical'        => false,

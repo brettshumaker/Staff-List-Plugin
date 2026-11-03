@@ -42,7 +42,7 @@ if ( $staff->have_posts() ) :
 				<th class="column-bio"><?php esc_html_e( 'Bio', 'simple-staff-list' ); ?></th>
 			</tr>
 		</thead>
-		<tbody data-post-type="product">
+		<tbody>
 		<?php
 		while ( $staff->have_posts() ) :
 			$staff->the_post();
