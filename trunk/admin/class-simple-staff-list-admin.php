@@ -670,121 +670,136 @@ class Simple_Staff_List_Admin {
 			wp_send_json_error( 'Sorry, you are not allowed to export staff members.' );
 		}
 
-		$args = array(
-			'post_type'      => 'staff-member',
-			'posts_per_page' => -1,
-			'post_status'    => 'publish',
+		$staff_ids = get_posts(
+			array(
+				'post_type'      => 'staff-member',
+				'posts_per_page' => -1,
+				'post_status'    => 'publish',
+				'orderby'        => 'menu_order',
+				'order'          => 'ASC',
+				'fields'         => 'ids',
+			)
 		);
 
-		$staff_query = new WP_Query( $args );
+		if ( ! $staff_ids ) {
+			wp_send_json_error( 'No data to export.' );
+		}
 
-		if ( $staff_query->have_posts() ) :
+		// The plugin's own fields, in the order earlier exports usually listed them.
+		$meta_keys = array(
+			'_staff_member_bio',
+			'_staff_member_title',
+			'_staff_member_email',
+			'_staff_member_phone',
+			'_staff_member_fb',
+			'_staff_member_tw',
+		);
 
-			$csv_headers = array();
-			$csv_data    = array();
-
-			while ( $staff_query->have_posts() ) :
-				$staff_query->the_post();
-
-				$custom = get_post_custom();
-
-				// Setup our CSV Header line if we haven't already.
-				if ( ! $csv_headers ) {
-					$csv_headers[] = 'Staff Member Name';
-					$csv_headers[] = 'Staff Member Image URL';
-
-					foreach ( $custom as $key => $value ) {
-						if ( strpos( $key, '_staff_member_' ) !== false ) {
-
-							$new_key = trim( str_replace( '_', ' ', $key ) );
-
-							$csv_headers[] = ucwords( $new_key );
-
-						}
-					}
-
-					$csv_headers[] = 'Groups';
-
-					$csv_data[] = $csv_headers;
+		// Extra fields saved through the sslp_save_staff_member_details hook get their own columns.
+		// They're collected from every staff member so each row has the same columns.
+		$extra_keys = array();
+		foreach ( $staff_ids as $staff_id ) {
+			foreach ( array_keys( get_post_custom( $staff_id ) ) as $key ) {
+				if ( 0 === strpos( $key, '_staff_member_' ) && ! in_array( $key, $meta_keys, true ) ) {
+					$extra_keys[ $key ] = true;
 				}
-
-				// Setup our data line for this Staff Member.
-				$csv_new_line = array( get_the_title() );
-
-				// Get the post image.
-				$image_obj = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full', false );
-				if ( false !== $image_obj ) {
-					$csv_new_line[] = $image_obj[0];
-				} else {
-					$csv_new_line[] = '';
-				}
-
-				// Get the post custom data.
-				foreach ( $custom as $key => $value ) {
-					if ( strpos( $key, '_staff_member_' ) !== false ) {
-
-						$new_value = $value[0];
-
-						$csv_new_line[] = trim( $new_value );
-
-					}
-				}
-
-				// Get the group data.
-				$groups = get_the_terms( get_the_ID(), 'staff-member-group' );
-
-				$group_names = array();
-
-				// $groups should be an array of WP_Term objects if terms are found. It will be false if no terms exist, and a WP_Error if there was an error.
-				if ( is_array( $groups ) ) {
-					foreach ( $groups as $group ) {
-						// Wrap each group name in quotes.
-						$group_names[] = '"' . $group->name . '"';
-					}
-				}
-
-				// Add the group data to the line.
-				$csv_new_line[] = implode( ',', $group_names );
-
-				// Add a new line to the end of our data.
-				$csv_data[] = $csv_new_line;
-
-			endwhile;
-
-			$csv_str_out = '';
-			foreach ( $csv_data as $line ) {
-
-				$i = 1;
-				foreach ( $line as $data ) {
-					$data_line_out = '"' . str_replace( '"', '""', $data ) . '"';
-
-					// Replace the newlines with <br> tags.
-					$csv_str_out .= str_replace( array( "\r\n", "\r", "\n" ), '<br/>', $data_line_out );
-
-					if ( count( $line ) !== $i ) {
-						$csv_str_out .= ',';
-					}
-
-					$i++;
-				}
-
-				$csv_str_out .= "\n";
-
 			}
+		}
+		$extra_keys = array_keys( $extra_keys );
+		sort( $extra_keys );
+		$meta_keys = array_merge( $meta_keys, $extra_keys );
 
-			// Send the CSV straight back to the browser.
-			wp_send_json_success(
-				array(
-					'created_file' => false,
-					'content'      => $csv_str_out,
-					'filename'     => 'staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv',
-				)
+		$header = array( 'Staff Member Name', 'Staff Member Image URL' );
+		foreach ( $meta_keys as $key ) {
+			$header[] = ucwords( trim( str_replace( '_', ' ', $key ) ) );
+		}
+		$header[] = 'Groups';
+
+		$rows = array( $header );
+
+		foreach ( $staff_ids as $staff_id ) {
+			$custom = get_post_custom( $staff_id );
+
+			$image_obj = wp_get_attachment_image_src( get_post_thumbnail_id( $staff_id ), 'full', false );
+
+			$row = array(
+				get_the_title( $staff_id ),
+				$image_obj ? $image_obj[0] : '',
 			);
 
-		endif;
+			foreach ( $meta_keys as $key ) {
+				$row[] = isset( $custom[ $key ][0] ) ? trim( $custom[ $key ][0] ) : '';
+			}
 
-		wp_send_json_error( 'No data to export.' );
+			$group_names = array();
+			$groups      = get_the_terms( $staff_id, 'staff-member-group' );
+			if ( is_array( $groups ) ) {
+				foreach ( $groups as $group ) {
+					$group_names[] = $group->name;
+				}
+			}
+			$row[] = implode( ', ', $group_names );
 
+			$rows[] = $row;
+		}
+
+		/**
+		 * Filters whether exported cells that a spreadsheet app would read as a formula
+		 * are prefixed with an apostrophe so they're shown as text.
+		 *
+		 * @since 2.2.7
+		 *
+		 * @param bool $escape Whether to prefix the cells. Default true.
+		 */
+		$escape_formulas = apply_filters( 'sslp_export_escape_formulas', true );
+
+		$csv = '';
+		foreach ( $rows as $row ) {
+			$cells = array();
+			foreach ( $row as $cell ) {
+				$cell = (string) $cell;
+				if ( $escape_formulas ) {
+					$cell = $this->escape_csv_formula( $cell );
+				}
+				// RFC 4180: quote every cell and double any quotes inside it. Line breaks stay inside the quotes.
+				$cells[] = '"' . str_replace( '"', '""', $cell ) . '"';
+			}
+			$csv .= implode( ',', $cells ) . "\n";
+		}
+
+		// Send the CSV straight back to the browser.
+		wp_send_json_success(
+			array(
+				'created_file' => false,
+				'content'      => $csv,
+				'filename'     => 'staff-member-export-' . gmdate( 'Y-m-d-G-i' ) . '.csv',
+			)
+		);
+
+	}
+
+	/**
+	 * Prefix a CSV cell with an apostrophe if a spreadsheet app would read it as a formula.
+	 *
+	 * Values made only of digits, spaces and + - ( ) . are left alone, so phone numbers
+	 * such as "+44 20 7946 0958" export unchanged. They can't call a function.
+	 *
+	 * @since 2.2.7
+	 *
+	 * @param string $cell The cell value.
+	 *
+	 * @return string
+	 */
+	private function escape_csv_formula( $cell ) {
+		if ( '' === $cell || false === strpos( "=+-@\t\r", $cell[0] ) ) {
+			return $cell;
+		}
+
+		if ( preg_match( '/^[+\-][0-9 ().+\-]*$/', $cell ) ) {
+			return $cell;
+		}
+
+		return "'" . $cell;
 	}
 
 }
