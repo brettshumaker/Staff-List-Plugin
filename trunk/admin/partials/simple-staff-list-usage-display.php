@@ -19,8 +19,8 @@
 	<h2><?php esc_html_e( 'Usage', 'simple-staff-list' ); ?></h2>
 	<div class="sslp-content sslp-column">
 		<?php
-		$template_url = 'edit.php?post_type=staff-member&page=staff-member-template';
-		$usage_url    = 'edit.php?post_type=staff-member&page=staff-member-usage';
+		// Custom CSS is edited on the Templates page too.
+		$template_url = admin_url( 'edit.php?post_type=staff-member&page=staff-member-template' );
 		?>
 
 		<p>
@@ -36,7 +36,7 @@
 				),
 				sprintf(
 					'<a href="%s" title="%s">%s</a>',
-					esc_url( $usage_url ),
+					esc_url( $template_url ),
 					esc_attr__( 'Edit Custom CSS for Simple Staff List', 'simple-staff-list' ),
 					esc_html__( 'add custom css', 'simple-staff-list' )
 				)
@@ -58,9 +58,10 @@
 		<p><?php esc_html_e( 'This displays the Staff Members\' "thumbnail" size image instead of the "full" size image. You can use any image size registered with WordPress in place of "thumbnail."', 'simple-staff-list' ); ?></p>
 		<p>
 			<?php
+			// The string contains <code> tags, so allow those rather than escaping them into visible text.
 			printf(
 				// Translators: The placeholders below are for links.
-				esc_html__( 'To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set %1$s.', 'simple-staff-list' ),
+				wp_kses( __( 'To display your Staff List just use the shortcode <code>[simple-staff-list]</code> in any page or post. This will output all staff members according to the template options set %1$s.', 'simple-staff-list' ), array( 'code' => array() ) ),
 				sprintf(
 					'<a href="%s" title="%s">%s</a>',
 					esc_url( $template_url ),
