@@ -68,7 +68,7 @@ class Simple_Staff_List {
 	public function __construct() {
 
 		$this->plugin_name = 'simple-staff-list';
-		$this->version     = '2.2.5';
+		$this->version     = '2.2.6';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -128,6 +128,11 @@ class Simple_Staff_List {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-simple-staff-list-admin.php';
 
 		/**
+		 * The class responsible for one-time upgrade steps when the plugin is updated.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-simple-staff-list-upgrader.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -165,6 +170,10 @@ class Simple_Staff_List {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Simple_Staff_List_Admin( $this->get_plugin_name(), $this->get_version() );
+
+		// Activation doesn't run on plugin updates, so run upgrade steps here.
+		$plugin_upgrader = new Simple_Staff_List_Upgrader( $this->get_version() );
+		$this->loader->add_action( 'admin_init', $plugin_upgrader, 'maybe_upgrade' );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );

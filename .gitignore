@@ -13,3 +13,6 @@ docker/*
 
 phpcs-report*.txt
 wpcs/
+
+# Local planning notes
+notes/

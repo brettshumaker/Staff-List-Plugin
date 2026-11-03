@@ -18,9 +18,12 @@ $default_name_plural   = get_option( '_staff_listing_default_name_plural' );
 
 // Check Nonce and then update options.
 if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-options', 'staff-list-options' ) ) {
-	update_option( '_staff_listing_custom_slug', wp_unique_term_slug( $_POST['staff-listing-slug'], 'staff-member' ) );
-	update_option( '_staff_listing_custom_name_singular', $_POST['staff-listing-name-singular'] );
-	update_option( '_staff_listing_custom_name_plural', $_POST['staff-listing-name-plural'] );
+	// sanitize_text_field() strips tags but keeps case and slashes, so saving an unchanged
+	// slug keeps the same URL. wp_unique_term_slug() was being passed a string where it
+	// expects a term object, which raises warnings on PHP 8; it returned the slug unchanged.
+	update_option( '_staff_listing_custom_slug', isset( $_POST['staff-listing-slug'] ) ? sanitize_text_field( $_POST['staff-listing-slug'] ) : '' );
+	update_option( '_staff_listing_custom_name_singular', isset( $_POST['staff-listing-name-singular'] ) ? sanitize_text_field( $_POST['staff-listing-name-singular'] ) : '' );
+	update_option( '_staff_listing_custom_name_plural', isset( $_POST['staff-listing-name-plural'] ) ? sanitize_text_field( $_POST['staff-listing-name-plural'] ) : '' );
 
 	$custom_slug          = stripslashes_deep( get_option( '_staff_listing_custom_slug' ) );
 	$custom_name_singular = stripslashes_deep( get_option( '_staff_listing_custom_name_singular' ) );

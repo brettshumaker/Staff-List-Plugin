@@ -19,9 +19,9 @@ $facebook = get_post_meta( $post->ID, '_staff_member_fb', true );
 if ( '' !== $facebook ) {
 
 	$icon = '';
-	$svg  = wp_remote_get( STAFFLIST_URI . 'public/svg/facebook.svg' );
-	if ( '404' !== $svg['response']['code'] ) {
-		$icon = $svg['body'];
+	$svg_file = STAFFLIST_PATH . 'public/svg/facebook.svg';
+	if ( is_readable( $svg_file ) ) {
+		$icon = file_get_contents( $svg_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local plugin file, not a remote URL.
 	}
 
 	echo '<span class="facebook"><a class="staff-member-facebook" href="' . esc_url( $facebook ) . '" title="Find ' . esc_attr( get_the_title() ) . ' on Facebook">' . $icon . '</a></span>';

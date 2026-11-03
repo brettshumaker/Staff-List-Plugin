@@ -99,7 +99,7 @@
 
 	if ( $staff->have_posts() ) :
 
-		$output .= '<div class="staff-member-listing ' . $group . '">';
+		$output .= '<div class="staff-member-listing ' . esc_attr( $group ) . '">';
 
 		while ( $staff->have_posts() ) :
 			$staff->the_post();
