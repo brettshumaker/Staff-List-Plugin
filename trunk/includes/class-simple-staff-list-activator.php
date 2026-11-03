@@ -74,16 +74,23 @@ class Simple_Staff_List_Activator {
 			update_option( '_staff_listing_custom_html', $default_template );
 		}
 
-		$filename = get_stylesheet_directory() . '/simple-staff-list-custom.css';
+		$filename         = get_stylesheet_directory() . '/simple-staff-list-custom.css';
+		$saved_css        = get_option( '_staff_listing_custom_css' );
+		$use_external_css = 'yes' === get_option( '_staff_listing_write_external_css' );
 
-		if ( ! get_option( '_staff_listing_custom_css' ) && ! file_exists( $filename ) ) {
+		// With external CSS on, the site loads the theme file, so the option follows the file.
+		// Otherwise the file is only used to fill an empty option; it never replaces saved CSS.
+		if ( file_exists( $filename ) && ( $use_external_css || ! $saved_css ) ) {
+			$file_css = file_get_contents( $filename ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local theme file.
+			if ( false !== $file_css ) {
+				// Stored slashed, the same way the Templates page saves it, because it's read with stripslashes_deep().
+				update_option( '_staff_listing_custom_css', addslashes( $file_css ) );
+			}
+		} elseif ( ! $saved_css ) {
 			update_option( '_staff_listing_custom_css', get_option( '_staff_listing_default_css' ) );
 
 			// Save custom css to a file in current theme directory.
 			file_put_contents( $filename, get_option( '_staff_listing_default_css' ) );
-		} elseif ( file_exists( $filename ) ) {
-			$custom_css = file_get_contents( $filename );
-			update_option( '_staff_listing_custom_css', $custom_css );
 		}
 		if ( ! get_option( '_staff_listing_custom_slug' ) ) {
 			update_option( '_staff_listing_custom_slug', $default_slug );
