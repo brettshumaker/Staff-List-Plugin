@@ -128,7 +128,7 @@
 			$phone           = isset( $custom['_staff_member_phone'][0] ) ? $custom['_staff_member_phone'][0] : '';
 			$bio             = isset( $custom['_staff_member_bio'][0] ) ? $custom['_staff_member_bio'][0] : '';
 			$fb_url          = isset( $custom['_staff_member_fb'][0] ) ? $custom['_staff_member_fb'][0] : '';
-			$tw_url          = isset( $custom['_staff_member_tw'][0] ) ? 'http://www.twitter.com/' . $custom['_staff_member_tw'][0] : '';
+			$tw_url          = isset( $custom['_staff_member_tw'][0] ) && '' !== $custom['_staff_member_tw'][0] ? 'http://www.twitter.com/' . $custom['_staff_member_tw'][0] : '';
 			$email_mailto    = '' !== $email ? '<a class="staff-member-email" href="mailto:' . esc_attr( antispambot( $email ) ) . '" title="Email ' . esc_attr( $name ) . '">' . esc_html( antispambot( $email ) ) . '</a>' : '';
 			$email_nolink    = '' !== $email ? antispambot( $email ) : '';
 
