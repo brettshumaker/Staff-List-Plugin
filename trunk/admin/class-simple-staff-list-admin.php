@@ -371,7 +371,7 @@ class Simple_Staff_List_Admin {
 		?>
 
 		<div class="sslp_admin_wrap">
-			<label for="_staff-member-title">
+			<label for="_staff_member_title">
 				<?php esc_html_e( 'Position:', $this->plugin_name ); ?>
 				<input type="text"
 						name="_staff_member_title"
@@ -379,7 +379,7 @@ class Simple_Staff_List_Admin {
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Position', $this->plugin_name ); ?>"
 						value="<?php echo esc_attr( $_staff_member_title ); ?>"/>
 			</label>
-			<label for="_staff-member-email">
+			<label for="_staff_member_email">
 				<?php esc_html_e( 'Email:', $this->plugin_name ); ?>
 				<input type="text"
 						name="_staff_member_email"
@@ -387,7 +387,7 @@ class Simple_Staff_List_Admin {
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Email', $this->plugin_name ); ?>"
 						value="<?php echo esc_attr( $_staff_member_email ); ?>"/>
 			</label>
-			<label for="_staff-member-title">
+			<label for="_staff_member_phone">
 				<?php esc_html_e( 'Phone:', $this->plugin_name ); ?>
 				<input type="text"
 						name="_staff_member_phone"
@@ -395,7 +395,7 @@ class Simple_Staff_List_Admin {
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Phone', $this->plugin_name ); ?>"
 						value="<?php echo esc_attr( $_staff_member_phone ); ?>"/>
 			</label>
-			<label for="_staff-member-fb">
+			<label for="_staff_member_fb">
 				<?php esc_html_e( 'Facebook URL:', $this->plugin_name ); ?>
 				<input type="text"
 						name="_staff_member_fb"
@@ -403,7 +403,7 @@ class Simple_Staff_List_Admin {
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Facebook URL', $this->plugin_name ); ?>"
 						value="<?php echo esc_attr( $_staff_member_fb ); ?>"/>
 			</label>
-			<label for="_staff-member-tw">
+			<label for="_staff_member_tw">
 				<?php esc_html_e( 'Twitter Username:', $this->plugin_name ); ?>
 				<input type="text"
 						name="_staff_member_tw"
