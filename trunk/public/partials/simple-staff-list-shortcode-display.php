@@ -106,7 +106,8 @@
 
 			global $post;
 
-			if ( ( $staff->found_posts ) - 1 === $i ) {
+			// post_count is the number shown here; found_posts counts every match, even past the 100 limit.
+			if ( $staff->post_count - 1 === $i ) {
 				$staff_member_classes .= ' last';
 			}
 
