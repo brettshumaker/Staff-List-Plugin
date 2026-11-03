@@ -40,6 +40,15 @@ class Simple_Staff_List_Admin {
 	private $version;
 
 	/**
+	 * Hook suffixes of the plugin's admin pages, as returned by add_submenu_page().
+	 *
+	 * @since    2.2.7
+	 * @access   private
+	 * @var      string[] $page_hooks The plugin's admin page hook suffixes.
+	 */
+	private $page_hooks = array();
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.17
@@ -57,21 +66,18 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
+	 * Loaded on Staff Member screens only. WordPress before 3.8 also needs it on every
+	 * other screen, because it holds the admin menu icon.
+	 *
 	 * @since    1.17
+	 *
+	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $hook_suffix = '' ) {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Staff_List_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Staff_List_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		if ( ! $this->is_staff_member_screen( $hook_suffix ) && version_compare( $GLOBALS['wp_version'], '3.8', '>=' ) ) {
+			return;
+		}
 
 		wp_enqueue_style(
 			$this->plugin_name,
@@ -86,33 +92,47 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
+	 * Only the plugin's own pages (Order, Templates, Export…) use it.
+	 *
 	 * @since    1.17
+	 *
+	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook_suffix = '' ) {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Staff_List_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Staff_List_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		if ( isset( $_GET['post_type'] ) && 'staff-member' === $_GET['post_type'] ) {
-
-			wp_enqueue_script(
-				$this->plugin_name,
-				plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-admin.js',
-				array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ),
-				$this->version,
-				false
-			);
-
+		if ( ! in_array( $hook_suffix, $this->page_hooks, true ) ) {
+			return;
 		}
+
+		wp_enqueue_script(
+			$this->plugin_name,
+			plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-admin.js',
+			array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ),
+			$this->version,
+			false
+		);
+
+	}
+
+	/**
+	 * Whether the current admin screen is one of the plugin's pages or a Staff Member screen.
+	 *
+	 * @since 2.2.7
+	 *
+	 * @param string $hook_suffix The current admin page.
+	 *
+	 * @return bool
+	 */
+	private function is_staff_member_screen( $hook_suffix ) {
+
+		if ( in_array( $hook_suffix, $this->page_hooks, true ) ) {
+			return true;
+		}
+
+		// The staff list, add/edit screens and the Groups screen.
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+		return $screen && 'staff-member' === $screen->post_type;
 
 	}
 
@@ -144,7 +164,7 @@ class Simple_Staff_List_Admin {
 	public function register_menu() {
 
 		// Order page.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Order', $this->plugin_name ),
 			__( 'Order', $this->plugin_name ),
@@ -154,7 +174,7 @@ class Simple_Staff_List_Admin {
 		);
 
 		// Templates page.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Display Templates', $this->plugin_name ),
 			__( 'Templates', $this->plugin_name ),
@@ -164,7 +184,7 @@ class Simple_Staff_List_Admin {
 		);
 
 		// Usage page.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Usage', $this->plugin_name ),
 			__( 'Usage', $this->plugin_name ),
@@ -174,7 +194,7 @@ class Simple_Staff_List_Admin {
 		);
 
 		// Options page.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Options', $this->plugin_name ),
 			__( 'Options', $this->plugin_name ),
@@ -184,7 +204,7 @@ class Simple_Staff_List_Admin {
 		);
 
 		// Export.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
 			__( 'Simple Staff List Export', $this->plugin_name ),
 			__( 'Export', $this->plugin_name ),
