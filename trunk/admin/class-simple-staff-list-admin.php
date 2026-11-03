@@ -381,7 +381,8 @@ class Simple_Staff_List_Admin {
 			</label>
 			<label for="_staff_member_email">
 				<?php esc_html_e( 'Email:', $this->plugin_name ); ?>
-				<input type="text"
+				<?php // An older saved value that isn't a valid email would fail the email field's validation and block saving, so keep a text field for it. ?>
+				<input type="<?php echo ( '' === $_staff_member_email || is_email( $_staff_member_email ) ) ? 'email' : 'text'; ?>"
 						name="_staff_member_email"
 						id="_staff_member_email"
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Email', $this->plugin_name ); ?>"
@@ -389,7 +390,7 @@ class Simple_Staff_List_Admin {
 			</label>
 			<label for="_staff_member_phone">
 				<?php esc_html_e( 'Phone:', $this->plugin_name ); ?>
-				<input type="text"
+				<input type="tel"
 						name="_staff_member_phone"
 						id="_staff_member_phone"
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Phone', $this->plugin_name ); ?>"
@@ -397,11 +398,12 @@ class Simple_Staff_List_Admin {
 			</label>
 			<label for="_staff_member_fb">
 				<?php esc_html_e( 'Facebook URL:', $this->plugin_name ); ?>
-				<input type="text"
+				<?php // esc_url() adds a missing http://, so an older value without one doesn't fail the URL field's validation and block saving. ?>
+				<input type="url"
 						name="_staff_member_fb"
 						id="_staff_member_fb"
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Facebook URL', $this->plugin_name ); ?>"
-						value="<?php echo esc_attr( $_staff_member_fb ); ?>"/>
+						value="<?php echo esc_url( $_staff_member_fb ); ?>"/>
 			</label>
 			<label for="_staff_member_tw">
 				<?php esc_html_e( 'Twitter Username:', $this->plugin_name ); ?>
