@@ -8,14 +8,23 @@
  *
  * @package    Simple_Staff_List
  * @subpackage Simple_Staff_List/public/templates
- * @version    1.0
+ * @version    1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$image_obj = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium', false );
-$src       = $image_obj[0];
-?>
-<img class="staff-member-photo" src="<?php echo esc_url( $src ); ?>" alt = "<?php echo esc_attr( get_the_title() ); ?>">
+// Staff members without a photo get no image, rather than an empty <img src="">.
+if ( ! has_post_thumbnail() ) {
+	return;
+}
+
+// the_post_thumbnail() adds width, height and srcset, so browsers can reserve space and pick a suitable file.
+the_post_thumbnail(
+	'medium',
+	array(
+		'class' => 'staff-member-photo',
+		'alt'   => get_the_title(),
+	)
+);
