@@ -141,7 +141,7 @@
 				$src       = $image_obj[0];
 
 				$photo_url = $src;
-				$photo     = '<img class="staff-member-photo" src="' . esc_url( $photo_url ) . '" alt = "' . esc_attr( $title ) . '">';
+				$photo     = '<img class="staff-member-photo" src="' . esc_url( $photo_url ) . '" alt = "' . esc_attr( $name ) . '">';
 
 			} else {
 
