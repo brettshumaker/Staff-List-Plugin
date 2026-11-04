@@ -26,7 +26,11 @@
  */
 function sslp_add_url_scheme( $url ) {
 
-	$url = trim( (string) $url );
+	if ( ! is_string( $url ) ) {
+		return '';
+	}
+
+	$url = trim( $url );
 
 	if ( '' === $url || preg_match( '#^[a-z][a-z0-9+.\-]*:#i', $url ) || in_array( $url[0], array( '/', '#', '?' ), true ) ) {
 		return $url;
