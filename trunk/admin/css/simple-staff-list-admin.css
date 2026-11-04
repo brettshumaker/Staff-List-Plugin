@@ -16,6 +16,8 @@
 }
 
 .sslp_admin_wrap input[type="text"],
+.sslp_admin_wrap input[type="email"],
+.sslp_admin_wrap input[type="tel"],
 .sslp_admin_wrap input[type="url"]{
 	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
 	width: 30%;

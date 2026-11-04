@@ -88,18 +88,6 @@ class Simple_Staff_List_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Staff_List_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Staff_List_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style(
 			$this->plugin_name,
 			plugin_dir_url( __FILE__ ) . 'css/simple-staff-list-public.css',
@@ -117,27 +105,6 @@ class Simple_Staff_List_Public {
 			wp_register_style( 'staff-list-custom-css', get_stylesheet_directory_uri() . '/simple-staff-list-custom.css' );
 			wp_enqueue_style( 'staff-list-custom-css' );
 		}
-
-	}
-
-	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    1.17
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Staff_List_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Staff_List_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 	}
 
@@ -172,23 +139,37 @@ class Simple_Staff_List_Public {
 		$labels = array(
 			'name'                  => $name,
 			'singular_name'         => $singular_name,
-			'add_new'               => _x( 'Add New', 'staff member', $this->plugin_name ),
-			'add_new_item'          => __( 'Add New Staff Member', $this->plugin_name ),
-			'edit_item'             => __( 'Edit Staff Member', $this->plugin_name ),
-			'new_item'              => __( 'New Staff Member', $this->plugin_name ),
-			'view_item'             => __( 'View Staff Member', $this->plugin_name ),
-			'search_items'          => __( 'Search Staff Members', $this->plugin_name ),
-			'exclude_from_search'   => true,
-			'not_found'             => __( 'No staff members found', $this->plugin_name ),
-			'not_found_in_trash'    => __( 'No staff members found in Trash', $this->plugin_name ),
+			'add_new'               => _x( 'Add New', 'staff member', 'simple-staff-list' ),
+			'add_new_item'          => __( 'Add New Staff Member', 'simple-staff-list' ),
+			'edit_item'             => __( 'Edit Staff Member', 'simple-staff-list' ),
+			'new_item'              => __( 'New Staff Member', 'simple-staff-list' ),
+			'view_item'             => __( 'View Staff Member', 'simple-staff-list' ),
+			'search_items'          => __( 'Search Staff Members', 'simple-staff-list' ),
+			'not_found'             => __( 'No staff members found', 'simple-staff-list' ),
+			'not_found_in_trash'    => __( 'No staff members found in Trash', 'simple-staff-list' ),
 			'parent_item_colon'     => '',
-			'all_items'             => __( 'All Staff Members', $this->plugin_name ),
-			'menu_name'             => __( 'Staff Members', $this->plugin_name ),
-			'featured_image'        => __( 'Staff Photo', $this->plugin_name ),
-			'set_featured_image'    => __( 'Set Staff Photo', $this->plugin_name ),
-			'remove_featured_image' => __( 'Remove Staff Photo', $this->plugin_name ),
-			'use_featured_image'    => __( 'Use Staff Photo', $this->plugin_name ),
+			'all_items'             => __( 'All Staff Members', 'simple-staff-list' ),
+			'menu_name'             => __( 'Staff Members', 'simple-staff-list' ),
+			'featured_image'        => __( 'Staff Photo', 'simple-staff-list' ),
+			'set_featured_image'    => __( 'Set Staff Photo', 'simple-staff-list' ),
+			'remove_featured_image' => __( 'Remove Staff Photo', 'simple-staff-list' ),
+			'use_featured_image'    => __( 'Use Staff Photo', 'simple-staff-list' ),
 		);
+
+		/**
+		 * sslp_exclude_staff_member_from_search
+		 *
+		 * Return true to leave staff members out of site search results. Staff members have
+		 * always appeared in search, so the default is false.
+		 *
+		 * WordPress also leaves excluded post types out of taxonomy archives, so returning true
+		 * empties the staff group archive pages too.
+		 *
+		 * @since 2.2.7
+		 *
+		 * @param $exclude bool Whether to exclude staff members from search. Default false.
+		 */
+		$exclude_from_search = (bool) apply_filters( 'sslp_exclude_staff_member_from_search', false );
 
 		/**
 		 * sslp_enable_staff_member_archive
@@ -200,23 +181,23 @@ class Simple_Staff_List_Public {
 		 * @param $enabled bool Whether or not the archive page is enabled. Default is true.
 		 */
 		$args = array(
-			'labels'             => $labels,
-			'public'             => true,
-			'publicly_queryable' => true,
-			'show_ui'            => true,
-			'show_in_menu'       => true,
-			'query_var'          => true,
-			'rewrite'            => true,
-			'capability_type'    => 'page',
-			'has_archive'        => apply_filters( 'sslp_enable_staff_member_archive', true ),
-			'hierarchical'       => false,
-			'menu_position'      => 100,
-			'rewrite'            => array(
+			'labels'              => $labels,
+			'public'              => true,
+			'exclude_from_search' => $exclude_from_search,
+			'publicly_queryable'  => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'query_var'           => true,
+			'capability_type'     => 'page',
+			'has_archive'         => apply_filters( 'sslp_enable_staff_member_archive', true ),
+			'hierarchical'        => false,
+			'menu_position'       => 100,
+			'rewrite'             => array(
 				'slug'       => $slug,
 				'with_front' => false,
 			),
-			'supports'           => array( 'title', 'thumbnail', 'excerpt' ),
-			'menu_icon'          => 'dashicons-groups',
+			'supports'            => array( 'title', 'thumbnail', 'excerpt' ),
+			'menu_icon'           => 'dashicons-groups',
 		);
 
 		/**
@@ -230,16 +211,16 @@ class Simple_Staff_List_Public {
 		register_post_type( 'staff-member', $args );
 
 		$group_labels = array(
-			'name'              => _x( 'Groups', 'taxonomy general name', $this->plugin_name ),
-			'singular_name'     => _x( 'Group', 'taxonomy singular name', $this->plugin_name ),
-			'search_items'      => __( 'Search Groups', $this->plugin_name ),
-			'all_items'         => __( 'All Groups', $this->plugin_name ),
-			'parent_item'       => __( 'Parent Group', $this->plugin_name ),
-			'parent_item_colon' => __( 'Parent Group:', $this->plugin_name ),
-			'edit_item'         => __( 'Edit Group', $this->plugin_name ),
-			'update_item'       => __( 'Update Group', $this->plugin_name ),
-			'add_new_item'      => __( 'Add New Group', $this->plugin_name ),
-			'new_item_name'     => __( 'New Group Name', $this->plugin_name ),
+			'name'              => _x( 'Groups', 'taxonomy general name', 'simple-staff-list' ),
+			'singular_name'     => _x( 'Group', 'taxonomy singular name', 'simple-staff-list' ),
+			'search_items'      => __( 'Search Groups', 'simple-staff-list' ),
+			'all_items'         => __( 'All Groups', 'simple-staff-list' ),
+			'parent_item'       => __( 'Parent Group', 'simple-staff-list' ),
+			'parent_item_colon' => __( 'Parent Group:', 'simple-staff-list' ),
+			'edit_item'         => __( 'Edit Group', 'simple-staff-list' ),
+			'update_item'       => __( 'Update Group', 'simple-staff-list' ),
+			'add_new_item'      => __( 'Add New Group', 'simple-staff-list' ),
+			'new_item_name'     => __( 'New Group Name', 'simple-staff-list' ),
 		);
 		register_taxonomy(
 			'staff-member-group', array( 'staff-member' ), array(

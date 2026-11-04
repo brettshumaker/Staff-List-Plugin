@@ -4,7 +4,7 @@ Tags: staff list, staff directory, employee list, staff, employee
 Requires at least: 3.5
 Tested up to: 7.1
 Requires PHP: 5.4
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,26 @@ Alright, here's a few things to try:
 5. Templates screen 2
 
 == Changelog ==
+
+= 2.2.7 =
+- IMPROVED: General hardening and code quality improvements.
+- FIXED: New installs now show the staff list with the default styling. Existing sites keep their current setting.
+- FIXED: Custom CSS that's added inline (with "Write to external CSS file" unchecked) is no longer garbled. Quotes and ">" selectors now work, including the default CSS's float clearing, so the layout may change to match your CSS. Check your staff list page after updating.
+- FIXED: `[staff-twitter]` no longer outputs a twitter.com link for staff members without a Twitter username.
+- FIXED: With more than 100 staff members, the last one shown now gets the `last` class.
+- FIXED: `[staff-photo]` now uses the staff member's name as the image's alt text, instead of their position.
+- FIXED: `[staff-facebook]` is now output as a URL. A Facebook URL entered without "http://" or "https://" gets "https://" added.
+- FIXED: Single staff member pages no longer show a broken image for staff members without a photo.
+- FIXED: In the staff export, every row has the same columns, line breaks in bios are kept, names and groups containing & or apostrophes are no longer garbled, and staff are listed in the order set on the Order page.
+- CHANGED: In the staff export, values that start with =, +, - or @ now start with an apostrophe, so spreadsheet apps show them as text. Phone numbers are unchanged. Use the `sslp_export_escape_formulas` filter to turn this off.
+- FIXED: The Staff Members list could print staff details into another post type's columns.
+- FIXED: The Bio column in the Staff Members list shows text instead of `<p>` tags.
+- FIXED: The Usage page shows its code examples correctly, and its "add custom css" link now goes to the Templates page.
+- FIXED: Clicking a field's label on the staff edit screen now selects that field.
+- IMPROVED: The staff edit screen's email, phone and Facebook URL fields show the right keyboard on phones.
+- IMPROVED: The plugin's admin styles and scripts only load on Staff Members screens.
+- IMPROVED: All of the plugin's text can now be translated.
+- ADDED: `sslp_exclude_staff_member_from_search` filter. Return true to leave staff members out of site search. They still appear in search by default.
 
 = 2.2.6 =
 - IMPROVED: General hardening and code quality improvements. Updating is recommended.

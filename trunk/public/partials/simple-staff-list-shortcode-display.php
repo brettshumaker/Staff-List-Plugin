@@ -91,7 +91,10 @@
 
 	// Prepare to output styles if not using external style sheet.
 	if ( 'no' === $use_external_css ) {
-		$style_output = '<style>' . esc_html( $custom_css ) . '</style>';
+		// CSS isn't HTML, so esc_html() broke quotes and child selectors (e.g. content: ""; and >).
+		// Inside <style> the only thing that can end the element is "</style", so escape just that.
+		// Stripping tags would also eat CSS such as the default CSS's "/* Clearfix for <= IE7 */" comment.
+		$style_output = '<style>' . preg_replace( '#</(style)#i', '<\\/$1', $custom_css ) . '</style>';
 	} else {
 		$style_output = ''; }
 
@@ -106,7 +109,8 @@
 
 			global $post;
 
-			if ( ( $staff->found_posts ) - 1 === $i ) {
+			// post_count is the number shown here; found_posts counts every match, even past the 100 limit.
+			if ( $staff->post_count - 1 === $i ) {
 				$staff_member_classes .= ' last';
 			}
 
@@ -128,7 +132,7 @@
 			$phone           = isset( $custom['_staff_member_phone'][0] ) ? $custom['_staff_member_phone'][0] : '';
 			$bio             = isset( $custom['_staff_member_bio'][0] ) ? $custom['_staff_member_bio'][0] : '';
 			$fb_url          = isset( $custom['_staff_member_fb'][0] ) ? $custom['_staff_member_fb'][0] : '';
-			$tw_url          = isset( $custom['_staff_member_tw'][0] ) ? 'http://www.twitter.com/' . $custom['_staff_member_tw'][0] : '';
+			$tw_url          = isset( $custom['_staff_member_tw'][0] ) && '' !== $custom['_staff_member_tw'][0] ? 'http://www.twitter.com/' . $custom['_staff_member_tw'][0] : '';
 			$email_mailto    = '' !== $email ? '<a class="staff-member-email" href="mailto:' . esc_attr( antispambot( $email ) ) . '" title="Email ' . esc_attr( $name ) . '">' . esc_html( antispambot( $email ) ) . '</a>' : '';
 			$email_nolink    = '' !== $email ? antispambot( $email ) : '';
 
@@ -140,7 +144,7 @@
 				$src       = $image_obj[0];
 
 				$photo_url = $src;
-				$photo     = '<img class="staff-member-photo" src="' . esc_url( $photo_url ) . '" alt = "' . esc_attr( $title ) . '">';
+				$photo     = '<img class="staff-member-photo" src="' . esc_url( $photo_url ) . '" alt = "' . esc_attr( $name ) . '">';
 
 			} else {
 
@@ -160,7 +164,7 @@
 			}
 
 			$accepted_single_tags  = $default_tags;
-			$replace_single_values = apply_filters( 'sslp_replace_single_values_filter', array( esc_html( $name ), esc_attr( $name_slug ), esc_url( $photo_url ), esc_html( $title ), esc_html( $email_nolink ), esc_html( $phone ), wp_kses( $bio, apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) ), esc_html( $fb_url ), esc_url( $tw_url ) ), $post->ID );
+			$replace_single_values = apply_filters( 'sslp_replace_single_values_filter', array( esc_html( $name ), esc_attr( $name_slug ), esc_url( $photo_url ), esc_html( $title ), esc_html( $email_nolink ), esc_html( $phone ), wp_kses( $bio, apply_filters( 'sslp_staff_member_bio_kses_allowed_html', 'post' ) ), esc_url( sslp_add_url_scheme( $fb_url ) ), esc_url( $tw_url ) ), $post->ID );
 
 			$accepted_formatted_tags  = $default_formatted_tags;
 			$replace_formatted_values = apply_filters( 'sslp_replace_formatted_values_filter', array( $name_formatted, $title_formatted, $photo, $email_mailto, $bio_format ), $post->ID );

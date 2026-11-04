@@ -40,6 +40,15 @@ class Simple_Staff_List_Admin {
 	private $version;
 
 	/**
+	 * Hook suffixes of the plugin's admin pages, as returned by add_submenu_page().
+	 *
+	 * @since    2.2.7
+	 * @access   private
+	 * @var      string[] $page_hooks The plugin's admin page hook suffixes.
+	 */
+	private $page_hooks = array();
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.17
@@ -57,21 +66,18 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
+	 * Loaded on Staff Member screens only. WordPress before 3.8 also needs it on every
+	 * other screen, because it holds the admin menu icon.
+	 *
 	 * @since    1.17
+	 *
+	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $hook_suffix = '' ) {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Staff_List_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Staff_List_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		if ( ! $this->is_staff_member_screen( $hook_suffix ) && version_compare( $GLOBALS['wp_version'], '3.8', '>=' ) ) {
+			return;
+		}
 
 		wp_enqueue_style(
 			$this->plugin_name,
@@ -86,33 +92,47 @@ class Simple_Staff_List_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
+	 * Only the plugin's own pages (Order, Templates, Export…) use it.
+	 *
 	 * @since    1.17
+	 *
+	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook_suffix = '' ) {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Staff_List_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Staff_List_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		if ( isset( $_GET['post_type'] ) && 'staff-member' === $_GET['post_type'] ) {
-
-			wp_enqueue_script(
-				$this->plugin_name,
-				plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-admin.js',
-				array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ),
-				$this->version,
-				false
-			);
-
+		if ( ! in_array( $hook_suffix, $this->page_hooks, true ) ) {
+			return;
 		}
+
+		wp_enqueue_script(
+			$this->plugin_name,
+			plugin_dir_url( __FILE__ ) . 'js/simple-staff-list-admin.js',
+			array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ),
+			$this->version,
+			false
+		);
+
+	}
+
+	/**
+	 * Whether the current admin screen is one of the plugin's pages or a Staff Member screen.
+	 *
+	 * @since 2.2.7
+	 *
+	 * @param string $hook_suffix The current admin page.
+	 *
+	 * @return bool
+	 */
+	private function is_staff_member_screen( $hook_suffix ) {
+
+		if ( in_array( $hook_suffix, $this->page_hooks, true ) ) {
+			return true;
+		}
+
+		// The staff list, add/edit screens and the Groups screen.
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+		return $screen && 'staff-member' === $screen->post_type;
 
 	}
 
@@ -144,50 +164,50 @@ class Simple_Staff_List_Admin {
 	public function register_menu() {
 
 		// Order page.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Simple Staff List Order', $this->plugin_name ),
-			__( 'Order', $this->plugin_name ),
+			__( 'Simple Staff List Order', 'simple-staff-list' ),
+			__( 'Order', 'simple-staff-list' ),
 			'edit_pages',
 			'staff-member-order',
 			array( $this, 'display_order_page' )
 		);
 
 		// Templates page.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Display Templates', $this->plugin_name ),
-			__( 'Templates', $this->plugin_name ),
+			__( 'Display Templates', 'simple-staff-list' ),
+			__( 'Templates', 'simple-staff-list' ),
 			'edit_pages',
 			'staff-member-template',
 			array( $this, 'display_templates_page' )
 		);
 
 		// Usage page.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Simple Staff List Usage', $this->plugin_name ),
-			__( 'Usage', $this->plugin_name ),
+			__( 'Simple Staff List Usage', 'simple-staff-list' ),
+			__( 'Usage', 'simple-staff-list' ),
 			'edit_pages',
 			'staff-member-usage',
 			array( $this, 'display_usage_page' )
 		);
 
 		// Options page.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Simple Staff List Options', $this->plugin_name ),
-			__( 'Options', $this->plugin_name ),
+			__( 'Simple Staff List Options', 'simple-staff-list' ),
+			__( 'Options', 'simple-staff-list' ),
 			'edit_pages',
 			'staff-member-options',
 			array( $this, 'display_options_page' )
 		);
 
 		// Export.
-		add_submenu_page(
+		$this->page_hooks[] = add_submenu_page(
 			'edit.php?post_type=staff-member',
-			__( 'Simple Staff List Export', $this->plugin_name ),
-			__( 'Export', $this->plugin_name ),
+			__( 'Simple Staff List Export', 'simple-staff-list' ),
+			__( 'Export', 'simple-staff-list' ),
 			'export',
 			'staff-member-export',
 			array( $this, 'display_export_page' )
@@ -274,20 +294,10 @@ class Simple_Staff_List_Admin {
 		$screen = get_current_screen();
 
 		if ( 'staff-member' === $screen->post_type ) {
-			$title = __( 'Staff Name', $this->plugin_name );
+			$title = __( 'Staff Name', 'simple-staff-list' );
 		}
 
 		return $title;
-	}
-
-	/**
-	 * Handle staff member featured image text
-	 *
-	 * @since 1.17
-	 * @deprecated Function deprecated in release 2.0.0
-	 */
-	public function staff_member_featured_image_text() {
-
 	}
 
 	/**
@@ -310,7 +320,7 @@ class Simple_Staff_List_Admin {
 
 		add_meta_box(
 			'staff-member-info',
-			__( 'Staff Member Info', $this->plugin_name ),
+			__( 'Staff Member Info', 'simple-staff-list' ),
 			array( $this, 'staff_member_info_meta_box' ),
 			'staff-member',
 			'normal',
@@ -319,7 +329,7 @@ class Simple_Staff_List_Admin {
 
 		add_meta_box(
 			'staff-member-bio',
-			__( 'Staff Member Bio', $this->plugin_name ),
+			__( 'Staff Member Bio', 'simple-staff-list' ),
 			array( $this, 'staff_member_bio_meta_box' ),
 			'staff-member',
 			'normal',
@@ -341,13 +351,13 @@ class Simple_Staff_List_Admin {
 
 		$cols = array(
 			'cb'                  => '<input type="checkbox" />',
-			'id'                  => __( 'Staff ID', $this->plugin_name ),
-			'title'               => __( 'Name', $this->plugin_name ),
-			'photo'               => __( 'Photo', $this->plugin_name ),
-			'_staff_member_title' => __( 'Position', $this->plugin_name ),
-			'_staff_member_email' => __( 'Email', $this->plugin_name ),
-			'_staff_member_phone' => __( 'Phone', $this->plugin_name ),
-			'_staff_member_bio'   => __( 'Bio', $this->plugin_name ),
+			'id'                  => __( 'Staff ID', 'simple-staff-list' ),
+			'title'               => __( 'Name', 'simple-staff-list' ),
+			'photo'               => __( 'Photo', 'simple-staff-list' ),
+			'_staff_member_title' => __( 'Position', 'simple-staff-list' ),
+			'_staff_member_email' => __( 'Email', 'simple-staff-list' ),
+			'_staff_member_phone' => __( 'Phone', 'simple-staff-list' ),
+			'_staff_member_bio'   => __( 'Bio', 'simple-staff-list' ),
 		);
 
 		return $cols;
@@ -371,44 +381,47 @@ class Simple_Staff_List_Admin {
 		?>
 
 		<div class="sslp_admin_wrap">
-			<label for="_staff-member-title">
-				<?php esc_html_e( 'Position:', $this->plugin_name ); ?>
+			<label for="_staff_member_title">
+				<?php esc_html_e( 'Position:', 'simple-staff-list' ); ?>
 				<input type="text"
 						name="_staff_member_title"
 						id="_staff_member_title"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Position', $this->plugin_name ); ?>"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Position', 'simple-staff-list' ); ?>"
 						value="<?php echo esc_attr( $_staff_member_title ); ?>"/>
 			</label>
-			<label for="_staff-member-email">
-				<?php esc_html_e( 'Email:', $this->plugin_name ); ?>
-				<input type="text"
+			<label for="_staff_member_email">
+				<?php esc_html_e( 'Email:', 'simple-staff-list' ); ?>
+				<?php // An older saved value that isn't a valid email would fail the email field's validation and block saving, so keep a text field for it. ?>
+				<input type="<?php echo ( '' === $_staff_member_email || is_email( $_staff_member_email ) ) ? 'email' : 'text'; ?>"
 						name="_staff_member_email"
 						id="_staff_member_email"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Email', $this->plugin_name ); ?>"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Email', 'simple-staff-list' ); ?>"
 						value="<?php echo esc_attr( $_staff_member_email ); ?>"/>
 			</label>
-			<label for="_staff-member-title">
-				<?php esc_html_e( 'Phone:', $this->plugin_name ); ?>
-				<input type="text"
+			<label for="_staff_member_phone">
+				<?php esc_html_e( 'Phone:', 'simple-staff-list' ); ?>
+				<input type="tel"
 						name="_staff_member_phone"
 						id="_staff_member_phone"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Phone', $this->plugin_name ); ?>"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Phone', 'simple-staff-list' ); ?>"
 						value="<?php echo esc_attr( $_staff_member_phone ); ?>"/>
 			</label>
-			<label for="_staff-member-fb">
-				<?php esc_html_e( 'Facebook URL:', $this->plugin_name ); ?>
+			<label for="_staff_member_fb">
+				<?php esc_html_e( 'Facebook URL:', 'simple-staff-list' ); ?>
+				<?php // A text field with the URL keyboard, not type="url": "facebook.com/name" is accepted and saved with https:// added. ?>
 				<input type="text"
+						inputmode="url"
 						name="_staff_member_fb"
 						id="_staff_member_fb"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Facebook URL', $this->plugin_name ); ?>"
-						value="<?php echo esc_attr( $_staff_member_fb ); ?>"/>
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Facebook URL', 'simple-staff-list' ); ?>"
+						value="<?php echo esc_url( sslp_add_url_scheme( $_staff_member_fb ) ); ?>"/>
 			</label>
-			<label for="_staff-member-tw">
-				<?php esc_html_e( 'Twitter Username:', $this->plugin_name ); ?>
+			<label for="_staff_member_tw">
+				<?php esc_html_e( 'Twitter Username:', 'simple-staff-list' ); ?>
 				<input type="text"
 						name="_staff_member_tw"
 						id="_staff_member_tw"
-						placeholder="<?php esc_attr_e( 'Staff Member\'s Twitter Name', $this->plugin_name ); ?>"
+						placeholder="<?php esc_attr_e( 'Staff Member\'s Twitter Name', 'simple-staff-list' ); ?>"
 						value="<?php echo esc_attr( $_staff_member_tw ); ?>"/>
 			</label>
 			
@@ -416,20 +429,6 @@ class Simple_Staff_List_Admin {
 			
 		</div>
 		<?php
-
-	}
-
-	/**
-	 * Display staff member warnings.
-	 *
-	 * @since 1.17
-	 */
-	public function sslp_staff_member_warning_meta_box() {
-
-		esc_html_e(
-			'<p><strong>Your current theme does not support post thumbnails. Unfortunately, you will not be able to add photos for your Staff Members</strong></p>',
-			$this->plugin_name
-		);
 
 	}
 
@@ -501,7 +500,8 @@ class Simple_Staff_List_Admin {
 				echo esc_html( $_staff_member_phone );
 				break;
 			case '_staff_member_bio':
-				echo esc_html( $this->get_staff_bio_excerpt( $_staff_member_bio, 10 ) );
+				// The excerpt is HTML (the_excerpt adds <p>), so strip it to plain text rather than showing the tags.
+				echo esc_html( wp_strip_all_tags( $this->get_staff_bio_excerpt( $_staff_member_bio, 10 ) ) );
 				break;
 		}
 
@@ -560,7 +560,7 @@ class Simple_Staff_List_Admin {
 		update_post_meta(
 			$post->ID,
 			'_staff_member_fb',
-			isset( $_POST['_staff_member_fb'] ) ? sanitize_text_field( $_POST['_staff_member_fb'] ) : ''
+			isset( $_POST['_staff_member_fb'] ) ? esc_url_raw( sslp_add_url_scheme( $_POST['_staff_member_fb'] ) ) : ''
 		);
 		update_post_meta(
 			$post->ID,
@@ -670,121 +670,141 @@ class Simple_Staff_List_Admin {
 			wp_send_json_error( 'Sorry, you are not allowed to export staff members.' );
 		}
 
-		$args = array(
-			'post_type'      => 'staff-member',
-			'posts_per_page' => -1,
-			'post_status'    => 'publish',
+		$staff_ids = get_posts(
+			array(
+				'post_type'        => 'staff-member',
+				'posts_per_page'   => -1,
+				'post_status'      => 'publish',
+				'orderby'          => 'menu_order',
+				'order'            => 'ASC',
+				'fields'           => 'ids',
+				// get_posts() skips query filters by default; the old WP_Query export ran them
+				// (for example, multilingual plugins limiting the export to one language).
+				'suppress_filters' => false,
+			)
 		);
 
-		$staff_query = new WP_Query( $args );
+		if ( ! $staff_ids ) {
+			wp_send_json_error( 'No data to export.' );
+		}
 
-		if ( $staff_query->have_posts() ) :
+		// The plugin's own fields, in the order earlier exports usually listed them.
+		$meta_keys = array(
+			'_staff_member_bio',
+			'_staff_member_title',
+			'_staff_member_email',
+			'_staff_member_phone',
+			'_staff_member_fb',
+			'_staff_member_tw',
+		);
 
-			$csv_headers = array();
-			$csv_data    = array();
-
-			while ( $staff_query->have_posts() ) :
-				$staff_query->the_post();
-
-				$custom = get_post_custom();
-
-				// Setup our CSV Header line if we haven't already.
-				if ( ! $csv_headers ) {
-					$csv_headers[] = 'Staff Member Name';
-					$csv_headers[] = 'Staff Member Image URL';
-
-					foreach ( $custom as $key => $value ) {
-						if ( strpos( $key, '_staff_member_' ) !== false ) {
-
-							$new_key = trim( str_replace( '_', ' ', $key ) );
-
-							$csv_headers[] = ucwords( $new_key );
-
-						}
-					}
-
-					$csv_headers[] = 'Groups';
-
-					$csv_data[] = $csv_headers;
+		// Extra fields saved through the sslp_save_staff_member_details hook get their own columns.
+		// They're collected from every staff member so each row has the same columns.
+		$extra_keys = array();
+		foreach ( $staff_ids as $staff_id ) {
+			foreach ( array_keys( get_post_custom( $staff_id ) ) as $key ) {
+				if ( 0 === strpos( $key, '_staff_member_' ) && ! in_array( $key, $meta_keys, true ) ) {
+					$extra_keys[ $key ] = true;
 				}
-
-				// Setup our data line for this Staff Member.
-				$csv_new_line = array( get_the_title() );
-
-				// Get the post image.
-				$image_obj = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full', false );
-				if ( false !== $image_obj ) {
-					$csv_new_line[] = $image_obj[0];
-				} else {
-					$csv_new_line[] = '';
-				}
-
-				// Get the post custom data.
-				foreach ( $custom as $key => $value ) {
-					if ( strpos( $key, '_staff_member_' ) !== false ) {
-
-						$new_value = $value[0];
-
-						$csv_new_line[] = trim( $new_value );
-
-					}
-				}
-
-				// Get the group data.
-				$groups = get_the_terms( get_the_ID(), 'staff-member-group' );
-
-				$group_names = array();
-
-				// $groups should be an array of WP_Term objects if terms are found. It will be false if no terms exist, and a WP_Error if there was an error.
-				if ( is_array( $groups ) ) {
-					foreach ( $groups as $group ) {
-						// Wrap each group name in quotes.
-						$group_names[] = '"' . $group->name . '"';
-					}
-				}
-
-				// Add the group data to the line.
-				$csv_new_line[] = implode( ',', $group_names );
-
-				// Add a new line to the end of our data.
-				$csv_data[] = $csv_new_line;
-
-			endwhile;
-
-			$csv_str_out = '';
-			foreach ( $csv_data as $line ) {
-
-				$i = 1;
-				foreach ( $line as $data ) {
-					$data_line_out = '"' . str_replace( '"', '""', $data ) . '"';
-
-					// Replace the newlines with <br> tags.
-					$csv_str_out .= str_replace( array( "\r\n", "\r", "\n" ), '<br/>', $data_line_out );
-
-					if ( count( $line ) !== $i ) {
-						$csv_str_out .= ',';
-					}
-
-					$i++;
-				}
-
-				$csv_str_out .= "\n";
-
 			}
+		}
+		$extra_keys = array_keys( $extra_keys );
+		sort( $extra_keys );
+		$meta_keys = array_merge( $meta_keys, $extra_keys );
 
-			// Send the CSV straight back to the browser.
-			wp_send_json_success(
-				array(
-					'created_file' => false,
-					'content'      => $csv_str_out,
-					'filename'     => 'staff-member-export-' . date( 'Y-m-d-G-i' ) . '.csv',
-				)
+		$header = array( 'Staff Member Name', 'Staff Member Image URL' );
+		foreach ( $meta_keys as $key ) {
+			$header[] = ucwords( trim( str_replace( '_', ' ', $key ) ) );
+		}
+		$header[] = 'Groups';
+
+		$rows = array( $header );
+
+		foreach ( $staff_ids as $staff_id ) {
+			$custom = get_post_custom( $staff_id );
+
+			$image_obj = wp_get_attachment_image_src( get_post_thumbnail_id( $staff_id ), 'full', false );
+
+			// Titles and group names are HTML-encoded (O&#8217;Brien, Sales &amp; Marketing),
+			// which a spreadsheet shows literally, so decode them.
+			$row = array(
+				html_entity_decode( get_the_title( $staff_id ), ENT_QUOTES, 'UTF-8' ),
+				$image_obj ? $image_obj[0] : '',
 			);
 
-		endif;
+			foreach ( $meta_keys as $key ) {
+				$row[] = isset( $custom[ $key ][0] ) ? trim( $custom[ $key ][0] ) : '';
+			}
 
-		wp_send_json_error( 'No data to export.' );
+			$group_names = array();
+			$groups      = get_the_terms( $staff_id, 'staff-member-group' );
+			if ( is_array( $groups ) ) {
+				foreach ( $groups as $group ) {
+					$group_names[] = html_entity_decode( $group->name, ENT_QUOTES, 'UTF-8' );
+				}
+			}
+			$row[] = implode( ', ', $group_names );
 
+			$rows[] = $row;
+		}
+
+		/**
+		 * Filters whether exported cells that a spreadsheet app would read as a formula
+		 * are prefixed with an apostrophe so they're shown as text.
+		 *
+		 * @since 2.2.7
+		 *
+		 * @param bool $escape Whether to prefix the cells. Default true.
+		 */
+		$escape_formulas = apply_filters( 'sslp_export_escape_formulas', true );
+
+		$csv = '';
+		foreach ( $rows as $row ) {
+			$cells = array();
+			foreach ( $row as $cell ) {
+				$cell = (string) $cell;
+				if ( $escape_formulas ) {
+					$cell = $this->escape_csv_formula( $cell );
+				}
+				// RFC 4180: quote every cell and double any quotes inside it. Line breaks stay inside the quotes.
+				$cells[] = '"' . str_replace( '"', '""', $cell ) . '"';
+			}
+			$csv .= implode( ',', $cells ) . "\n";
+		}
+
+		// Send the CSV straight back to the browser.
+		wp_send_json_success(
+			array(
+				'created_file' => false,
+				'content'      => $csv,
+				'filename'     => 'staff-member-export-' . gmdate( 'Y-m-d-G-i' ) . '.csv',
+			)
+		);
+
+	}
+
+	/**
+	 * Prefix a CSV cell with an apostrophe if a spreadsheet app would read it as a formula.
+	 *
+	 * Values made only of digits, spaces and + - ( ) . are left alone, so phone numbers
+	 * such as "+44 20 7946 0958" export unchanged. They can't call a function.
+	 *
+	 * @since 2.2.7
+	 *
+	 * @param string $cell The cell value.
+	 *
+	 * @return string
+	 */
+	private function escape_csv_formula( $cell ) {
+		if ( '' === $cell || false === strpos( "=+-@\t\r", $cell[0] ) ) {
+			return $cell;
+		}
+
+		if ( preg_match( '/^[+\-][0-9 ().+\-]*$/', $cell ) ) {
+			return $cell;
+		}
+
+		return "'" . $cell;
 	}
 
 }

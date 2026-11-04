@@ -68,7 +68,7 @@ class Simple_Staff_List {
 	public function __construct() {
 
 		$this->plugin_name = 'simple-staff-list';
-		$this->version     = '2.2.6';
+		$this->version     = '2.2.7';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -185,10 +185,9 @@ class Simple_Staff_List {
 		$this->loader->add_action( 'after_setup_theme', $plugin_admin, 'add_featured_image_support', 10 );
 		$this->loader->add_filter( 'default_hidden_meta_boxes', $plugin_admin, 'hide_meta_boxes', 10, 2 );
 		$this->loader->add_filter( 'enter_title_here', $plugin_admin, 'staff_member_change_title' );
-		$this->loader->add_action( 'do_meta_boxes', $plugin_admin, 'staff_member_featured_image_text' );
 		$this->loader->add_action( 'do_meta_boxes', $plugin_admin, 'staff_member_add_meta_boxes' );
 		$this->loader->add_filter( 'manage_staff-member_posts_columns', $plugin_admin, 'staff_member_custom_columns' );
-		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'staff_member_display_custom_columns' );
+		$this->loader->add_action( 'manage_staff-member_posts_custom_column', $plugin_admin, 'staff_member_display_custom_columns' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_staff_member_details' );
 		$this->loader->add_action( 'wp_ajax_staff_member_update_post_order', $plugin_admin, 'update_staff_member_order' );
 		$this->loader->add_action( 'wp_ajax_staff_member_export', $plugin_admin, 'staff_member_export' );
@@ -207,7 +206,6 @@ class Simple_Staff_List {
 		$plugin_public = new Simple_Staff_List_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'init', $plugin_public, 'staff_member_init', 10 );
 		$this->loader->add_action( 'init', $plugin_public, 'maybe_flush_rewrite_rules', 20 );
 

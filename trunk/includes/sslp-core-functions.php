@@ -11,6 +11,35 @@
  * @author     Brett Shumaker <brettshumaker@gmail.com>
  */
 
+/**
+ * Add https:// to a URL entered without a scheme, such as "facebook.com/name".
+ *
+ * esc_url() and esc_url_raw() add http:// to these instead. (WordPress 6.9 can add https://,
+ * but the plugin supports older versions.) URLs that already have a scheme, and relative
+ * URLs, are returned unchanged.
+ *
+ * @since 2.2.7
+ *
+ * @param string $url The URL.
+ *
+ * @return string
+ */
+function sslp_add_url_scheme( $url ) {
+
+	if ( ! is_string( $url ) ) {
+		return '';
+	}
+
+	$url = trim( $url );
+
+	if ( '' === $url || preg_match( '#^[a-z][a-z0-9+.\-]*:#i', $url ) || in_array( $url[0], array( '/', '#', '?' ), true ) ) {
+		return $url;
+	}
+
+	return 'https://' . $url;
+
+}
+
 function sslp_get_template_part( $slug = '' ) {
 
 	$template = '';
