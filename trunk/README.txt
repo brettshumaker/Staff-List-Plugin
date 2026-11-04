@@ -56,7 +56,7 @@ Alright, here's a few things to try:
 - FIXED: `[staff-photo]` now uses the staff member's name as the image's alt text, instead of their position.
 - FIXED: `[staff-facebook]` is now output as a URL. A Facebook URL entered without "http://" or "https://" gets "https://" added.
 - FIXED: Single staff member pages no longer show a broken image for staff members without a photo.
-- FIXED: In the staff export, every row has the same columns, line breaks in bios are kept, and staff are listed in the order set on the Order page.
+- FIXED: In the staff export, every row has the same columns, line breaks in bios are kept, names and groups containing & or apostrophes are no longer garbled, and staff are listed in the order set on the Order page.
 - CHANGED: In the staff export, values that start with =, +, - or @ now start with an apostrophe, so spreadsheet apps show them as text. Phone numbers are unchanged. Use the `sslp_export_escape_formulas` filter to turn this off.
 - FIXED: The Staff Members list could print staff details into another post type's columns.
 - FIXED: The Bio column in the Staff Members list shows text instead of `<p>` tags.

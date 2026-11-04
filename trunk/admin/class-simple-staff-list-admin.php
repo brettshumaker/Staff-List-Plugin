@@ -672,12 +672,15 @@ class Simple_Staff_List_Admin {
 
 		$staff_ids = get_posts(
 			array(
-				'post_type'      => 'staff-member',
-				'posts_per_page' => -1,
-				'post_status'    => 'publish',
-				'orderby'        => 'menu_order',
-				'order'          => 'ASC',
-				'fields'         => 'ids',
+				'post_type'        => 'staff-member',
+				'posts_per_page'   => -1,
+				'post_status'      => 'publish',
+				'orderby'          => 'menu_order',
+				'order'            => 'ASC',
+				'fields'           => 'ids',
+				// get_posts() skips query filters by default; the old WP_Query export ran them
+				// (for example, multilingual plugins limiting the export to one language).
+				'suppress_filters' => false,
 			)
 		);
 
@@ -722,8 +725,10 @@ class Simple_Staff_List_Admin {
 
 			$image_obj = wp_get_attachment_image_src( get_post_thumbnail_id( $staff_id ), 'full', false );
 
+			// Titles and group names are HTML-encoded (O&#8217;Brien, Sales &amp; Marketing),
+			// which a spreadsheet shows literally, so decode them.
 			$row = array(
-				get_the_title( $staff_id ),
+				html_entity_decode( get_the_title( $staff_id ), ENT_QUOTES, 'UTF-8' ),
 				$image_obj ? $image_obj[0] : '',
 			);
 
@@ -735,7 +740,7 @@ class Simple_Staff_List_Admin {
 			$groups      = get_the_terms( $staff_id, 'staff-member-group' );
 			if ( is_array( $groups ) ) {
 				foreach ( $groups as $group ) {
-					$group_names[] = $group->name;
+					$group_names[] = html_entity_decode( $group->name, ENT_QUOTES, 'UTF-8' );
 				}
 			}
 			$row[] = implode( ', ', $group_names );
