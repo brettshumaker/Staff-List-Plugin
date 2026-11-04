@@ -408,12 +408,12 @@ class Simple_Staff_List_Admin {
 			</label>
 			<label for="_staff_member_fb">
 				<?php esc_html_e( 'Facebook URL:', 'simple-staff-list' ); ?>
-				<?php // esc_url() adds a missing http://, so an older value without one doesn't fail the URL field's validation and block saving. ?>
+				<?php // An older value saved without https:// gets one added, so it doesn't fail the URL field's validation and block saving. ?>
 				<input type="url"
 						name="_staff_member_fb"
 						id="_staff_member_fb"
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Facebook URL', 'simple-staff-list' ); ?>"
-						value="<?php echo esc_url( $_staff_member_fb ); ?>"/>
+						value="<?php echo esc_url( sslp_add_url_scheme( $_staff_member_fb ) ); ?>"/>
 			</label>
 			<label for="_staff_member_tw">
 				<?php esc_html_e( 'Twitter Username:', 'simple-staff-list' ); ?>
@@ -559,7 +559,7 @@ class Simple_Staff_List_Admin {
 		update_post_meta(
 			$post->ID,
 			'_staff_member_fb',
-			isset( $_POST['_staff_member_fb'] ) ? esc_url_raw( trim( $_POST['_staff_member_fb'] ) ) : ''
+			isset( $_POST['_staff_member_fb'] ) ? esc_url_raw( sslp_add_url_scheme( $_POST['_staff_member_fb'] ) ) : ''
 		);
 		update_post_meta(
 			$post->ID,

@@ -24,6 +24,6 @@ if ( '' !== $facebook ) {
 		$icon = file_get_contents( $svg_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local plugin file, not a remote URL.
 	}
 
-	echo '<span class="facebook"><a class="staff-member-facebook" href="' . esc_url( $facebook ) . '" title="Find ' . esc_attr( get_the_title() ) . ' on Facebook">' . $icon . '</a></span>';
+	echo '<span class="facebook"><a class="staff-member-facebook" href="' . esc_url( sslp_add_url_scheme( $facebook ) ) . '" title="Find ' . esc_attr( get_the_title() ) . ' on Facebook">' . $icon . '</a></span>';
 
 }

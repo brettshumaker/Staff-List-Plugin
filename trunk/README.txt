@@ -54,7 +54,7 @@ Alright, here's a few things to try:
 - FIXED: `[staff-twitter]` no longer outputs a twitter.com link for staff members without a Twitter username.
 - FIXED: With more than 100 staff members, the last one shown now gets the `last` class.
 - FIXED: `[staff-photo]` now uses the staff member's name as the image's alt text, instead of their position.
-- FIXED: `[staff-facebook]` is now output as a URL. A Facebook URL entered without "http://" or "https://" gets "http://" added.
+- FIXED: `[staff-facebook]` is now output as a URL. A Facebook URL entered without "http://" or "https://" gets "https://" added.
 - FIXED: Single staff member pages no longer show a broken image for staff members without a photo.
 - FIXED: In the staff export, every row has the same columns, line breaks in bios are kept, and staff are listed in the order set on the Order page.
 - CHANGED: In the staff export, values that start with =, +, - or @ now start with an apostrophe, so spreadsheet apps show them as text. Phone numbers are unchanged. Use the `sslp_export_escape_formulas` filter to turn this off.
