@@ -408,8 +408,9 @@ class Simple_Staff_List_Admin {
 			</label>
 			<label for="_staff_member_fb">
 				<?php esc_html_e( 'Facebook URL:', 'simple-staff-list' ); ?>
-				<?php // An older value saved without https:// gets one added, so it doesn't fail the URL field's validation and block saving. ?>
-				<input type="url"
+				<?php // A text field with the URL keyboard, not type="url": "facebook.com/name" is accepted and saved with https:// added. ?>
+				<input type="text"
+						inputmode="url"
 						name="_staff_member_fb"
 						id="_staff_member_fb"
 						placeholder="<?php esc_attr_e( 'Staff Member\'s Facebook URL', 'simple-staff-list' ); ?>"

@@ -62,7 +62,7 @@ Alright, here's a few things to try:
 - FIXED: The Bio column in the Staff Members list shows text instead of `<p>` tags.
 - FIXED: The Usage page shows its code examples correctly, and its "add custom css" link now goes to the Templates page.
 - FIXED: Clicking a field's label on the staff edit screen now selects that field.
-- IMPROVED: The staff edit screen uses email, phone and URL fields, so phones show the right keyboard.
+- IMPROVED: The staff edit screen's email, phone and Facebook URL fields show the right keyboard on phones.
 - IMPROVED: The plugin's admin styles and scripts only load on Staff Members screens.
 - IMPROVED: All of the plugin's text can now be translated.
 - ADDED: `sslp_exclude_staff_member_from_search` filter. Return true to leave staff members out of site search. They still appear in search by default.
